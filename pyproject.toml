@@ -6,7 +6,10 @@ authors = [{name = "Joakim Hellsén", email = "tlovinator@gmail.com"}]
 license = "GPL-3.0-or-later"
 readme = "README.md"
 requires-python = ">=3.13"
-dependencies = ["django>=5.1.7"]
+dependencies = [
+    "django>=5.1.7",
+    "httpx>=0.28.1",
+]
 
 [tool.ruff]
 preview = true
@@ -14,7 +17,7 @@ lint.select = ["ALL"]
 lint.pydocstyle.convention = "google"
 lint.isort.required-imports = ["from __future__ import annotations"]
 lint.pycodestyle.ignore-overlong-task-comments = true
-line-length = 120
+line-length = 140
 
 lint.ignore = [
     "CPY001", # Checks for the absence of copyright notices within Python files.
@@ -41,6 +44,7 @@ lint.ignore = [
     "Q003",   # Checks for strings that include escaped quotes, and suggests changing the quote style to avoid the need to escape them.
     "W191",   # Checks for indentation that uses tabs.
 ]
+
 
 [tool.ruff.lint.per-file-ignores]
 "*/tests/*.py" = [

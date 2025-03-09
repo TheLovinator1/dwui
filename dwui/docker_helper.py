@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import logging
+import os
 from typing import TYPE_CHECKING
 
 import docker
@@ -21,7 +22,7 @@ class DockerClient:
         Returns:
             docker.DockerClient: The Docker client.""
         """
-        self.client: docker.DockerClient = docker.from_env(use_ssh_client=True, user_agent="dwui")
+        self.client: docker.DockerClient = docker.from_env(use_ssh_client=self.should_use_ssh())
         return self.client
 
     def __exit__(self, exc_type: object, exc_value: BaseException | None, traceback: types.TracebackType | None) -> None:
@@ -37,3 +38,12 @@ class DockerClient:
             logger.error(msg, exc_info=(type(exc_value), exc_value, traceback) if exc_value else None)
 
         self.client.close()
+
+    @staticmethod
+    def should_use_ssh() -> bool:
+        """Determine if the SSH client should be used.
+
+        Returns:
+            bool: True if the SSH client should be used, otherwise False.
+        """
+        return os.getenv("DOCKER_HOST", "").startswith("ssh://")

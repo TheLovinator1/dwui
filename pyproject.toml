@@ -9,6 +9,7 @@ requires-python = ">=3.13"
 dependencies = [
     "django>=5.1.7",
     "docker>=7.1.0",
+    "paramiko>=3.5.1",
     "platformdirs>=4.3.6",
     "python-dotenv>=1.0.1",
 ]
@@ -25,7 +26,6 @@ lint.select = ["ALL"]
 lint.pydocstyle.convention = "google"
 lint.isort.required-imports = ["from __future__ import annotations"]
 lint.pycodestyle.ignore-overlong-task-comments = true
-line-length = 140
 
 lint.ignore = [
     "CPY001", # Checks for the absence of copyright notices within Python files.
@@ -52,6 +52,7 @@ lint.ignore = [
     "Q003",   # Checks for strings that include escaped quotes, and suggests changing the quote style to avoid the need to escape them.
     "W191",   # Checks for indentation that uses tabs.
 ]
+line-length = 140
 
 [tool.ruff.lint.per-file-ignores]
 "**/tests/*.py" = [

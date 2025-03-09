@@ -3,33 +3,78 @@
 {% block title %}Docker Web UI - Home{% endblock title %}
 
 {% block content %}
-<div class="row">
-    <div class="col-12">
-        <h1>Welcome to Docker Web UI</h1>
-        <p class="lead">A simple web interface for managing Docker containers.</p>
-    </div>
-</div>
-
-<div class="row mt-4">
-    <div class="col-md-6">
-        <div class="card">
-            <div class="card-header">
-                Containers
+<div class="container-fluid">
+    <div class="row">
+        <!-- Left sidebar with containers list -->
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Containers</h5>
+                </div>
+                <div class="card-body p-0">
+                    <ul class="list-group list-group-flush">
+                        {% if containers %}
+                        {% for container in containers %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            {{ container.name }}
+                            <span
+                                class="badge {% if container.status == 'running' %}bg-success{% else %}bg-secondary{% endif %} rounded-pill">
+                                {{ container.status }}
+                            </span>
+                        </li>
+                        {% endfor %}
+                        {% else %}
+                        <li class="list-group-item">No containers found</li>
+                        {% endif %}
+                    </ul>
+                </div>
             </div>
-            <div class="card-body">
-                <p>Manage your Docker containers from a simple web interface.</p>
-                <a href="#" class="btn btn-primary">View Containers</a>
+
+            <!-- Docker Info Card -->
+            <div class="card mt-3">
+                <div class="card-header">
+                    <h5>Docker Info</h5>
+                </div>
+                <div class="card-body">
+                    <p><strong>Docker Version:</strong> {{ version.Version }}</p>
+                    <p><strong>API Version:</strong> {{ version.ApiVersion }}</p>
+                    <p><strong>OS:</strong> {{ version.Os }} / {{ version.Arch }}</p>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="col-md-6">
-        <div class="card">
-            <div class="card-header">
-                Images
+
+        <!-- Main content -->
+        <div class="col-md-9">
+            <div class="row">
+                <div class="col-12">
+                    <h1>Welcome to Docker Web UI</h1>
+                    <p class="lead">A simple web interface for managing Docker containers.</p>
+                </div>
             </div>
-            <div class="card-body">
-                <p>View and manage your Docker images.</p>
-                <a href="#" class="btn btn-primary">View Images</a>
+
+            <div class="row mt-4">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            Containers
+                        </div>
+                        <div class="card-body">
+                            <p>Manage your Docker containers from a simple web interface.</p>
+                            <a href="#" class="btn btn-primary">View Containers</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            Images
+                        </div>
+                        <div class="card-body">
+                            <p>View and manage your Docker images.</p>
+                            <a href="#" class="btn btn-primary">View Images</a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

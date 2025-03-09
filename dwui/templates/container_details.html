@@ -1,0 +1,142 @@
+{% extends 'base.html' %}
+
+{% block title %}Container Details - {{ container.name }}{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center">
+        <h1>Container: {{ container.name }}</h1>
+        <a href="{% url 'index' %}" class="btn btn-secondary">Back to List</a>
+    </div>
+
+    <div class="card mt-4">
+        <div class="card-header">
+            <h3>Container Information</h3>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <p><strong>ID:</strong> {{ container.short_id }}</p>
+                    <p><strong>Name:</strong> {{ container.name }}</p>
+                    <p><strong>Image:</strong> {{ container.image.tags.0|default:container.image.short_id }}</p>
+                    <p><strong>Created:</strong> {{ container.attrs.Created|date:"Y-m-d H:i:s" }}</p>
+                    <p><strong>Status:</strong>
+                        {% if container.status == "running" %}
+                        <span class="badge bg-success">Running</span>
+                        {% elif container.status == "exited" %}
+                        <span class="badge bg-danger">Stopped</span>
+                        {% else %}
+                        <span class="badge bg-secondary">{{ container.status }}</span>
+                        {% endif %}
+                    </p>
+                </div>
+                <div class="col-md-6">
+                    <p><strong>Health:</strong> {{ container.health }}</p>
+                    <p><strong>IP Address:</strong> {{ container.attrs.NetworkSettings.IPAddress }}</p>
+                    <p><strong>Restart Policy:</strong> {{ container.attrs.HostConfig.RestartPolicy.Name }}</p>
+                    <p><strong>Command:</strong> {{ container.attrs.Config.Cmd|join:" " }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mt-4">
+        <div class="card-header">
+            <h3>Ports</h3>
+        </div>
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Container Port</th>
+                        <th>Host Port</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for port, bindings in container.ports.items %}
+                    {% if bindings %}
+                    {% for binding in bindings %}
+                    <tr>
+                        <td>{{ port }}</td>
+                        <td>{{ binding.HostIp }}:{{ binding.HostPort }}</td>
+                    </tr>
+                    {% endfor %}
+                    {% else %}
+                    <tr>
+                        <td>{{ port }}</td>
+                        <td>Not published</td>
+                    </tr>
+                    {% endif %}
+                    {% empty %}
+                    <tr>
+                        <td colspan="2">No ports exposed</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="card mt-4">
+        <div class="card-header">
+            <h3>Environment Variables</h3>
+        </div>
+        <div class="card-body">
+            <pre class="bg-light p-3">{% for env in container.attrs.Config.Env %}{{ env }}
+{% endfor %}</pre>
+        </div>
+    </div>
+
+    <div class="card mt-4">
+        <div class="card-header">
+            <h3>Volumes</h3>
+        </div>
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Host Path</th>
+                        <th>Container Path</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for mount in container.attrs.Mounts %}
+                    <tr>
+                        <td>{{ mount.Source }}</td>
+                        <td>{{ mount.Destination }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="2">No volumes mounted</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="card mt-4">
+        <div class="card-header">
+            <h3>Container Logs (Last 100 lines)</h3>
+        </div>
+        <div class="card-body">
+            <div class="container-logs p-3 bg-dark text-light">
+                <pre style="max-height: 400px; overflow-y: auto;">{% for log in logs %}{{ log }}
+{% endfor %}</pre>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-4 mb-5">
+        <div class="btn-group" role="group">
+            {% if container.status == "running" %}
+            <button class="btn btn-warning">Stop</button>
+            <button class="btn btn-danger">Restart</button>
+            {% else %}
+            <button class="btn btn-success">Start</button>
+            {% endif %}
+            <button class="btn btn-danger">Delete</button>
+        </div>
+    </div>
+</div>
+{% endblock %}

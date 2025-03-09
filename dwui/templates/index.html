@@ -19,7 +19,7 @@
                         {% if containers %}
                         {% for container in containers %}
                         <li class="list-group-item d-flex justify-content-between align-items-center">
-                            {{ container.name }}
+                            <a href="{% url 'container_details' container.id %}">{{ container.name }}</a>
                             <span
                                 class="badge {% if container.status == 'running' %}bg-success{% else %}bg-secondary{% endif %} rounded-pill">
                                 {{ container.status }}
@@ -81,6 +81,44 @@
                         </div>
                     </div>
                 </div>
+            </div>
+
+            <div class="container mt-4">
+                <h2>Containers</h2>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Image</th>
+                            <th>Status</th>
+                            <th>Created</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for container in containers %}
+                        <tr>
+                            <td>
+                                <a href="{% url 'container_details' container.id %}">{{ container.name }}</a>
+                            </td>
+                            <td>{{ container.image.tags.0|default:container.image.short_id }}</td>
+                            <td>
+                                {% if container.status == "running" %}
+                                <span class="badge bg-success">Running</span>
+                                {% elif container.status == "exited" %}
+                                <span class="badge bg-danger">Stopped</span>
+                                {% else %}
+                                <span class="badge bg-secondary">{{ container.status }}</span>
+                                {% endif %}
+                            </td>
+                            <td>{{ container.attrs.Created|date:"Y-m-d H:i" }}</td>
+                            <td>
+                                <!-- Your action buttons here -->
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

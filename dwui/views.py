@@ -91,3 +91,33 @@ def new_container(request: HttpRequest) -> HttpResponse:
     }
 
     return render(request, "new_container.html", context)
+
+
+@login_not_required
+def container_details(request: HttpRequest, container_id: str) -> HttpResponse:
+    """Show details for a specific container.
+
+    Args:
+        request (HttpRequest): The request object.
+        container_id (str): The ID of the container to show details for.
+
+    Returns:
+        HttpResponse: The response object containing container details.
+    """
+    with DockerClient() as client:
+        try:
+            container = client.containers.get(container_id)
+            container_stats = next(container.stats(stream=True, decode=True))
+            logs = container.logs(tail=100, timestamps=True).decode("utf-8").splitlines()
+        except Exception as e:  # noqa: BLE001
+            logger.info("Error retrieving container details: %s", e)
+            return HttpResponseRedirect(reverse("index"))
+
+    context = {
+        "container": container,
+        "container_stats": container_stats,
+        "logs": logs,
+        "hostname": container.attrs["Config"]["Hostname"],
+    }
+
+    return render(request, "container_details.html", context)

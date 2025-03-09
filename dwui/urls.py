@@ -16,6 +16,7 @@ urlpatterns: list[URLResolver | URLPattern] = [
     path("admin/", admin.site.urls),
     path("", views.index, name="index"),
     path("containers/new/", views.new_container, name="new_container"),
+    path("container/<str:container_id>/", views.container_details, name="container_details"),
 ]
 
 if "test" not in sys.argv:

@@ -1,8 +1,6 @@
 from __future__ import annotations
 
-from config.settings import (  # noqa: TID251
-    MIDDLEWARE,
-)
+from dwui.settings import MIDDLEWARE  # noqa: TID251
 
 
 def test_middleware_order() -> None:

@@ -8,6 +8,6 @@ from django.core.wsgi import get_wsgi_application
 if TYPE_CHECKING:
     from django.core.handlers.wsgi import WSGIHandler
 
-os.environ.setdefault(key="DJANGO_SETTINGS_MODULE", value="config.settings")
+os.environ.setdefault(key="DJANGO_SETTINGS_MODULE", value="dwui.settings")
 
 application: WSGIHandler = get_wsgi_application()

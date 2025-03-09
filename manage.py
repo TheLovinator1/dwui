@@ -13,7 +13,7 @@ def main() -> None:
     Raises:
         ImportError: If Django is not installed.
     """
-    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings")
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "dwui.settings")
     try:
         from django.core.management import execute_from_command_line  # noqa: PLC0415
     except ImportError as exc:

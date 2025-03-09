@@ -14,8 +14,12 @@ BASE_DIR: Path = Path(__file__).resolve().parent.parent
 DATA_DIR: Path = Path(user_data_dir(appname="dwui", appauthor="TheLovinator", roaming=True, ensure_exists=True))
 
 SECRET_KEY: str | None = os.getenv(key="DJANGO_SECRET_KEY")
+if SECRET_KEY is None:
+    msg = "DJANGO_SECRET_KEY environment variable is not set. You can generate one using `python -c 'from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())'`"  # noqa: E501
+    raise OSError(msg)
+
 DEBUG: bool = os.getenv(key="DJANGO_DEBUG", default="False").lower() == "true"
-ALLOWED_HOSTS: list[str] = os.getenv(key="DJANGO_ALLOWED_HOSTS", default="localhost").split(",")
+ALLOWED_HOSTS: list[str] = os.getenv(key="DJANGO_ALLOWED_HOSTS", default="127.0.0.1").split(",")
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 LANGUAGE_CODE = "en-us"
 TIME_ZONE = "UTC"
@@ -26,11 +30,11 @@ DECIMAL_SEPARATOR = ","
 THOUSAND_SEPARATOR = " "
 INTERNAL_IPS: list[str] = ["127.0.0.1", "::1"]
 SITE_ID = 1
-WSGI_APPLICATION = "config.wsgi.application"
-ROOT_URLCONF = "config.urls"
+WSGI_APPLICATION = "dwui.wsgi.application"
+ROOT_URLCONF = "dwui.urls"
 
 INSTALLED_APPS: list[str] = [
-    "docker.apps.DockerConfig",
+    "dwui.apps.DWUIAppConfig",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",

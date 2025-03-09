@@ -8,7 +8,7 @@ readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
     "django>=5.1.7",
-    "httpx>=0.28.1",
+    "docker>=7.1.0",
     "platformdirs>=4.3.6",
     "python-dotenv>=1.0.1",
 ]
@@ -53,7 +53,6 @@ lint.ignore = [
     "W191",   # Checks for indentation that uses tabs.
 ]
 
-
 [tool.ruff.lint.per-file-ignores]
 "**/tests/*.py" = [
     "ARG",     # Unused function args -> fixtures nevertheless are functionally relevant...
@@ -66,8 +65,8 @@ lint.ignore = [
 
 # https://github.com/astral-sh/ruff/issues/12200#issuecomment-2244480290
 [tool.ruff.lint.flake8-tidy-imports.banned-api]
-"config.settings".msg = "See https://docs.djangoproject.com/en/dev/topics/settings/#using-settings-in-python-code. Use 'from django.conf import settings' instead."
+"dwui.settings".msg = "See https://docs.djangoproject.com/en/dev/topics/settings/#using-settings-in-python-code. Use 'from django.conf import settings' instead."
 
 [tool.pytest.ini_options]
-DJANGO_SETTINGS_MODULE = "config.settings"
+DJANGO_SETTINGS_MODULE = "dwui.settings"
 python_files = ["test_*.py", "*_test.py"]

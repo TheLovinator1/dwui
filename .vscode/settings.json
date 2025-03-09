@@ -11,6 +11,7 @@
         "httpx",
         "isort",
         "Joakim",
+        "platformdirs",
         "pycodestyle",
         "pydocstyle",
         "pytest",

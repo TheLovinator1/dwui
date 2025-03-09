@@ -62,8 +62,8 @@ def new_container(request: HttpRequest) -> HttpResponse:
     ]
 
     if request.method == "POST":
-        name = request.POST.get("name")
-        image = request.POST.get("image")
+        name: str | None = request.POST.get("name")
+        image: str | None = request.POST.get("image")
 
         if name and image:
             with DockerClient() as client:
@@ -79,8 +79,10 @@ def new_container(request: HttpRequest) -> HttpResponse:
                     image=image,
                     name=name,
                     detach=True,  # Run container in background
-                    restart_policy={"Name": "unless-stopped"},
-                    ports={"80/tcp": None},  # Auto-assign port
+                    restart_policy={
+                        "Name": "on-failure",
+                        "MaximumRetryCount": 5,
+                    },
                 )
 
             # Redirect to home page
@@ -121,3 +123,145 @@ def container_details(request: HttpRequest, container_id: str) -> HttpResponse:
     }
 
     return render(request, "container_details.html", context)
+
+
+@login_not_required
+def start_container(request: HttpRequest, container_id: str) -> HttpResponse:
+    """Start a Docker container.
+
+    Args:
+        request (HttpRequest): The request object.
+        container_id (str): The ID of the container to start.
+
+    Returns:
+        HttpResponse: Redirect to the container details page.
+    """
+    with DockerClient() as client:
+        try:
+            container = client.containers.get(container_id)
+            container.start()
+            logger.info("Container %s started successfully", container.name)
+        except Exception:
+            logger.exception("Error starting container %s", container_id)
+
+    return HttpResponseRedirect(reverse("container_details", args=[container_id]))
+
+
+@login_not_required
+def stop_container(request: HttpRequest, container_id: str) -> HttpResponse:
+    """Stop a Docker container.
+
+    Args:
+        request (HttpRequest): The request object.
+        container_id (str): The ID of the container to stop.
+
+    Returns:
+        HttpResponse: Redirect to the container details page.
+    """
+    with DockerClient() as client:
+        try:
+            container = client.containers.get(container_id)
+            container.stop()
+            logger.info("Container %s stopped successfully", container.name)
+        except Exception:
+            logger.exception("Error stopping container %s", container_id)
+
+    return HttpResponseRedirect(reverse("container_details", args=[container_id]))
+
+
+@login_not_required
+def restart_container(request: HttpRequest, container_id: str) -> HttpResponse:
+    """Restart a Docker container.
+
+    Args:
+        request (HttpRequest): The request object.
+        container_id (str): The ID of the container to restart.
+
+    Returns:
+        HttpResponse: Redirect to the container details page.
+    """
+    with DockerClient() as client:
+        try:
+            container = client.containers.get(container_id)
+            container.restart()
+            logger.info("Container %s restarted successfully", container.name)
+        except Exception:
+            logger.exception("Error restarting container %s", container_id)
+
+    return HttpResponseRedirect(reverse("container_details", args=[container_id]))
+
+
+@login_not_required
+def remove_container(request: HttpRequest, container_id: str) -> HttpResponse:
+    """Remove a Docker container.
+
+    Args:
+        request (HttpRequest): The request object.
+        container_id (str): The ID of the container to remove.
+
+    Returns:
+        HttpResponse: Redirect to the home page.
+    """
+    with DockerClient() as client:
+        try:
+            container = client.containers.get(container_id)
+            container_name = container.name
+            container.remove(force=True)  # Force removal even if running
+            logger.info("Container %s removed successfully", container_name)
+        except Exception:
+            logger.exception("Error removing container %s", container_id)
+
+    return HttpResponseRedirect(reverse("index"))
+
+
+@login_not_required
+def update_container(request: HttpRequest, container_id: str) -> HttpResponse:
+    """Update a Docker container by recreating it with the latest image.
+
+    Args:
+        request (HttpRequest): The request object.
+        container_id (str): The ID of the container to update.
+
+    Returns:
+        HttpResponse: Redirect to the home page.
+    """
+    with DockerClient() as client:
+        try:
+            # Get container details
+            container = client.containers.get(container_id)
+            name = container.name
+            image_name = ""
+            if container.image:
+                image_name = container.image.tags[0] if container.image.tags else container.image.id or ""
+            ports = container.attrs["HostConfig"]["PortBindings"]
+            volumes = container.attrs["HostConfig"]["Binds"]
+            env_vars = container.attrs["Config"]["Env"]
+            restart_policy = container.attrs["HostConfig"]["RestartPolicy"]
+
+            # Pull latest image
+            logger.info("Pulling latest image for %s", image_name)
+            client.images.pull(image_name.split(":")[0])
+
+            # Stop and remove existing container
+            logger.info("Stopping and removing container %s", name)
+            container.stop()
+            container.remove()
+
+            # Create and start new container with same parameters
+            logger.info("Creating new container %s with updated image", name)
+            new_container = client.containers.run(
+                image=image_name,
+                name=name,
+                detach=True,
+                ports=dict(ports.items()),
+                volumes={volume.split(":")[0]: {"bind": volume.split(":")[1], "mode": "rw"} for volume in volumes},
+                environment=env_vars,
+                restart_policy=restart_policy,
+            )
+
+            logger.info("Container %s updated successfully with ID %s", name, new_container.id)
+            return HttpResponseRedirect(reverse("container_details", args=[new_container.id]))
+
+        except Exception as e:  # noqa: BLE001
+            logger.info("Error updating container %s: %s", container_id, e)
+            return HttpResponseRedirect(reverse("index"))

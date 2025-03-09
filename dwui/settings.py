@@ -19,7 +19,7 @@ if SECRET_KEY is None:
     raise OSError(msg)
 
 DEBUG: bool = os.getenv(key="DJANGO_DEBUG", default="False").lower() == "true"
-ALLOWED_HOSTS: list[str] = os.getenv(key="DJANGO_ALLOWED_HOSTS", default="127.0.0.1").split(",")
+ALLOWED_HOSTS: list[str] = os.getenv(key="DJANGO_ALLOWED_HOSTS", default="127.0.0.1, localhost").replace(" ", "").split(",")
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 LANGUAGE_CODE = "en-us"
 TIME_ZONE = "UTC"

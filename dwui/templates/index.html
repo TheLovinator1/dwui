@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}Docker Web UI - Home{% endblock title %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h1>Welcome to Docker Web UI</h1>
+        <p class="lead">A simple web interface for managing Docker containers.</p>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                Containers
+            </div>
+            <div class="card-body">
+                <p>Manage your Docker containers from a simple web interface.</p>
+                <a href="#" class="btn btn-primary">View Containers</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                Images
+            </div>
+            <div class="card-body">
+                <p>View and manage your Docker images.</p>
+                <a href="#" class="btn btn-primary">View Images</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

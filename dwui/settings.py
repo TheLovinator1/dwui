@@ -57,7 +57,7 @@ MIDDLEWARE: list[str] = [
 TEMPLATES: list[dict[str, Any]] = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [BASE_DIR / "dwui" / "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [

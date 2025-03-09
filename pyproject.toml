@@ -1,0 +1,9 @@
+[project]
+name = "docker-web-ui"
+version = "0.1.0"
+description = "A web UI for Docker"
+authors = [{name = "Joakim Hellsén", email = "tlovinator@gmail.com"}]
+license = "GPL-3.0-or-later"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = ["django>=5.1.7"]

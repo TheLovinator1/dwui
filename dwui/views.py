@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import logging
-import socket
 from typing import TYPE_CHECKING
 
 from django.contrib.auth.decorators import login_not_required  # pyright: ignore[reportAttributeAccessIssue]
@@ -31,12 +30,9 @@ def index(request: HttpRequest) -> HttpResponse:
         version: dict = client.version()
         containers = client.containers.list(all=True)
 
-    hostname = socket.gethostname()
-
     context = {
         "version": version,
         "containers": containers,
-        "hostname": hostname,
     }
 
     return render(request, "index.html", context)

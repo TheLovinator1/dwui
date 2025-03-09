@@ -8,8 +8,11 @@
         <!-- Left sidebar with containers list -->
         <div class="col-md-3">
             <div class="card">
-                <div class="card-header">
-                    <h5>Containers</h5>
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Containers</h5>
+                    <a href="{% url 'new_container' %}" class="btn btn-sm btn-primary">
+                        <i class="fas fa-plus"></i> Add
+                    </a>
                 </div>
                 <div class="card-body p-0">
                     <ul class="list-group list-group-flush">
@@ -24,7 +27,7 @@
                         </li>
                         {% endfor %}
                         {% else %}
-                        <li class="list-group-item">No containers found</li>
+                        <li class="list-group-item">No containers found.</li>
                         {% endif %}
                     </ul>
                 </div>
@@ -61,6 +64,9 @@
                         <div class="card-body">
                             <p>Manage your Docker containers from a simple web interface.</p>
                             <a href="#" class="btn btn-primary">View Containers</a>
+                            <a href="{% url 'new_container' %}" class="btn btn-success">
+                                <i class="fas fa-plus"></i> New Container
+                            </a>
                         </div>
                     </div>
                 </div>

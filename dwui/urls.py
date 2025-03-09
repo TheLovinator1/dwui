@@ -15,6 +15,7 @@ if TYPE_CHECKING:
 urlpatterns: list[URLResolver | URLPattern] = [
     path("admin/", admin.site.urls),
     path("", views.index, name="index"),
+    path("containers/new/", views.new_container, name="new_container"),
 ]
 
 if "test" not in sys.argv:

@@ -1,7 +1,19 @@
 {
     "python.analysis.typeCheckingMode": "standard",
     "cSpell.words": [
+        "appauthor",
+        "appname",
+        "docstrings",
+        "dotenv",
         "dwui",
-        "htmx"
+        "Hellsén",
+        "htmx",
+        "httpx",
+        "isort",
+        "Joakim",
+        "pycodestyle",
+        "pydocstyle",
+        "pytest",
+        "TheLovinator"
     ]
 }

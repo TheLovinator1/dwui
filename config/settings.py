@@ -1,26 +1,35 @@
 from __future__ import annotations
 
+import os
+import sys
 from pathlib import Path
+from typing import Any
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+from dotenv import load_dotenv
+from platformdirs import user_data_dir
 
+load_dotenv()
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
+BASE_DIR: Path = Path(__file__).resolve().parent.parent
+DATA_DIR: Path = Path(user_data_dir(appname="dwui", appauthor="TheLovinator", roaming=True, ensure_exists=True))
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-(91leyf#)ykubq&80rnc#s7ma2txi_4!hz^vxb!y=t(zlg_8($"  # noqa: S105
+SECRET_KEY: str | None = os.getenv(key="DJANGO_SECRET_KEY")
+DEBUG: bool = os.getenv(key="DJANGO_DEBUG", default="False").lower() == "true"
+ALLOWED_HOSTS: list[str] = os.getenv(key="DJANGO_ALLOWED_HOSTS", default="localhost").split(",")
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+LANGUAGE_CODE = "en-us"
+TIME_ZONE = "UTC"
+USE_I18N = True
+USE_TZ = True
+STATIC_URL = "static/"
+DECIMAL_SEPARATOR = ","
+THOUSAND_SEPARATOR = " "
+INTERNAL_IPS: list[str] = ["127.0.0.1", "::1"]
+SITE_ID = 1
+WSGI_APPLICATION = "config.wsgi.application"
+ROOT_URLCONF = "config.urls"
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
-
-
-# Application definition
-
-INSTALLED_APPS = [
+INSTALLED_APPS: list[str] = [
     "docker.apps.DockerConfig",
     "django.contrib.admin",
     "django.contrib.auth",
@@ -30,19 +39,18 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
 ]
 
-MIDDLEWARE = [
+MIDDLEWARE: list[str] = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.auth.middleware.LoginRequiredMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = "config.urls"
-
-TEMPLATES = [
+TEMPLATES: list[dict[str, Any]] = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         "DIRS": [],
@@ -58,24 +66,17 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "config.wsgi.application"
-
-
-# Database
-# https://docs.djangoproject.com/en/5.1/ref/settings/#databases
-
-DATABASES = {
+DATABASES: dict[str, dict[str, str | Path | dict[str, str]]] = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "NAME": DATA_DIR / "dwui-db.sqlite3",
+        "OPTIONS": {
+            "init_command": "PRAGMA journal_mode=wal; PRAGMA synchronous=1; PRAGMA mmap_size=134217728; PRAGMA journal_size_limit=67108864; PRAGMA cache_size=2000;",  # noqa: E501
+        },
     },
 }
 
-
-# Password validation
-# https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
-
-AUTH_PASSWORD_VALIDATORS = [
+AUTH_PASSWORD_VALIDATORS: list[dict[str, str]] = [
     {
         "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
@@ -90,25 +91,33 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+LOGGING: dict[str, Any] = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "console": {
+            "level": "DEBUG",
+            "class": "logging.StreamHandler",
+        },
+    },
+    "loggers": {
+        "": {
+            "handlers": ["console"],
+            "level": "DEBUG",
+            "propagate": True,
+        },
+        "asyncio": {  # Hide "Using selector: SelectSelector" spam
+            "level": "WARNING",
+        },
+    },
+}
 
-# Internationalization
-# https://docs.djangoproject.com/en/5.1/topics/i18n/
-
-LANGUAGE_CODE = "en-us"
-
-TIME_ZONE = "UTC"
-
-USE_I18N = True
-
-USE_TZ = True
-
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.1/howto/static-files/
-
-STATIC_URL = "static/"
-
-# Default primary key field type
-# https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
-
-DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+ENABLE_DEBUG_TOOLBAR: bool = DEBUG and "test" not in sys.argv
+if ENABLE_DEBUG_TOOLBAR:
+    INSTALLED_APPS += ["debug_toolbar"]
+    MIDDLEWARE += ["debug_toolbar.middleware.DebugToolbarMiddleware"]
+    DEBUG_TOOLBAR_CONFIG: dict[str, Any] = {
+        "ROOT_TAG_EXTRA_ATTRS": "hx-preserve",
+        "SQL_WARNING_THRESHOLD": 100,
+        "UPDATE_ON_FETCH": True,
+    }

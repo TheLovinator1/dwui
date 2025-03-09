@@ -1,2 +1,3 @@
-# docker-web-ui
-Think portainer, but better
+# dwui
+
+A web interface for your server's Docker containers.

@@ -1,7 +1,7 @@
 [project]
-name = "docker-web-ui"
+name = "dwui"
 version = "0.1.0"
-description = "A web UI for Docker"
+description = "A Docker Web UI"
 authors = [{name = "Joakim Hellsén", email = "tlovinator@gmail.com"}]
 license = "GPL-3.0-or-later"
 readme = "README.md"

@@ -5,6 +5,7 @@ from typing import TYPE_CHECKING
 
 from debug_toolbar.toolbar import debug_toolbar_urls
 from django.contrib import admin
+from django.contrib.auth import views as auth_views
 from django.urls import URLPattern, include, path
 
 from dwui import views
@@ -29,6 +30,10 @@ urlpatterns: list[URLResolver | URLPattern] = [
     path("new-container/", new_container, name="new_container"),
     path("image-config/", image_config, name="image_config"),
     path("accounts/", include("allauth.urls")),
+    path("accounts/password_reset/", auth_views.PasswordResetView.as_view(), name="password_reset"),
+    path("accounts/password_reset/done/", auth_views.PasswordResetDoneView.as_view(), name="password_reset_done"),
+    path("accounts/reset/<uidb64>/<token>/", auth_views.PasswordResetConfirmView.as_view(), name="password_reset_confirm"),
+    path("accounts/reset/done/", auth_views.PasswordResetCompleteView.as_view(), name="password_reset_complete"),
 ]
 
 if "test" not in sys.argv:

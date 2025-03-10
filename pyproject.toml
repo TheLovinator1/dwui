@@ -2,7 +2,7 @@
 name = "dwui"
 version = "0.1.0"
 description = "A Docker Web UI"
-authors = [{name = "Joakim Hellsén", email = "tlovinator@gmail.com"}]
+authors = [{ name = "Joakim Hellsén", email = "tlovinator@gmail.com" }]
 license = "GPL-3.0-or-later"
 readme = "README.md"
 requires-python = ">=3.13"
@@ -17,10 +17,7 @@ dependencies = [
 ]
 
 [dependency-groups]
-dev = [
-    "django-debug-toolbar>=5.0.1",
-    "pytest-django>=4.10.0",
-]
+dev = ["django-debug-toolbar>=5.0.1", "pytest-django>=4.10.0"]
 
 [tool.ruff]
 preview = true
@@ -31,13 +28,15 @@ lint.isort.required-imports = ["from __future__ import annotations"]
 lint.pycodestyle.ignore-overlong-task-comments = true
 
 lint.ignore = [
-    "ARG001", # Checks for the presence of unused arguments in function definitions.
-    "CPY001", # Checks for the absence of copyright notices within Python files.
-    "D100",   # Checks for undocumented public module definitions.
-    "D104",   # Checks for undocumented public package definitions.
-    "D106",   # Checks for undocumented public class definitions, for nested classes.
-    "ERA001", # Checks for commented-out Python code.
-    "FIX002", # Checks for "TODO" comments.
+    "ARG001",  # Checks for the presence of unused arguments in function definitions.
+    "CPY001",  # Checks for the absence of copyright notices within Python files.
+    "D100",    # Checks for undocumented public module definitions.
+    "D104",    # Checks for undocumented public package definitions.
+    "D106",    # Checks for undocumented public class definitions, for nested classes
+    "ERA001",  # Checks for commented-out Python code.
+    "FIX002",  # Checks for "TODO" comments.
+    "PLR0913", # Checks for function definitions that include too many arguments.
+    "PLR0917", # Checks for function definitions that include too many positional arguments.
 
     # Conflicting lint rules when using Ruff's formatter
     # https://docs.astral.sh/ruff/formatter/#conflicting-lint-rules

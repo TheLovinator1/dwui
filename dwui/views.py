@@ -11,12 +11,13 @@ from django.urls import reverse
 from docker import errors
 from packaging import version
 
-from dwui.container_images import ContainerImageConfig, get_categories, get_container_image_by_name, get_container_images
+from dwui.container_images import get_categories, get_container_image_by_name, get_container_images
 from dwui.docker_helper import DockerClient
 
 if TYPE_CHECKING:
     from django.http import HttpRequest
     from docker.models.containers import _RestartPolicy
+    from docker.models.networks import Network
 
 logger: logging.Logger = logging.getLogger("dwui.views")
 
@@ -181,8 +182,8 @@ def new_container(request: HttpRequest) -> HttpResponse:
     Returns:
         HttpResponse: The response object.
     """
-    # Get container images from the new module
-    container_images: list[ContainerImageConfig] = get_container_images()
+    # Get container images from the container_images module
+    container_images: list[dict] = get_container_images()
     categories: list[str] = get_categories()
 
     if request.method == "POST":
@@ -217,11 +218,18 @@ def container_details(request: HttpRequest, container_id: str) -> HttpResponse:
             logger.info("Error retrieving container details: %s", e)
             return HttpResponseRedirect(reverse("index"))
 
+    # Get container metadata if available
+    container_metadata = {}
+    container_image = container.image.tags[0] if container.image and container.image.tags else None
+    if container_image:
+        container_metadata = get_container_image_by_name(container_image)
+
     context = {
         "container": container,
         "container_stats": container_stats,
         "logs": logs,
         "hostname": container.attrs["Config"]["Hostname"],
+        "container_metadata": container_metadata,
     }
 
     return render(request, "container_details.html", context)
@@ -383,9 +391,9 @@ def image_config(request: HttpRequest) -> HttpResponse:
     display_name: str = request.GET.get("display_name", "")
 
     # Get container image configuration
-    image_config: ContainerImageConfig | None = get_container_image_by_name(image_name)
+    image_config_dict: dict | None = get_container_image_by_name(image_name)
 
-    if not image_config:
+    if not image_config_dict:
         # Handle case when image is not found
         return HttpResponse("Image configuration not found", status=404)
 
@@ -393,11 +401,16 @@ def image_config(request: HttpRequest) -> HttpResponse:
     suggested_name: str = display_name.lower().replace(" ", "-").replace("/", "-")
     suggested_name = "".join(c for c in suggested_name if c.isalnum() or c == "-")
 
-    context: dict[str, ContainerImageConfig | str] = {
-        "image_config": image_config,
+    # Get all available networks
+    with DockerClient() as client:
+        networks: list[Network] = client.networks.list()
+
+    context: dict[str, Any] = {
+        "image_config": image_config_dict,
         "image_name": image_name,
         "image_display_name": display_name,
         "suggested_name": suggested_name,
+        "networks": networks,
     }
 
     return render(request, "partials/container_config_form.html", context)

@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load app_filters %}
 
 {% block title %}Docker Web UI - New Container{% endblock title %}
 
@@ -36,13 +37,17 @@
                                 <div class="accordion-body p-0">
                                     <div class="list-group list-group-flush">
                                         {% for image in container_images %}
-                                        {% if image.category == category %}
+                                        {% if image.category == category or "," in image.category and category in image.category|split:"," %}
                                         <button type="button" class="list-group-item list-group-item-action"
                                             hx-get="{% url 'image_config' %}" hx-target="#configForm"
                                             hx-vals='{"image": "{{ image.image }}", "display_name": "{{ image.name }}"}'>
                                             <h6 class="mb-1">{{ image.name }}</h6>
                                             <p class="mb-1 small">{{ image.description }}</p>
                                             <small class="text-muted">{{ image.image }}</small>
+                                            {% if image.project_logo %}
+                                            <img src="{{ image.project_logo }}" alt="{{ image.name }}" class="float-end"
+                                                style="max-height: 40px; max-width: 80px;">
+                                            {% endif %}
                                         </button>
                                         {% endif %}
                                         {% endfor %}

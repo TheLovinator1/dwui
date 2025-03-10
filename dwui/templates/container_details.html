@@ -57,12 +57,26 @@
                         <span class="badge bg-secondary">{{ container.status }}</span>
                         {% endif %}
                     </p>
+                    {% if container_metadata.github_url %}
+                    <p><strong>GitHub:</strong> <a href="{{ container_metadata.github_url }}"
+                            target="_blank">{{ container_metadata.github_url }}</a></p>
+                    {% endif %}
+                    {% if container_metadata.project_url %}
+                    <p><strong>Project URL:</strong> <a href="{{ container_metadata.project_url }}"
+                            target="_blank">{{ container_metadata.project_url }}</a></p>
+                    {% endif %}
                 </div>
                 <div class="col-md-6">
                     <p><strong>Health:</strong> {{ container.health }}</p>
                     <p><strong>IP Address:</strong> {{ container.attrs.NetworkSettings.IPAddress }}</p>
                     <p><strong>Restart Policy:</strong> {{ container.attrs.HostConfig.RestartPolicy.Name }}</p>
                     <p><strong>Command:</strong> {{ container.attrs.Config.Cmd|join:" " }}</p>
+                    {% if container_metadata.version %}
+                    <p><strong>Version:</strong> {{ container_metadata.version }}</p>
+                    {% endif %}
+                    {% if container_metadata.category %}
+                    <p><strong>Categories:</strong> {{ container_metadata.category }}</p>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -145,7 +159,38 @@
 
     <div class="card mt-4">
         <div class="card-header">
+            <h3>Networks</h3>
+        </div>
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Network Name</th>
+                        <th>IP Address</th>
+                        <th>Network ID</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for network_name, network_config in container.attrs.NetworkSettings.Networks.items %}
+                    <tr>
+                        <td>{{ network_name }}</td>
+                        <td>{{ network_config.IPAddress }}</td>
+                        <td>{{ network_config.NetworkID|truncatechars:12 }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="3">No networks connected</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="card mt-4">
+        <div class="card-header d-flex justify-content-between align-items-center">
             <h3>Container Logs (Last 100 lines)</h3>
+            <a href="{% url 'container_logs' container.id %}" class="btn btn-sm btn-primary">View Full Logs</a>
         </div>
         <div class="card-body">
             <div class="container-logs p-3 bg-dark text-light">

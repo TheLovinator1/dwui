@@ -7,57 +7,67 @@
     <div class="row mb-4">
         <div class="col-12">
             <h1>Create New Container</h1>
-            <p class="lead">Select from popular Linuxserver.io images to create a new container</p>
+            <p class="lead">Select from popular container images to create a new container</p>
         </div>
     </div>
 
     <div class="row">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">
-                    New Container Details
-                </div>
-                <div class="card-body">
-                    <form method="post">
-                        {% csrf_token %}
-                        <div class="mb-3">
-                            <label for="name" class="form-label">Container Name</label>
-                            <input type="text" class="form-control" id="name" name="name" required>
-                            <div class="form-text">Choose a unique name for your container</div>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="image" class="form-label">Select Image</label>
-                            <select class="form-select" id="image" name="image" required>
-                                <option value="" selected disabled>-- Select an image --</option>
-                                {% for image in linuxserver_images %}
-                                <option value="{{ image.image }}">{{ image.name }} - {{ image.description }}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-
-                        <button type="submit" class="btn btn-success">Create Container</button>
-                        <a href="{% url 'index' %}" class="btn btn-secondary">Cancel</a>
-                    </form>
-                </div>
-            </div>
-        </div>
-
         <div class="col-md-4">
-            <div class="card">
+            <div class="card mb-4">
                 <div class="card-header">
                     Available Images
                 </div>
                 <div class="card-body">
-                    <ul class="list-group">
-                        {% for image in linuxserver_images %}
-                        <li class="list-group-item">
-                            <h6>{{ image.name }}</h6>
-                            <p class="mb-1">{{ image.description }}</p>
-                            <small class="text-muted">{{ image.image }}</small>
-                        </li>
+                    <div class="accordion" id="imageAccordion">
+                        {% for category in categories %}
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="heading{{ forloop.counter }}">
+                                <button class="accordion-button {% if forloop.counter > 1 %}collapsed{% endif %}"
+                                    type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapse{{ forloop.counter }}"
+                                    aria-expanded="{% if forloop.counter == 1 %}true{% else %}false{% endif %}"
+                                    aria-controls="collapse{{ forloop.counter }}">
+                                    {{ category }}
+                                </button>
+                            </h2>
+                            <div id="collapse{{ forloop.counter }}"
+                                class="accordion-collapse collapse {% if forloop.counter == 1 %}show{% endif %}"
+                                aria-labelledby="heading{{ forloop.counter }}" data-bs-parent="#imageAccordion">
+                                <div class="accordion-body p-0">
+                                    <div class="list-group list-group-flush">
+                                        {% for image in container_images %}
+                                        {% if image.category == category %}
+                                        <button type="button" class="list-group-item list-group-item-action"
+                                            hx-get="{% url 'image_config' %}" hx-target="#configForm"
+                                            hx-vals='{"image": "{{ image.image }}", "display_name": "{{ image.name }}"}'>
+                                            <h6 class="mb-1">{{ image.name }}</h6>
+                                            <p class="mb-1 small">{{ image.description }}</p>
+                                            <small class="text-muted">{{ image.image }}</small>
+                                        </button>
+                                        {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         {% endfor %}
-                    </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    New Container Configuration
+                </div>
+                <div class="card-body">
+                    <div id="configForm">
+                        <!-- This content will be replaced by the htmx request -->
+                        <div class="text-center text-muted my-5">
+                            <p>Select an image from the list to configure your container</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

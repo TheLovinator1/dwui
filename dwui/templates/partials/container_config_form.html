@@ -1,0 +1,128 @@
+<form method="post" id="containerForm">
+    {% csrf_token %}
+    <div class="mb-3">
+        <label for="name" class="form-label">Container Name</label>
+        <input type="text" class="form-control" id="name" name="name" value="{{ suggested_name }}" required>
+        <div class="form-text">Choose a unique name for your container</div>
+    </div>
+
+    <div class="mb-3">
+        <label for="image" class="form-label">Docker Image</label>
+        <input type="text" class="form-control" id="image" name="image" value="{{ image_name }}" readonly required>
+        <div class="form-text">{{ image_display_name }}</div>
+    </div>
+
+    <!-- Volumes Configuration -->
+    <div class="mb-4" id="volumesSection">
+        <h5>Volumes</h5>
+        <div class="form-text mb-2">Configure volume mappings from your host to the container</div>
+
+        {% if not image_config.volumes %}
+        <p class="text-muted">No volumes required for this container.</p>
+        {% else %}
+        {% for volume in image_config.volumes %}
+        <div class="card mb-3">
+            <div class="card-body">
+                <div class="mb-2">
+                    <label for="volume_{{ forloop.counter0 }}_source" class="form-label">
+                        Host Path {% if volume.required %}<span class="text-danger">*</span>{% endif %}
+                    </label>
+                    <input type="text" class="form-control" id="volume_{{ forloop.counter0 }}_source"
+                        name="volume_{{ forloop.counter0 }}_source" value="{{ volume.source }}"
+                        {% if volume.required %}required{% endif %}>
+                    <div class="form-text">{{ volume.description }} (maps to {{ volume.target }})</div>
+                    <input type="hidden" name="volume_{{ forloop.counter0 }}_target" value="{{ volume.target }}">
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% endif %}
+    </div>
+
+    <!-- Port Configuration -->
+    <div class="mb-4" id="portsSection">
+        <h5>Network Ports</h5>
+        <div class="form-text mb-2">Configure port mappings from your host to the container</div>
+
+        {% if not image_config.ports %}
+        <p class="text-muted">No ports exposed for this container.</p>
+        {% else %}
+        {% for port in image_config.ports %}
+        <div class="card mb-3">
+            <div class="card-body">
+                <div class="mb-2">
+                    <label for="port_{{ forloop.counter0 }}_host" class="form-label">Host Port</label>
+                    <input type="text" class="form-control" id="port_{{ forloop.counter0 }}_host"
+                        name="port_{{ forloop.counter0 }}_host" value="{{ port.host }}">
+                    <div class="form-text">{{ port.description }} (Container port: {{ port.container }})</div>
+                    <input type="hidden" name="port_{{ forloop.counter0 }}_container" value="{{ port.container }}">
+                    <input type="hidden" name="port_{{ forloop.counter0 }}_protocol" value="{{ port.protocol }}">
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% endif %}
+    </div>
+
+    <!-- Environment Variables -->
+    <div class="mb-4" id="envSection">
+        <h5>Environment Variables</h5>
+        <div class="form-text mb-2">Configure environment variables for the container</div>
+
+        {% if not image_config.env_vars %}
+        <p class="text-muted">No environment variables required for this container.</p>
+        {% else %}
+        {% for env in image_config.env_vars %}
+        <div class="card mb-3">
+            <div class="card-body">
+                <div class="mb-2">
+                    <label for="env_{{ forloop.counter0 }}_{{ env.name }}" class="form-label">
+                        {{ env.name }} {% if env.required %}<span class="text-danger">*</span>{% endif %}
+                    </label>
+
+                    {% if env.options %}
+                    <select class="form-select" id="env_{{ forloop.counter0 }}_{{ env.name }}" name="env_{{ env.name }}"
+                        {% if env.required %}required{% endif %}>
+                        {% for option in env.options %}
+                        <option value="{{ option }}" {% if env.default == option %}selected{% endif %}>{{ option }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                    {% else %}
+                    <input type="text" class="form-control" id="env_{{ forloop.counter0 }}_{{ env.name }}"
+                        name="env_{{ env.name }}" value="{{ env.default|default:'' }}"
+                        {% if env.required %}required{% endif %}>
+                    {% endif %}
+
+                    <div class="form-text">{{ env.description }}</div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% endif %}
+    </div>
+
+    <!-- Restart Policy -->
+    <div class="mb-4" id="restartSection">
+        <h5>Restart Policy</h5>
+        <div class="form-text mb-2">Configure container restart behavior</div>
+        <div class="mb-3">
+            <label for="restart_policy" class="form-label">Policy</label>
+            <select class="form-select" id="restart_policy" name="restart_policy">
+                <option value="on-failure">On Failure</option>
+                <option value="always">Always</option>
+                <option value="unless-stopped">Unless Stopped</option>
+                <option value="no">No (don't restart)</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="max_retry_count" class="form-label">Max Retry Count</label>
+            <input type="number" class="form-control" id="max_retry_count" name="max_retry_count" value="5" min="0">
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <button type="submit" class="btn btn-success">Create Container</button>
+        <a href="{% url 'index' %}" class="btn btn-secondary">Cancel</a>
+    </div>
+</form>

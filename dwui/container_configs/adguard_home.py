@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from dwui.container_config import ContainerImageConfig, EnvVarConfig, PortConfig, VolumeConfig
+from dwui.container_configs.loader import get_host_timezone
 
 ADGUARD_HOME_SYNC: ContainerImageConfig = ContainerImageConfig.create_complete(
     name="AdGuard Home Sync",
@@ -20,7 +21,7 @@ ADGUARD_HOME_SYNC: ContainerImageConfig = ContainerImageConfig.create_complete(
     ],
     ports=[PortConfig(host="8080", container="8080", protocol="tcp", description="Port for AdGuardHome Sync's web API.")],
     env_vars=[
-        EnvVarConfig(name="TZ", default="Etc/UTC", description="Timezone", required=True),
+        EnvVarConfig(name="TZ", default=get_host_timezone(), description="Timezone", required=True),
         EnvVarConfig(
             name="CONFIGFILE",
             default="/config/adguardhome-sync.yaml",

@@ -203,11 +203,11 @@ class ContainerImageConfig:
             volumes (list[VolumeConfig], optional): Volumes for the container. Defaults to None.
             ports (list[PortConfig], optional): Ports for the container. Defaults to None.
             env_vars (list[EnvVarConfig], optional): Environment variables for the container. Defaults to None.
-            use_common_env_vars (bool, optional): Whether to include common environment variables. Defaults to True.
+            use_common_env_vars (bool, optional): Whether to include common environment variables. Currently PUID and PGID. Defaults to True.
 
         Returns:
             ContainerImageConfig: The container image configuration
-        """
+        """  # noqa: E501
         if tags is None:
             tags = []
         if architectures is None:
@@ -220,7 +220,7 @@ class ContainerImageConfig:
             env_vars = []
 
         # Apply common env vars if requested
-        final_env_vars = env_vars
+        final_env_vars: list[EnvVarConfig] = env_vars
         if use_common_env_vars:
             final_env_vars = cls.COMMON_ENV_VARS + env_vars
 

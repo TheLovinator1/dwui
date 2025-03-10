@@ -3,6 +3,7 @@
     "cSpell.words": [
         "appauthor",
         "appname",
+        "CONFIGFILE",
         "docstrings",
         "dotenv",
         "dwui",
@@ -11,7 +12,10 @@
         "htmx",
         "httpx",
         "isort",
+        "Jellyfin",
         "Joakim",
+        "Nextcloud",
+        "paramiko",
         "PGID",
         "pkgver",
         "platformdirs",
@@ -19,6 +23,7 @@
         "pycodestyle",
         "pydocstyle",
         "pytest",
+        "pyupgrade",
         "TheLovinator"
     ]
 }

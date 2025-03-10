@@ -1,11 +1,8 @@
-"""AdGuard Home Sync configuration for Docker Web UI."""
-
 from __future__ import annotations
 
 from dwui.container_config import ContainerImageConfig, EnvVarConfig, PortConfig, VolumeConfig
 
-# Create the AdGuard Home Sync configuration
-ADGUARD_HOME_SYNC = ContainerImageConfig.create_complete(
+ADGUARD_HOME_SYNC: ContainerImageConfig = ContainerImageConfig.create_complete(
     name="AdGuard Home Sync",
     image="linuxserver/adguardhome-sync",
     description="adguardhome-sync is a tool to synchronize AdGuardHome config to replica instances.",

@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 
-from dwui.adguard_home_config import ADGUARD_HOME_SYNC
 from dwui.container_config import ContainerImageConfig, EnvVarConfig, PortConfig, VolumeConfig
+from dwui.container_configs.loader import get_all_container_configs
 
 # Container images configuration
 CONTAINER_IMAGES: list[ContainerImageConfig] = [
@@ -82,8 +82,10 @@ CONTAINER_IMAGES: list[ContainerImageConfig] = [
             ),
         ],
     ),
-    ADGUARD_HOME_SYNC,  # Add AdGuard Home Sync to the container images list
 ]
+
+# Add all imported container configurations
+CONTAINER_IMAGES.extend(get_all_container_configs())
 
 
 def get_container_images() -> list[dict]:

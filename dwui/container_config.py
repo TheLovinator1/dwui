@@ -97,15 +97,10 @@ class ContainerImageConfig:
     github_url: str = ""
     project_url: str = ""
     project_logo: str = ""
-    version: str = ""
-    version_timestamp: str = ""
     stable: bool = True
     deprecated: bool = False
-    stars: int = 0
-    monthly_pulls: int = 0
     tags: list[dict[str, str]] = field(default_factory=list)
     architectures: list[dict[str, str]] = field(default_factory=list)
-    changelog: list[dict[str, str]] = field(default_factory=list)
 
     # Container configuration
     volumes: list[VolumeConfig] = field(default_factory=list)
@@ -180,13 +175,8 @@ class ContainerImageConfig:
         github_url: str = "",
         project_url: str = "",
         project_logo: str = "",
-        version: str = "",
-        version_timestamp: str = "",
-        stars: int = 0,
-        monthly_pulls: int = 0,
         tags: list[dict[str, str]] | None = None,
         architectures: list[dict[str, str]] | None = None,
-        changelog: list[dict[str, str]] | None = None,
         volumes: list[VolumeConfig] | None = None,
         ports: list[PortConfig] | None = None,
         env_vars: list[EnvVarConfig] | None = None,
@@ -206,15 +196,10 @@ class ContainerImageConfig:
             github_url (str, optional): The GitHub URL for the project. Defaults to "".
             project_url (str, optional): The project URL. Defaults to "".
             project_logo (str, optional): The project logo URL. Defaults to "".
-            version (str, optional): The version of the container image. Defaults to "".
-            version_timestamp (str, optional): The timestamp of the version. Defaults to "".
             stable (bool, optional): Whether the image is stable. Defaults to True.
             deprecated (bool, optional): Whether the image is deprecated. Defaults to False.
-            stars (int, optional): The number of stars for the project. Defaults to 0.
-            monthly_pulls (int, optional): The number of monthly pulls. Defaults to 0.
             tags (list[dict[str, str]], optional): Tags for the image. Defaults to None.
             architectures (list[dict[str, str]], optional): Supported architectures. Defaults to None.
-            changelog (list[dict[str, str]], optional): Changelog for the image. Defaults to None.
             volumes (list[VolumeConfig], optional): Volumes for the container. Defaults to None.
             ports (list[PortConfig], optional): Ports for the container. Defaults to None.
             env_vars (list[EnvVarConfig], optional): Environment variables for the container. Defaults to None.
@@ -227,8 +212,6 @@ class ContainerImageConfig:
             tags = []
         if architectures is None:
             architectures = []
-        if changelog is None:
-            changelog = []
         if volumes is None:
             volumes = []
         if ports is None:
@@ -250,15 +233,10 @@ class ContainerImageConfig:
             github_url=github_url,
             project_url=project_url,
             project_logo=project_logo,
-            version=version,
-            version_timestamp=version_timestamp,
             stable=stable,
             deprecated=deprecated,
-            stars=stars,
-            monthly_pulls=monthly_pulls,
             tags=tags,
             architectures=architectures,
-            changelog=changelog,
             volumes=volumes,
             ports=ports,
             env_vars=final_env_vars,
@@ -279,15 +257,10 @@ class ContainerImageConfig:
             "github_url": self.github_url,
             "project_url": self.project_url,
             "project_logo": self.project_logo,
-            "version": self.version,
-            "version_timestamp": self.version_timestamp,
             "stable": self.stable,
             "deprecated": self.deprecated,
-            "stars": self.stars,
-            "monthly_pulls": self.monthly_pulls,
             "tags": self.tags,
             "architectures": self.architectures,
-            "changelog": self.changelog,
             "volumes": [vars(vol) for vol in self.volumes],
             "ports": [vars(port) for port in self.ports],
             "env_vars": [vars(env) for env in self.env_vars],

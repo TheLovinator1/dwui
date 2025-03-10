@@ -72,7 +72,46 @@
         {% if not image_config.env_vars %}
         <p class="text-muted">No environment variables required for this container.</p>
         {% else %}
+
+        <!-- Group PUID and PGID side by side -->
         {% for env in image_config.env_vars %}
+        {% if env.name == "PUID" %}
+        {% for pgid_env in image_config.env_vars %}
+        {% if pgid_env.name == "PGID" %}
+        <div class="card mb-3">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-2">
+                            <label for="env_PUID" class="form-label">
+                                PUID {% if env.required %}<span class="text-danger">*</span>{% endif %}
+                            </label>
+                            <input type="text" class="form-control" id="env_PUID" name="env_PUID"
+                                value="{{ env.default|default:'' }}" {% if env.required %}required{% endif %}>
+                            <div class="form-text">{{ env.description }}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-2">
+                            <label for="env_PGID" class="form-label">
+                                PGID {% if pgid_env.required %}<span class="text-danger">*</span>{% endif %}
+                            </label>
+                            <input type="text" class="form-control" id="env_PGID" name="env_PGID"
+                                value="{{ pgid_env.default|default:'' }}" {% if pgid_env.required %}required{% endif %}>
+                            <div class="form-text">{{ pgid_env.description }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+        {% endif %}
+        {% endfor %}
+
+        <!-- Regular environment variables (except PUID/PGID) -->
+        {% for env in image_config.env_vars %}
+        {% if env.name != 'PUID' and env.name != 'PGID' %}
         <div class="card mb-3">
             <div class="card-body">
                 <div class="mb-2">
@@ -98,6 +137,7 @@
                 </div>
             </div>
         </div>
+        {% endif %}
         {% endfor %}
         {% endif %}
     </div>

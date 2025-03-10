@@ -41,7 +41,22 @@ INSTALLED_APPS: list[str] = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django.contrib.sites",
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
+    "django_bootstrap5",
 ]
+
+AUTHENTICATION_BACKENDS: list[str] = [
+    "django.contrib.auth.backends.ModelBackend",
+    "allauth.account.auth_backends.AuthenticationBackend",
+]
+
+ACCOUNT_EMAIL_VERIFICATION = "optional"
+ACCOUNT_EMAIL_NOTIFICATIONS = True
+ACCOUNT_EMAIL_REQUIRED = True
+LOGIN_REDIRECT_URL = "/"
 
 MIDDLEWARE: list[str] = [
     "django.middleware.security.SecurityMiddleware",
@@ -52,6 +67,7 @@ MIDDLEWARE: list[str] = [
     "django.contrib.auth.middleware.LoginRequiredMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "allauth.account.middleware.AccountMiddleware",
 ]
 
 TEMPLATES: list[dict[str, Any]] = [

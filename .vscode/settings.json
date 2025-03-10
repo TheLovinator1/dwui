@@ -1,6 +1,7 @@
 {
     "python.analysis.typeCheckingMode": "standard",
     "cSpell.words": [
+        "allauth",
         "appauthor",
         "appname",
         "CONFIGFILE",
@@ -24,6 +25,7 @@
         "pydocstyle",
         "pytest",
         "pyupgrade",
+        "socialaccount",
         "TheLovinator"
     ]
 }

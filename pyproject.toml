@@ -7,6 +7,8 @@ license = "GPL-3.0-or-later"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
+    "django-allauth>=65.4.1",
+    "django-bootstrap5>=25.1",
     "django>=5.1.7",
     "docker>=7.1.0",
     "packaging>=24.2",

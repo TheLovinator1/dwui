@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from dwui.container_config import ContainerImageConfig, EnvVarConfig, PortConfig, VolumeConfig
-from dwui.container_configs.loader import get_host_timezone
+from dwui.container_configs.host_timezone import get_host_timezone
 
 ADGUARD_HOME_SYNC: ContainerImageConfig = ContainerImageConfig.create_complete(
     name="AdGuard Home Sync",

@@ -206,9 +206,11 @@ source = { virtual = "." }
 dependencies = [
     { name = "django" },
     { name = "docker" },
+    { name = "packaging" },
     { name = "paramiko" },
     { name = "platformdirs" },
     { name = "python-dotenv" },
+    { name = "requests" },
 ]
 
 [package.dev-dependencies]
@@ -221,9 +223,11 @@ dev = [
 requires-dist = [
     { name = "django", specifier = ">=5.1.7" },
     { name = "docker", specifier = ">=7.1.0" },
+    { name = "packaging", specifier = ">=24.2" },
     { name = "paramiko", specifier = ">=3.5.1" },
     { name = "platformdirs", specifier = ">=4.3.6" },
     { name = "python-dotenv", specifier = ">=1.0.1" },
+    { name = "requests", specifier = ">=2.32.3" },
 ]
 
 [package.metadata.requires-dev]

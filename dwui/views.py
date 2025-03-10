@@ -1,12 +1,15 @@
 from __future__ import annotations
 
 import logging
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
+import requests
 from django.contrib.auth.decorators import login_not_required  # pyright: ignore[reportAttributeAccessIssue]
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
+from docker import errors
+from packaging import version
 
 from dwui.docker_helper import DockerClient
 
@@ -14,6 +17,26 @@ if TYPE_CHECKING:
     from django.http import HttpRequest, HttpResponse
 
 logger: logging.Logger = logging.getLogger("dwui.views")
+
+
+def get_latest_docker_version() -> str | None:
+    """Get the latest Docker version from Arch Linux package repository.
+
+    Returns:
+        str | None: The latest version string or None if unable to fetch.
+    """
+    try:
+        response: requests.Response = requests.get("https://archlinux.org/packages/extra/x86_64/docker/json/", timeout=5)
+        response.raise_for_status()
+        data: dict[str, Any] = response.json()
+
+        # Extract the version from the JSON data
+        latest_version: str = data.get("pkgver", "")
+        if latest_version:
+            return latest_version
+    except Exception:
+        logger.exception("Failed to fetch latest Docker version")
+    return None
 
 
 @login_not_required
@@ -27,12 +50,37 @@ def index(request: HttpRequest) -> HttpResponse:
         HttpResponse: The response object.
     """
     with DockerClient() as client:
-        version: dict = client.version()
-        containers = client.containers.list(all=True)
+        current_version_info: dict = client.version()
+        containers: list = client.containers.list(all=True)
 
-    context = {
-        "version": version,
+    current_version: str = current_version_info.get("Version", "")
+    latest_version: str | None = get_latest_docker_version()
+    is_outdated = False
+    version_message: str | None = None
+    changelog_url: str = "https://docs.docker.com/engine/release-notes/"
+
+    if latest_version and current_version:
+        try:
+            # Remove any leading 'v' prefix if present
+            latest_version = latest_version.removeprefix("v")
+            current_version = current_version.removeprefix("v")
+
+            logger.info("Current Docker version: %s, Latest version: %s", current_version, latest_version)
+
+            # Compare versions
+            is_outdated: bool = version.parse(current_version) < version.parse(latest_version)
+            if is_outdated:
+                version_message = f"Your Docker version ({current_version}) is outdated. Latest version is {latest_version}."
+        except Exception:
+            logger.exception("Error comparing Docker versions")
+
+    context: dict[str, Any] = {
+        "changelog_url": changelog_url,
         "containers": containers,
+        "is_outdated": is_outdated,
+        "latest_version": latest_version,
+        "version_message": version_message,
+        "version": current_version_info,
     }
 
     return render(request, "index.html", context)
@@ -66,12 +114,15 @@ def new_container(request: HttpRequest) -> HttpResponse:
                 # Pull the image if it doesn't exist
                 try:
                     client.images.get(image)
-                except Exception:  # noqa: BLE001
-                    logger.info("Got the following exception: %s", Exception)
+                except errors.ImageNotFound:
+                    logger.info("Pulling image %s", image)
                     client.images.pull(image)
+                except errors.APIError:
+                    logger.exception("Error pulling image %s", image)
+                    return HttpResponseRedirect(reverse("index"))
 
                 # Create and start the container
-                client.containers.run(
+                container = client.containers.run(
                     image=image,
                     name=name,
                     detach=True,  # Run container in background
@@ -81,10 +132,10 @@ def new_container(request: HttpRequest) -> HttpResponse:
                     },
                 )
 
-            # Redirect to home page
-            return HttpResponseRedirect(reverse("index"))
+                logger.info("Container %s created successfully with ID %s", name, container.id)
+                return HttpResponseRedirect(reverse("container_details", args=[container.id]))
 
-    context = {
+    context: dict[str, list[dict[str, str]]] = {
         "linuxserver_images": linuxserver_images,
     }
 

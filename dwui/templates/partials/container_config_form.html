@@ -16,15 +16,9 @@
         {% endif %}
     </div>
 
-    <div class="mb-3">
-        <label for="image" class="form-label">Docker Image</label>
-        <input type="text" class="form-control" id="image" name="image" value="{{ image_name }}" readonly required>
-        <div class="form-text">{{ image_display_name }}</div>
-    </div>
     {% if image_config.github_url or image_config.project_url %}
-    <div class="mb-3">
-        <h5>Container Information</h5>
-        <div class="d-flex justify-content-between">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <div>
             {% if image_config.github_url %}
             <a href="{{ image_config.github_url }}" target="_blank" class="btn btn-outline-primary btn-sm">GitHub</a>
             {% endif %}
@@ -33,28 +27,18 @@
                 class="btn btn-outline-secondary btn-sm">Project</a>
             {% endif %}
         </div>
-        {% if image_config.version or image_config.category %}
-        <div class="mt-2">
-            {% if image_config.version %}
-            <p><strong>Version:</strong> {{ image_config.version }}</p>
-            {% endif %}
-            {% if image_config.category %}
-            <p><strong>Categories:</strong>
-                {% if "," in image_config.category %}
-                {% with categories=image_config.category|split:"," %}
-                {% for category in categories %}
-                <span class="badge bg-secondary">{{ category }}</span>
-                {% endfor %}
-                {% endwith %}
-                {% else %}
-                <span class="badge bg-secondary">{{ image_config.category }}</span>
-                {% endif %}
-            </p>
-            {% endif %}
-        </div>
-        {% endif %}
     </div>
     {% endif %}
+
+    <div>
+        <p>{{ image_config.description }}</p>
+    </div>
+
+    <div class="mb-3">
+        <label for="image" class="form-label">Docker Image</label>
+        <input type="text" class="form-control" id="image" name="image" value="{{ image_name }}" readonly required>
+        <div class="form-text">{{ image_display_name }}</div>
+    </div>
 
     <!-- Volumes Configuration -->
     <div class="mb-4" id="volumesSection">
@@ -136,54 +120,54 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="mb-2">
-                            <label for="env_PGID" class="form-label">
-                                PGID {% if pgid_env.required %}<span class="text-danger">*</span>{% endif %}
-                            </label>
-                            <input type="text" class="form-control" id="env_PGID" name="env_PGID"
-                                value="{{ pgid_env.default|default:'' }}" {% if pgid_env.required %}required{% endif %}>
-                            <div class="form-text">{{ pgid_env.description }}</div>
-                        </div>
+                        <div class="mb-2"></div>
+                        <label for="env_PGID" class="form-label">
+                            PGID {% if pgid_env.required %}<span class="text-danger">*</span>{% endif %}
+                        </label>
+                        <input type="text" class="form-control" id="env_PGID" name="env_PGID"
+                            value="{{ pgid_env.default|default:'' }}" {% if pgid_env.required %}required{% endif %}>
+                        <div class="form-text">{{ pgid_env.description }}</div>
                     </div>
                 </div>
             </div>
         </div>
-        {% endif %}
-        {% endfor %}
-        {% endif %}
-        {% endfor %}
+    </div>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+    {% endfor %}
 
-        <!-- Regular environment variables (except PUID/PGID) -->
-        {% for env in image_config.env_vars %}
-        {% if env.name != 'PUID' and env.name != 'PGID' %}
-        <div class="card mb-3">
-            <div class="card-body">
-                <div class="mb-2">
-                    <label for="env_{{ forloop.counter0 }}_{{ env.name }}" class="form-label">
-                        {{ env.name }} {% if env.required %}<span class="text-danger">*</span>{% endif %}
-                    </label>
+    <!-- Regular environment variables (except PUID/PGID) -->
+    {% for env in image_config.env_vars %}
+    {% if env.name != 'PUID' and env.name != 'PGID' %}
+    <div class="card mb-3">
+        <div class="card-body">
+            <div class="mb-2">
+                <label for="env_{{ forloop.counter0 }}_{{ env.name }}" class="form-label">
+                    {{ env.name }} {% if env.required %}<span class="text-danger">*</span>{% endif %}
+                </label>
 
-                    {% if env.options %}
-                    <select class="form-select" id="env_{{ forloop.counter0 }}_{{ env.name }}" name="env_{{ env.name }}"
-                        {% if env.required %}required{% endif %}>
-                        {% for option in env.options %}
-                        <option value="{{ option }}" {% if env.default == option %}selected{% endif %}>{{ option }}
-                        </option>
-                        {% endfor %}
-                    </select>
-                    {% else %}
-                    <input type="text" class="form-control" id="env_{{ forloop.counter0 }}_{{ env.name }}"
-                        name="env_{{ env.name }}" value="{{ env.default|default:'' }}"
-                        {% if env.required %}required{% endif %}>
-                    {% endif %}
+                {% if env.options %}
+                <select class="form-select" id="env_{{ forloop.counter0 }}_{{ env.name }}" name="env_{{ env.name }}"
+                    {% if env.required %}required{% endif %}>
+                    {% for option in env.options %}
+                    <option value="{{ option }}" {% if env.default == option %}selected{% endif %}>{{ option }}
+                    </option>
+                    {% endfor %}
+                </select>
+                {% else %}
+                <input type="text" class="form-control" id="env_{{ forloop.counter0 }}_{{ env.name }}"
+                    name="env_{{ env.name }}" value="{{ env.default|default:'' }}"
+                    {% if env.required %}required{% endif %}>
+                {% endif %}
 
-                    <div class="form-text">{{ env.description }}</div>
-                </div>
+                <div class="form-text">{{ env.description }}</div>
             </div>
         </div>
-        {% endif %}
-        {% endfor %}
-        {% endif %}
+    </div>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
     </div>
 
     <!-- Networks Configuration -->

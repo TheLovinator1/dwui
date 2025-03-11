@@ -2,10 +2,18 @@
 
 <form method="post" id="containerForm">
     {% csrf_token %}
-    <div class="mb-3">
-        <label for="name" class="form-label">Container Name</label>
-        <input type="text" class="form-control" id="name" name="name" value="{{ suggested_name }}" required>
-        <div class="form-text">Choose a unique name for your container</div>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <div>
+            <label for="name" class="form-label">Container Name</label>
+            <input type="text" class="form-control" id="name" name="name" value="{{ suggested_name }}" required>
+            <div class="form-text">Choose a unique name for your container</div>
+        </div>
+        {% if image_config.project_logo %}
+        <div class="ms-3">
+            <img src="{{ image_config.project_logo }}" alt="{{ image_display_name }} Logo"
+                style="max-height: 100px; max-width: 200px;">
+        </div>
+        {% endif %}
     </div>
 
     <div class="mb-3">
@@ -13,48 +21,38 @@
         <input type="text" class="form-control" id="image" name="image" value="{{ image_name }}" readonly required>
         <div class="form-text">{{ image_display_name }}</div>
     </div>
-
     {% if image_config.github_url or image_config.project_url %}
-    <div class="mb-3 card">
-        <div class="card-body">
-            <h5>Container Information</h5>
-            <div class="row">
-                <div class="col-md-6">
-                    {% if image_config.github_url %}
-                    <p><strong>GitHub:</strong> <a href="{{ image_config.github_url }}"
-                            target="_blank">{{ image_config.github_url }}</a></p>
-                    {% endif %}
-                    {% if image_config.project_url %}
-                    <p><strong>Project:</strong> <a href="{{ image_config.project_url }}"
-                            target="_blank">{{ image_config.project_url }}</a></p>
-                    {% endif %}
-                </div>
-                <div class="col-md-6">
-                    {% if image_config.version %}
-                    <p><strong>Version:</strong> {{ image_config.version }}</p>
-                    {% endif %}
-                    {% if image_config.category %}
-                    <p><strong>Categories:</strong>
-                        {% if "," in image_config.category %}
-                        {% with categories=image_config.category|split:"," %}
-                        {% for category in categories %}
-                        <span class="badge bg-secondary">{{ category }}</span>
-                        {% endfor %}
-                        {% endwith %}
-                        {% else %}
-                        <span class="badge bg-secondary">{{ image_config.category }}</span>
-                        {% endif %}
-                    </p>
-                    {% endif %}
-                </div>
-            </div>
-            {% if image_config.project_logo %}
-            <div class="text-center mt-2">
-                <img src="{{ image_config.project_logo }}" alt="{{ image_display_name }} Logo"
-                    style="max-height: 100px; max-width: 200px;">
-            </div>
+    <div class="mb-3">
+        <h5>Container Information</h5>
+        <div class="d-flex justify-content-between">
+            {% if image_config.github_url %}
+            <a href="{{ image_config.github_url }}" target="_blank" class="btn btn-outline-primary btn-sm">GitHub</a>
+            {% endif %}
+            {% if image_config.project_url %}
+            <a href="{{ image_config.project_url }}" target="_blank"
+                class="btn btn-outline-secondary btn-sm">Project</a>
             {% endif %}
         </div>
+        {% if image_config.version or image_config.category %}
+        <div class="mt-2">
+            {% if image_config.version %}
+            <p><strong>Version:</strong> {{ image_config.version }}</p>
+            {% endif %}
+            {% if image_config.category %}
+            <p><strong>Categories:</strong>
+                {% if "," in image_config.category %}
+                {% with categories=image_config.category|split:"," %}
+                {% for category in categories %}
+                <span class="badge bg-secondary">{{ category }}</span>
+                {% endfor %}
+                {% endwith %}
+                {% else %}
+                <span class="badge bg-secondary">{{ image_config.category }}</span>
+                {% endif %}
+            </p>
+            {% endif %}
+        </div>
+        {% endif %}
     </div>
     {% endif %}
 

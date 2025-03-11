@@ -15,44 +15,16 @@ class VolumeConfig:
     required: bool = True
     source: str = ""
 
-    def __post_init__(self) -> None:
-        """Validate the volume configuration.
-
-        Raises:
-            ValueError: If the target or description is missing.
-        """
-        if not self.target:
-            msg = "Volume target path is required"
-            raise ValueError(msg)
-        if not self.description:
-            msg = "Volume description is required"
-            raise ValueError(msg)
-
 
 @dataclass
 class PortConfig:
     """Class for port configuration."""
 
-    container: str
-    description: str
+    internal: str
+    desc: str
+    optional: bool = False
+    external: str = ""
     protocol: Literal["tcp", "udp"] = "tcp"
-    host: str = ""
-
-    def __post_init__(self) -> None:
-        """Validate the port configuration.
-
-        Raises:
-            ValueError: If the container port, description, or protocol is invalid.
-        """
-        if not self.container:
-            msg = "Container port is required"
-            raise ValueError(msg)
-        if not self.description:
-            msg = "Port description is required"
-            raise ValueError(msg)
-        if self.protocol not in {"tcp", "udp"}:
-            msg = f"Invalid protocol: {self.protocol}, must be 'tcp' or 'udp'"
-            raise ValueError(msg)
 
 
 @dataclass
@@ -60,27 +32,19 @@ class EnvVarConfig:
     """Class for environment variable configuration."""
 
     name: str
+    value: str
     description: str
-    required: bool = False
-    default: str | None = None
-    options: list[str] | None = None
+    optional: bool
 
-    def __post_init__(self) -> None:
-        """Validate the environment variable configuration.
 
-        Raises:
-            ValueError: If the environment variable name or description is missing,
-                        or if the default value is not in the options list.
-        """
-        if not self.name:
-            msg = "Environment variable name is required"
-            raise ValueError(msg)
-        if not self.description:
-            msg = "Environment variable description is required"
-            raise ValueError(msg)
-        if self.options and self.default and self.default not in self.options:
-            msg = f"Default value '{self.default}' not in options: {self.options}"
-            raise ValueError(msg)
+@dataclass
+class DeviceConfig:
+    """Class for device configuration."""
+
+    path: str
+    host_path: str
+    desc: str
+    optional: bool = True
 
 
 @dataclass
@@ -93,12 +57,15 @@ class ContainerImageConfig:
     category: str
 
     # Additional fields
-    initial_date: str = ""
-    github_url: str = ""
-    project_url: str = ""
-    project_logo: str = ""
-    stable: bool = True
+    application_setup: str = ""
     deprecated: bool = False
+    github_url: str = ""
+    initial_date: str = ""
+    nonroot_supported: bool = False
+    project_logo: str = ""
+    project_url: str = ""
+    readonly_supported: bool = False
+    stable: bool = True
     tags: list[dict[str, str]] = field(default_factory=list)
     architectures: list[dict[str, str]] = field(default_factory=list)
 
@@ -106,63 +73,12 @@ class ContainerImageConfig:
     volumes: list[VolumeConfig] = field(default_factory=list)
     ports: list[PortConfig] = field(default_factory=list)
     env_vars: list[EnvVarConfig] = field(default_factory=list)
+    devices: list[DeviceConfig] = field(default_factory=list)
 
     COMMON_ENV_VARS: ClassVar[list[EnvVarConfig]] = [
-        EnvVarConfig(name="PUID", default="1000", description="User ID", required=True),
-        EnvVarConfig(name="PGID", default="1000", description="Group ID", required=True),
+        EnvVarConfig(name="PUID", value="1000", description="User ID", optional=True),
+        EnvVarConfig(name="PGID", value="1000", description="Group ID", optional=True),
     ]
-
-    def __post_init__(self) -> None:
-        """Validate the container image configuration.
-
-        Raises:
-            ValueError: If any required field is missing.
-        """
-        if not self.name:
-            msg = "Container image name is required"
-            raise ValueError(msg)
-        if not self.image:
-            msg = "Docker image name is required"
-            raise ValueError(msg)
-        if not self.description:
-            msg = "Container image description is required"
-            raise ValueError(msg)
-        if not self.category:
-            msg = "Container image category is required"
-            raise ValueError(msg)
-
-    @classmethod
-    def with_common_env_vars(
-        cls,
-        name: str,
-        image: str,
-        description: str,
-        category: str,
-        volumes: list[VolumeConfig] | None = None,
-        ports: list[PortConfig] | None = None,
-        env_vars: list[EnvVarConfig] | None = None,
-    ) -> ContainerImageConfig:
-        """Create a container image config with common environment variables.
-
-        Returns:
-            ContainerImageConfig: The container image configuration with common environment variables.
-        """
-        if volumes is None:
-            volumes = []
-        if ports is None:
-            ports = []
-        if env_vars is None:
-            env_vars = []
-
-        return cls(
-            name=name,
-            image=image,
-            description=description,
-            category=category,
-            volumes=volumes,
-            ports=ports,
-            env_vars=cls.COMMON_ENV_VARS + env_vars,
-        )
 
     @classmethod
     def create_complete(
@@ -174,13 +90,17 @@ class ContainerImageConfig:
         initial_date: str = "",
         github_url: str = "",
         project_url: str = "",
+        application_setup: str = "",
         project_logo: str = "",
         tags: list[dict[str, str]] | None = None,
         architectures: list[dict[str, str]] | None = None,
         volumes: list[VolumeConfig] | None = None,
         ports: list[PortConfig] | None = None,
         env_vars: list[EnvVarConfig] | None = None,
+        devices: list[DeviceConfig] | None = None,
         *,
+        nonroot_supported: bool = False,
+        readonly_supported: bool = False,
         use_common_env_vars: bool = True,
         stable: bool = True,
         deprecated: bool = False,
@@ -188,22 +108,26 @@ class ContainerImageConfig:
         """Create a complete container image configuration with all available fields.
 
         Args:
-            name (str): The name of the container image.
-            image (str): The Docker image name.
-            description (str): The description of the container image.
-            category (str): The category of the container image.
-            initial_date (str, optional): The initial release date. Defaults to "".
-            github_url (str, optional): The GitHub URL for the project. Defaults to "".
-            project_url (str, optional): The project URL. Defaults to "".
-            project_logo (str, optional): The project logo URL. Defaults to "".
-            stable (bool, optional): Whether the image is stable. Defaults to True.
-            deprecated (bool, optional): Whether the image is deprecated. Defaults to False.
-            tags (list[dict[str, str]], optional): Tags for the image. Defaults to None.
+            application_setup (str, optional): The application setup instructions. Defaults to "".
             architectures (list[dict[str, str]], optional): Supported architectures. Defaults to None.
-            volumes (list[VolumeConfig], optional): Volumes for the container. Defaults to None.
-            ports (list[PortConfig], optional): Ports for the container. Defaults to None.
+            category (str): The category of the container image.
+            deprecated (bool, optional): Whether the image is deprecated. Defaults to False.
+            description (str): The description of the container image.
+            devices (list[DeviceConfig], optional): Devices for the container. Defaults to None.
             env_vars (list[EnvVarConfig], optional): Environment variables for the container. Defaults to None.
+            github_url (str, optional): The GitHub URL for the project. Defaults to "".
+            image (str): The Docker image name.
+            initial_date (str, optional): The initial release date. Defaults to "".
+            name (str): The name of the container image.
+            nonroot_supported (bool, optional): Whether the image supports non-root users. Defaults to False.
+            ports (list[PortConfig], optional): Ports for the container. Defaults to None.
+            project_logo (str, optional): The project logo URL. Defaults to "".
+            project_url (str, optional): The project URL. Defaults to "".
+            readonly_supported (bool, optional): Whether the image supports read-only filesystems. Defaults to False.
+            stable (bool, optional): Whether the image is stable. Defaults to True.
+            tags (list[dict[str, str]], optional): Tags for the image. Defaults to None.
             use_common_env_vars (bool, optional): Whether to include common environment variables. Currently PUID and PGID. Defaults to True.
+            volumes (list[VolumeConfig], optional): Volumes for the container. Defaults to None.
 
         Returns:
             ContainerImageConfig: The container image configuration
@@ -218,6 +142,8 @@ class ContainerImageConfig:
             ports = []
         if env_vars is None:
             env_vars = []
+        if devices is None:
+            devices = []
 
         # Apply common env vars if requested
         final_env_vars: list[EnvVarConfig] = env_vars
@@ -225,21 +151,25 @@ class ContainerImageConfig:
             final_env_vars = cls.COMMON_ENV_VARS + env_vars
 
         return cls(
-            name=name,
-            image=image,
-            description=description,
-            category=category,
-            initial_date=initial_date,
-            github_url=github_url,
-            project_url=project_url,
-            project_logo=project_logo,
-            stable=stable,
-            deprecated=deprecated,
-            tags=tags,
+            application_setup=application_setup,
             architectures=architectures,
-            volumes=volumes,
-            ports=ports,
+            category=category,
+            deprecated=deprecated,
+            description=description,
+            devices=devices,
             env_vars=final_env_vars,
+            github_url=github_url,
+            image=image,
+            initial_date=initial_date,
+            name=name,
+            nonroot_supported=nonroot_supported,
+            ports=ports,
+            project_logo=project_logo,
+            project_url=project_url,
+            readonly_supported=readonly_supported,
+            stable=stable,
+            tags=tags,
+            volumes=volumes,
         )
 
     def to_dict(self) -> dict:
@@ -249,19 +179,23 @@ class ContainerImageConfig:
             dict: Dictionary representation of the container image configuration.
         """
         return {
-            "name": self.name,
-            "image": self.image,
-            "description": self.description,
-            "category": self.category,
-            "initial_date": self.initial_date,
-            "github_url": self.github_url,
-            "project_url": self.project_url,
-            "project_logo": self.project_logo,
-            "stable": self.stable,
-            "deprecated": self.deprecated,
-            "tags": self.tags,
+            "application_setup": self.application_setup,
             "architectures": self.architectures,
-            "volumes": [vars(vol) for vol in self.volumes],
-            "ports": [vars(port) for port in self.ports],
+            "category": self.category,
+            "deprecated": self.deprecated,
+            "description": self.description,
+            "devices": [vars(dev) for dev in self.devices],
             "env_vars": [vars(env) for env in self.env_vars],
+            "github_url": self.github_url,
+            "image": self.image,
+            "initial_date": self.initial_date,
+            "name": self.name,
+            "nonroot_supported": self.nonroot_supported,
+            "ports": [vars(port) for port in self.ports],
+            "project_logo": self.project_logo,
+            "project_url": self.project_url,
+            "readonly_supported": self.readonly_supported,
+            "stable": self.stable,
+            "tags": self.tags,
+            "volumes": [vars(vol) for vol in self.volumes],
         }

@@ -1,17 +1,19 @@
 from __future__ import annotations
 
 from dwui.container_config import ContainerImageConfig, EnvVarConfig, PortConfig, VolumeConfig
-from dwui.container_configs.host_timezone import get_host_timezone
 
 ADGUARD_HOME_SYNC: ContainerImageConfig = ContainerImageConfig.create_complete(
     name="AdGuard Home Sync",
-    image="linuxserver/adguardhome-sync",
+    image="lscr.io/linuxserver/adguardhome-sync:latest",
     description="adguardhome-sync is a tool to synchronize AdGuardHome config to replica instances.",
     category="Network,DNS",
     initial_date="2021-04-08",
     github_url="https://github.com/linuxserver/docker-adguardhome-sync",
     project_url="https://github.com/bakito/adguardhome-sync/",
     project_logo="https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/adguardhomesync-icon.png",
+    application_setup="https://github.com/linuxserver/docker-airsonic-advanced?tab=readme-ov-file#application-setup",
+    nonroot_supported=True,
+    readonly_supported=True,
     stable=True,
     deprecated=False,
     tags=[{"tag": "latest", "desc": "Stable releases"}],
@@ -19,14 +21,15 @@ ADGUARD_HOME_SYNC: ContainerImageConfig = ContainerImageConfig.create_complete(
     volumes=[
         VolumeConfig(source="/path/to/adguardhome-sync/config", target="/config", description="Contains all relevant configuration files."),
     ],
-    ports=[PortConfig(host="8080", container="8080", protocol="tcp", description="Port for AdGuardHome Sync's web API.")],
+    ports=[
+        PortConfig(external="8080", internal="8080", protocol="tcp", desc="Port for AdGuardHome Sync's web API."),
+    ],
     env_vars=[
-        EnvVarConfig(name="TZ", default=get_host_timezone(), description="Timezone", required=True),
         EnvVarConfig(
             name="CONFIGFILE",
-            default="/config/adguardhome-sync.yaml",
+            value="/config/adguardhome-sync.yaml",
             description="Set a custom config file.",
-            required=False,
+            optional=True,
         ),
     ],
     use_common_env_vars=True,

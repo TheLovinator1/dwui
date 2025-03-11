@@ -1,6 +1,7 @@
 {
     "python.analysis.typeCheckingMode": "standard",
     "cSpell.words": [
+        "Airsonic",
         "allauth",
         "appauthor",
         "appname",
@@ -15,7 +16,9 @@
         "isort",
         "Jellyfin",
         "Joakim",
+        "lscr",
         "Nextcloud",
+        "nonroot",
         "paramiko",
         "PGID",
         "pkgver",

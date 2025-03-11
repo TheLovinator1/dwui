@@ -5,14 +5,15 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from dwui.container_configs.adguard_home import ADGUARD_HOME_SYNC
+from dwui.container_configs.airsonic import AIRSONIC
 
 if TYPE_CHECKING:
     from dwui.container_config import ContainerImageConfig
 
 # List of all container configurations
-# Add new configurations here as they are created
 ALL_CONTAINER_CONFIGS: list[ContainerImageConfig] = [
     ADGUARD_HOME_SYNC,
+    AIRSONIC,
 ]
 
 

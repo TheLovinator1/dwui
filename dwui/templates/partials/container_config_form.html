@@ -53,9 +53,6 @@
         <div class="card mb-3">
             <div class="card-body">
                 <div class="mb-2">
-                    <label for="volume_{{ forloop.counter0 }}_source" class="form-label">
-                        Host Path {% if volume.required %}<span class="text-danger">*</span>{% endif %}
-                    </label>
                     <input type="text" class="form-control" id="volume_{{ forloop.counter0 }}_source"
                         name="volume_{{ forloop.counter0 }}_source" value="{{ volume.source }}"
                         {% if volume.required %}required{% endif %}>
@@ -116,7 +113,7 @@
                                 PUID {% if env.required %}<span class="text-danger">*</span>{% endif %}
                             </label>
                             <input type="text" class="form-control" id="env_PUID" name="env_PUID"
-                                value="{{ env.default|default:'' }}" {% if env.required %}required{% endif %}>
+                                value="{{ env.value|default:'' }}" {% if env.required %}required{% endif %}>
                             <div class="form-text">{{ env.description }}</div>
                         </div>
                     </div>
@@ -126,7 +123,7 @@
                             PGID {% if pgid_env.required %}<span class="text-danger">*</span>{% endif %}
                         </label>
                         <input type="text" class="form-control" id="env_PGID" name="env_PGID"
-                            value="{{ pgid_env.default|default:'' }}" {% if pgid_env.required %}required{% endif %}>
+                            value="{{ pgid_env.value|default:'' }}" {% if pgid_env.required %}required{% endif %}>
                         <div class="form-text">{{ pgid_env.description }}</div>
                     </div>
                 </div>
@@ -152,13 +149,13 @@
                 <select class="form-select" id="env_{{ forloop.counter0 }}_{{ env.name }}" name="env_{{ env.name }}"
                     {% if env.required %}required{% endif %}>
                     {% for option in env.options %}
-                    <option value="{{ option }}" {% if env.default == option %}selected{% endif %}>{{ option }}
+                    <option value="{{ option }}" {% if env.value == option %}selected{% endif %}>{{ option }}
                     </option>
                     {% endfor %}
                 </select>
                 {% else %}
                 <input type="text" class="form-control" id="env_{{ forloop.counter0 }}_{{ env.name }}"
-                    name="env_{{ env.name }}" value="{{ env.default|default:'' }}"
+                    name="env_{{ env.name }}" value="{{ env.value|default:'' }}"
                     {% if env.required %}required{% endif %}>
                 {% endif %}
 
@@ -207,6 +204,27 @@
             </div>
         </div>
     </div>
+
+    <!-- Devices -->
+    {% if image_config.devices %}
+    <div class="mb-4" id="devicesSection">
+        <h5>Devices</h5>
+        <div class="form-text mb-2">Configure device mappings for the container</div>
+        {% for device in image_config.devices %}
+        <div class="card mb-3">
+            <div class="card-body">
+                <div class="mb-2">
+                    <input type="text" class="form-control" id="device_{{ forloop.counter0 }}_path"
+                        name="device_{{ forloop.counter0 }}_path" value="{{ device.path }}">
+                    <div class="form-text">{{ device.desc }} (Host path: {{ device.host_path }})</div>
+                    <input type="hidden" name="device_{{ forloop.counter0 }}_host_path" value="{{ device.host_path }}">
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
 
     <!-- Restart Policy -->
     <div class="mb-4" id="restartSection">

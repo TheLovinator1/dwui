@@ -2,6 +2,7 @@
 
 <form method="post" id="containerForm">
     {% csrf_token %}
+    <input type="hidden" name="image" value="{{ image_name }}">
 
     <div class="alert alert-info mb-4">
         <header>

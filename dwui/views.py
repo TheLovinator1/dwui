@@ -187,10 +187,12 @@ def new_container(request: HttpRequest) -> HttpResponse:
     categories: list[str] = get_categories()
 
     if request.method == "POST":
+        logger.info("Form submitted with POST method. %s", request.POST)
         name: str | None = request.POST.get("name")
         image: str | None = request.POST.get("image")
 
         if name and image:
+            logger.info("Creating container with name: %s, image: %s", name, image)
             return create_container(request, name, image)
 
     context: dict[str, Any] = {"container_images": container_images, "categories": categories}

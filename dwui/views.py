@@ -43,6 +43,23 @@ def get_latest_docker_version() -> str | None:
 
 
 @login_not_required
+def get_containers(request: HttpRequest) -> HttpResponse:
+    """Handle htmx request for getting containers.
+
+    Args:
+        request (HttpRequest): The request object.
+
+    Returns:
+        HttpResponse: The response containing the containers list.
+    """
+    with DockerClient() as client:
+        containers: list = client.containers.list(all=True)
+
+    context: dict[str, Any] = {"containers": containers}
+    return render(request, "partials/containers_list.html", context)
+
+
+@login_not_required
 def index(request: HttpRequest) -> HttpResponse:
     """Render the home page.
 
@@ -54,7 +71,6 @@ def index(request: HttpRequest) -> HttpResponse:
     """
     with DockerClient() as client:
         current_version_info: dict = client.version()
-        containers: list = client.containers.list(all=True)
 
     current_version: str = current_version_info.get("Version", "")
     latest_version: str | None = get_latest_docker_version()
@@ -79,7 +95,6 @@ def index(request: HttpRequest) -> HttpResponse:
 
     context: dict[str, Any] = {
         "changelog_url": changelog_url,
-        "containers": containers,
         "is_outdated": is_outdated,
         "latest_version": latest_version,
         "version_message": version_message,

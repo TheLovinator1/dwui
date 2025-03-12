@@ -10,6 +10,7 @@ from django.urls import URLPattern, include, path
 
 from dwui import views
 from dwui.views import (
+    get_containers,
     image_config,
     new_container,
 )
@@ -29,6 +30,7 @@ urlpatterns: list[URLResolver | URLPattern] = [
     path("container/<str:container_id>/update/", views.update_container, name="update_container"),
     path("new-container/", new_container, name="new_container"),
     path("image-config/", image_config, name="image_config"),
+    path("get-containers/", get_containers, name="get_containers"),
     path("accounts/", include("allauth.urls")),
     path("accounts/password_reset/", auth_views.PasswordResetView.as_view(), name="password_reset"),
     path("accounts/password_reset/done/", auth_views.PasswordResetDoneView.as_view(), name="password_reset_done"),

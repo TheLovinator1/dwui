@@ -29,6 +29,7 @@
         "pytest",
         "pyupgrade",
         "socialaccount",
-        "TheLovinator"
+        "TheLovinator",
+        "uidb"
     ]
 }

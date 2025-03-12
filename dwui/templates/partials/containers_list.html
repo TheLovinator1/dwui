@@ -1,0 +1,17 @@
+{% if containers %}
+<ul class="list-group list-group-flush">
+    {% for container in containers %}
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+        <a href="{% url 'container_details' container.id %}">{{ container.name }}</a>
+        <span
+            class="badge {% if container.status == 'running' %}bg-success{% else %}bg-secondary{% endif %} rounded-pill">
+            {{ container.status }}
+        </span>
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+<div class="text-center text-muted my-5">
+    <p>No containers found.</p>
+</div>
+{% endif %}

@@ -16,19 +16,14 @@
                 </div>
                 <div class="card-body p-0">
                     <ul class="list-group list-group-flush">
-                        {% if containers %}
-                        {% for container in containers %}
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            <a href="{% url 'container_details' container.id %}">{{ container.name }}</a>
-                            <span
-                                class="badge {% if container.status == 'running' %}bg-success{% else %}bg-secondary{% endif %} rounded-pill">
-                                {{ container.status }}
-                            </span>
-                        </li>
-                        {% endfor %}
-                        {% else %}
-                        <li class="list-group-item">No containers found.</li>
-                        {% endif %}
+                        <div hx-get="{% url 'get_containers' %}" hx-trigger="load" hx-target="#containersList">
+                            <div id="containersList">
+                                <!-- This content will be replaced by the htmx request -->
+                                <div class="text-center text-muted my-5">
+                                    <p>Loading containers...</p>
+                                </div>
+                            </div>
+                        </div>
                     </ul>
                 </div>
             </div>
@@ -90,69 +85,7 @@
             </div>
 
             <div class="container mt-4">
-                <h2>Containers</h2>
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Image</th>
-                            <th>Status</th>
-                            <th>Created</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for container in containers %}
-                        <tr>
-                            <td>
-                                <a href="{% url 'container_details' container.id %}">{{ container.name }}</a>
-                            </td>
-                            <td>{{ container.image.tags.0|default:container.image.short_id }}</td>
-                            <td>
-                                {% if container.status == "running" %}
-                                <span class="badge bg-success">Running</span>
-                                {% elif container.status == "exited" %}
-                                <span class="badge bg-danger">Stopped</span>
-                                {% else %}
-                                <span class="badge bg-secondary">{{ container.status }}</span>
-                                {% endif %}
-                            </td>
-                            <td>{{ container.attrs.Created|date:"Y-m-d H:i" }}</td>
-                            <td>
-                                <div class="btn-group btn-group-sm">
-                                    {% if container.status == "running" %}
-                                    <a href="{% url 'stop_container' container.id %}" class="btn btn-warning"
-                                        title="Stop Container"
-                                        onclick="return confirm('Are you sure you want to stop this container?')">
-                                        <i class="fas fa-stop"></i>
-                                    </a>
-                                    <a href="{% url 'restart_container' container.id %}" class="btn btn-info"
-                                        title="Restart Container"
-                                        onclick="return confirm('Are you sure you want to restart this container?')">
-                                        <i class="fas fa-sync"></i>
-                                    </a>
-                                    {% else %}
-                                    <a href="{% url 'start_container' container.id %}" class="btn btn-success"
-                                        title="Start Container">
-                                        <i class="fas fa-play"></i>
-                                    </a>
-                                    {% endif %}
-                                    <a href="{% url 'update_container' container.id %}" class="btn btn-primary"
-                                        title="Update Container"
-                                        onclick="return confirm('This will pull the latest image and recreate the container. Continue?')">
-                                        <i class="fas fa-cloud-download-alt"></i>
-                                    </a>
-                                    <a href="{% url 'remove_container' container.id %}" class="btn btn-danger"
-                                        title="Delete Container"
-                                        onclick="return confirm('Are you sure you want to delete this container? This action cannot be undone.')">
-                                        <i class="fas fa-trash"></i>
-                                    </a>
-                                </div>
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+                <p>More content can be added here to provide additional information.</p>
             </div>
         </div>
     </div>

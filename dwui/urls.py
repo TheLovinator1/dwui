@@ -27,7 +27,6 @@ urlpatterns: list[URLResolver | URLPattern] = [
     path("container/<str:container_id>/stop/", views.stop_container, name="stop_container"),
     path("container/<str:container_id>/restart/", views.restart_container, name="restart_container"),
     path("container/<str:container_id>/remove/", views.remove_container, name="remove_container"),
-    path("container/<str:container_id>/update/", views.update_container, name="update_container"),
     path("new-container/", new_container, name="new_container"),
     path("image-config/", image_config, name="image_config"),
     path("get-containers/", get_containers, name="get_containers"),

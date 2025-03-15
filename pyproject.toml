@@ -10,16 +10,16 @@ dependencies = [
     "django-allauth>=65.4.1",
     "django-bootstrap5>=25.1",
     "django>=5.1.7",
-    "docker>=7.1.0",
+    "fabric>=3.2.2",
+    "httpx>=0.28.1",
     "packaging>=24.2",
-    "paramiko>=3.5.1",
     "platformdirs>=4.3.6",
     "python-dotenv>=1.0.1",
     "requests>=2.32.3",
 ]
 
 [dependency-groups]
-dev = ["django-debug-toolbar>=5.0.1", "pytest-django>=4.10.0"]
+dev = ["django-debug-toolbar>=5.0.1", "pytest>=8.3.5", "pytest-django>=4.10.0"]
 
 [tool.ruff]
 preview = true

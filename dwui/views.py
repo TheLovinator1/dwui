@@ -1,20 +1,23 @@
 from __future__ import annotations
 
 import logging
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING, Any, Literal, cast
 
 import requests
 from django.contrib.auth.decorators import login_not_required  # pyright: ignore[reportAttributeAccessIssue]
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
+from docker import errors
 from packaging import version
 
 from dwui.container_images import get_categories, get_container_image_by_name, get_container_images
-from dwui.docker_helper import Client, DockerAPIError, DockerImageNotFoundError
+from dwui.docker_helper import DockerClient
 
 if TYPE_CHECKING:
     from django.http import HttpRequest
+    from docker.models.containers import _RestartPolicy
+    from docker.models.networks import Network
 
 logger: logging.Logger = logging.getLogger("dwui.views")
 
@@ -49,8 +52,8 @@ def get_containers(request: HttpRequest) -> HttpResponse:
     Returns:
         HttpResponse: The response containing the containers list.
     """
-    with Client() as client:
-        containers = client.get_containers_name_id_and_status()
+    with DockerClient() as client:
+        containers: list = client.containers.list(all=True)
 
     context: dict[str, Any] = {"containers": containers}
     return render(request, "partials/containers_list.html", context)
@@ -66,8 +69,8 @@ def index(request: HttpRequest) -> HttpResponse:
     Returns:
         HttpResponse: The response object.
     """
-    with Client() as client:
-        current_version_info: dict = client.get_version()
+    with DockerClient() as client:
+        current_version_info: dict = client.version()
 
     current_version: str = current_version_info.get("Version", "")
     latest_version: str | None = get_latest_docker_version()
@@ -112,14 +115,14 @@ def create_container(request: HttpRequest, name: str, image: str) -> HttpRespons
     Returns:
         HttpResponse: Redirect to the container details page.
     """
-    with Client() as client:
+    with DockerClient() as client:
         # Pull the image if it doesn't exist
         try:
-            client.get_image_by_name(image)
-        except DockerImageNotFoundError:
+            client.images.get(image)
+        except errors.ImageNotFound:
             logger.info("Pulling image %s", image)
-            client.pull_image(image)
-        except DockerAPIError:
+            client.images.pull(image)
+        except errors.APIError:
             logger.exception("Error pulling image %s", image)
             return HttpResponseRedirect(reverse("index"))
 
@@ -136,7 +139,7 @@ def create_container(request: HttpRequest, name: str, image: str) -> HttpRespons
                     volume_data[volume_id][field] = value
 
         # Format volumes for Docker
-        binds: list[str] = [
+        binds = [
             f"{vol['source']}:{vol['target']}"
             for vol in volume_data.values()
             if "source" in vol and "target" in vol and vol["source"].strip()
@@ -163,29 +166,25 @@ def create_container(request: HttpRequest, name: str, image: str) -> HttpRespons
                     env_name = parts[2]
                     env_vars.append(f"{env_name}={value}")
 
-        restart_policy_str: str = request.POST.get("restart_policy", "on-failure")
-        allowed_policies = ("always", "on-failure", "unless-stopped", "no")
+        max_retries = int(request.POST.get("max_retry_count", "5"))
 
-        if restart_policy_str in allowed_policies:
-            restart_policy = restart_policy_str
-        else:
-            logger.warning("Invalid restart policy: %s. Using default: on-failure", restart_policy_str)
-            restart_policy = "on-failure"  # Default
+        restart_policy: str = request.POST.get("restart_policy", "on-failure")
+        restart_policy = cast("Literal['always', 'on-failure']", restart_policy)
+        restart_policy_dict: _RestartPolicy = {"Name": restart_policy, "MaximumRetryCount": max_retries}
 
-        client.run_container(
+        # Create and start the container with the provided configurations
+        container = client.containers.run(
             image=image,
             name=name,
+            detach=True,
             ports=ports,
             volumes=binds,
             environment=env_vars,
-            restart_policy=restart_policy,
+            restart_policy=restart_policy_dict,
         )
 
-        # Get the container ID
-        container_id: str = client.get_container_id_by_name(name)
-
-        logger.info("Container %s created successfully with ID %s", name, container_id)
-        return HttpResponseRedirect(reverse("container_details", args=[container_id]))
+        logger.info("Container %s created successfully with ID %s", name, container.id)
+        return HttpResponseRedirect(reverse("container_details", args=[container.id]))
 
 
 @login_not_required
@@ -227,19 +226,27 @@ def container_details(request: HttpRequest, container_id: str) -> HttpResponse:
     Returns:
         HttpResponse: The response object containing container details.
     """
-    with Client() as client:
+    with DockerClient() as client:
         try:
-            container: str = client.get_container_id_by_name(container_id)
+            container = client.containers.get(container_id)
+            container_stats = next(container.stats(stream=True, decode=True))
+            logs: list[str] = container.logs(tail=100, timestamps=True).decode("utf-8").splitlines()
         except Exception as e:  # noqa: BLE001
             logger.info("Error retrieving container details: %s", e)
             return HttpResponseRedirect(reverse("index"))
 
+    # Get container metadata if available
+    container_metadata = {}
+    container_image = container.image.tags[0] if container.image and container.image.tags else None
+    if container_image:
+        container_metadata = get_container_image_by_name(container_image)
+
     context = {
         "container": container,
-        "container_stats": None,
-        "logs": None,
-        "hostname": None,
-        "container_metadata": None,
+        "container_stats": container_stats,
+        "logs": logs,
+        "hostname": container.attrs["Config"]["Hostname"],
+        "container_metadata": container_metadata,
     }
 
     return render(request, "container_details.html", context)
@@ -256,10 +263,11 @@ def start_container(request: HttpRequest, container_id: str) -> HttpResponse:
     Returns:
         HttpResponse: Redirect to the container details page.
     """
-    with Client() as client:
+    with DockerClient() as client:
         try:
-            client.start_container(container_id)
-            logger.info("Container %s started successfully", container_id)
+            container = client.containers.get(container_id)
+            container.start()
+            logger.info("Container %s started successfully", container.name)
         except Exception:
             logger.exception("Error starting container %s", container_id)
 
@@ -277,10 +285,11 @@ def stop_container(request: HttpRequest, container_id: str) -> HttpResponse:
     Returns:
         HttpResponse: Redirect to the container details page.
     """
-    with Client() as client:
+    with DockerClient() as client:
         try:
-            client.stop_container(container_id)
-            logger.info("Container %s stopped successfully", container_id)
+            container = client.containers.get(container_id)
+            container.stop()
+            logger.info("Container %s stopped successfully", container.name)
         except Exception:
             logger.exception("Error stopping container %s", container_id)
 
@@ -298,10 +307,11 @@ def restart_container(request: HttpRequest, container_id: str) -> HttpResponse:
     Returns:
         HttpResponse: Redirect to the container details page.
     """
-    with Client() as client:
+    with DockerClient() as client:
         try:
-            client.restart_container(container_id)
-            logger.info("Container %s restarted successfully", container_id)
+            container = client.containers.get(container_id)
+            container.restart()
+            logger.info("Container %s restarted successfully", container.name)
         except Exception:
             logger.exception("Error restarting container %s", container_id)
 
@@ -319,14 +329,69 @@ def remove_container(request: HttpRequest, container_id: str) -> HttpResponse:
     Returns:
         HttpResponse: Redirect to the home page.
     """
-    with Client() as client:
+    with DockerClient() as client:
         try:
-            client.remove_container(container_id)
-            logger.info("Container %s removed successfully", container_id)
+            container = client.containers.get(container_id)
+            container_name = container.name
+            container.remove(force=True)  # Force removal even if running
+            logger.info("Container %s removed successfully", container_name)
         except Exception:
             logger.exception("Error removing container %s", container_id)
 
     return HttpResponseRedirect(reverse("index"))
+
+
+@login_not_required
+def update_container(request: HttpRequest, container_id: str) -> HttpResponse:
+    """Update a Docker container by recreating it with the latest image.
+
+    Args:
+        request (HttpRequest): The request object.
+        container_id (str): The ID of the container to update.
+
+    Returns:
+        HttpResponse: Redirect to the home page.
+    """
+    with DockerClient() as client:
+        try:
+            # Get container details
+            container = client.containers.get(container_id)
+            name = container.name
+            image_name = ""
+            if container.image:
+                image_name = container.image.tags[0] if container.image.tags else container.image.id or ""
+            ports = container.attrs["HostConfig"]["PortBindings"]
+            volumes = container.attrs["HostConfig"]["Binds"]
+            env_vars = container.attrs["Config"]["Env"]
+            restart_policy = container.attrs["HostConfig"]["RestartPolicy"]
+
+            # Pull latest image
+            logger.info("Pulling latest image for %s", image_name)
+            client.images.pull(image_name.split(":")[0])
+
+            # Stop and remove existing container
+            logger.info("Stopping and removing container %s", name)
+            container.stop()
+            container.remove()
+
+            # Create and start new container with same parameters
+            logger.info("Creating new container %s with updated image", name)
+            new_container = client.containers.run(
+                image=image_name,
+                name=name,
+                detach=True,
+                ports=dict(ports.items()),
+                volumes={volume.split(":")[0]: {"bind": volume.split(":")[1], "mode": "rw"} for volume in volumes},
+                environment=env_vars,
+                restart_policy=restart_policy,
+            )
+
+            logger.info("Container %s updated successfully with ID %s", name, new_container.id)
+            return HttpResponseRedirect(reverse("container_details", args=[new_container.id]))
+
+        except Exception as e:  # noqa: BLE001
+            logger.info("Error updating container %s: %s", container_id, e)
+            return HttpResponseRedirect(reverse("index"))
 
 
 @login_not_required
@@ -354,8 +419,8 @@ def image_config(request: HttpRequest) -> HttpResponse:
     suggested_name = "".join(c for c in suggested_name if c.isalnum() or c == "-")
 
     # Get all available networks
-    with Client() as client:
-        networks = client.get_networks()
+    with DockerClient() as client:
+        networks: list[Network] = client.networks.list()
 
     context: dict[str, Any] = {
         "image_config": image_config_dict,

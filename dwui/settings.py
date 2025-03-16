@@ -55,7 +55,7 @@ AUTHENTICATION_BACKENDS: list[str] = [
 
 ACCOUNT_EMAIL_VERIFICATION = "optional"
 ACCOUNT_EMAIL_NOTIFICATIONS = True
-ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_SIGNUP_FIELDS: list[str] = ["email*", "username*", "password1*", "password2*"]
 LOGIN_REDIRECT_URL = "/"
 
 MIDDLEWARE: list[str] = [

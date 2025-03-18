@@ -1,45 +1,20 @@
 from __future__ import annotations
 
 import os
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING
 
-from django.conf import settings
+import django
 from django.core.handlers.wsgi import WSGIHandler
 from django.core.management import execute_from_command_line
 from django.http import HttpRequest, HttpResponse
 from django.urls import path
-from dotenv import load_dotenv
 
 if TYPE_CHECKING:
     from django.urls.resolvers import URLPattern
 
-load_dotenv()
-
-LOGGING: dict[str, Any] = {
-    "version": 1,
-    "disable_existing_loggers": False,
-    "handlers": {
-        "console": {
-            "level": "DEBUG",
-            "class": "logging.StreamHandler",
-        },
-    },
-    "loggers": {
-        "": {
-            "handlers": ["console"],
-            "level": "DEBUG",
-            "propagate": True,
-        },
-    },
-}
-
-settings.configure(
-    ROOT_URLCONF=__name__,
-    DEBUG=os.getenv(key="DJANGO_DEBUG", default="False").lower() == "true",
-    SECRET_KEY=os.getenv(key="DJANGO_SECRET_KEY"),
-    ALLOWED_HOSTS=["*"],
-    LOGGING=LOGGING,
-)
+# Set Django settings module first before any Django imports
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "settings")
+django.setup()
 
 
 def index(request: HttpRequest) -> HttpResponse:
@@ -54,8 +29,13 @@ def index(request: HttpRequest) -> HttpResponse:
     return HttpResponse("Agent is running!")
 
 
-urlpatterns: list[URLPattern] = [path("", index)]
-application = WSGIHandler()
+# Define URL patterns with the correct Django setup
+urlpatterns: list[URLPattern] = [
+    path("", index, name="index"),
+]
+
+# Ensure application is properly initialized as a WSGIHandler
+application: WSGIHandler = WSGIHandler()
 
 if __name__ == "__main__":
     execute_from_command_line()

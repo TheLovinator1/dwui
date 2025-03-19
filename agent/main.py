@@ -12,7 +12,6 @@ from django.urls import path
 if TYPE_CHECKING:
     from django.urls.resolvers import URLPattern
 
-# Set Django settings module first before any Django imports
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "settings")
 django.setup()
 
@@ -29,12 +28,7 @@ def index(request: HttpRequest) -> HttpResponse:
     return HttpResponse("Agent is running!")
 
 
-# Define URL patterns with the correct Django setup
-urlpatterns: list[URLPattern] = [
-    path("", index, name="index"),
-]
-
-# Ensure application is properly initialized as a WSGIHandler
+urlpatterns: list[URLPattern] = [path("", index, name="index")]
 application: WSGIHandler = WSGIHandler()
 
 if __name__ == "__main__":

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import logging
 import os
 import sys
 from typing import TYPE_CHECKING
@@ -11,6 +12,8 @@ from django.urls import path
 
 if TYPE_CHECKING:
     from django.urls.resolvers import URLPattern
+
+logger: logging.Logger = logging.getLogger("dwui.agent")
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "settings")
 django.setup()

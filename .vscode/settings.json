@@ -31,5 +31,11 @@
         "socialaccount",
         "TheLovinator",
         "uidb"
-    ]
+    ],
+    "github.copilot.chat.testGeneration.instructions": [
+        {
+            "file": ".github/copilot-instructions-tests.md",
+        }
+    ],
+    "github.copilot.chat.codeGeneration.useInstructionFiles": true,
 }

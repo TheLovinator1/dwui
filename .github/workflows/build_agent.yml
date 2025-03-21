@@ -17,6 +17,9 @@ jobs:
     concurrency:
       group: 'build-agent'
       cancel-in-progress: true
+    permissions:
+      contents: read
+      packages: write
     steps:
       - uses: actions/checkout@v4
       - uses: docker/setup-buildx-action@v3

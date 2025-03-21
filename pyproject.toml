@@ -16,6 +16,7 @@ dependencies = [
     "platformdirs>=4.3.6",
     "python-dotenv>=1.0.1",
     "requests>=2.32.3",
+    "gunicorn>=23.0.0",
 ]
 
 [dependency-groups]
@@ -39,6 +40,7 @@ lint.ignore = [
     "FIX002",  # Checks for "TODO" comments.
     "PLR0913", # Checks for function definitions that include too many arguments.
     "PLR0917", # Checks for function definitions that include too many positional arguments.
+    "PLR2004", # Checks for the use of unnamed numerical constants ("magic") values in comparisons.
 
     # Conflicting lint rules when using Ruff's formatter
     # https://docs.astral.sh/ruff/formatter/#conflicting-lint-rules

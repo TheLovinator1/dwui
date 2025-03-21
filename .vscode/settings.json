@@ -5,6 +5,7 @@
         "allauth",
         "appauthor",
         "appname",
+        "Buildx",
         "CONFIGFILE",
         "docstrings",
         "dotenv",

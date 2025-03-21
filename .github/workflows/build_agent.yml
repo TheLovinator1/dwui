@@ -29,5 +29,5 @@ jobs:
         with:
           context: .
           file: agent/Dockerfile
-          push: ${ github.event_name != 'pull_request' }
+          push: ${{ github.event_name != 'pull_request' }}
           tags: ghcr.io/TheLovinator1/dwui-agent:latest

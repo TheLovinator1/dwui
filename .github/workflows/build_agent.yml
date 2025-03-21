@@ -3,10 +3,10 @@ name: Build and Push Agent Docker Image
 on:
   push:
     branches:
-      - main
+      - master
   pull_request:
     branches:
-      - main
+      - master
   workflow_dispatch:
   schedule:
       - cron: '0 0 * * *' # Runs every day at midnight UTC

@@ -11,6 +11,7 @@ from django.urls import reverse
 from docker import errors
 from packaging import version
 
+from dwui.console import remove_ansi
 from dwui.container_images import get_categories, get_container_image_by_name, get_container_images
 from dwui.docker_helper import DockerClient
 
@@ -235,9 +236,12 @@ def container_details(request: HttpRequest, container_id: str) -> HttpResponse:
         container = client.containers.get(container_id)
 
         container_stats = container.stats(stream=False)
-        logs = container.logs(tail=10).decode("utf-8")
+        logs: str = container.logs(tail=100).decode("utf-8")
 
-        context = {
+        # Convert ansi codes to HTML
+        logs = remove_ansi(logs)
+
+        context: dict[str, Any] = {
             "container": container,
             "container_stats": container_stats,
             "logs": logs,

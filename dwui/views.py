@@ -3,6 +3,9 @@ from __future__ import annotations
 import logging
 from typing import TYPE_CHECKING, Any, Literal, cast
 
+if TYPE_CHECKING:
+    from datetime import datetime
+
 import requests
 from django.contrib.auth.decorators import login_not_required  # pyright: ignore[reportAttributeAccessIssue]
 from django.http import HttpResponse, HttpResponseRedirect
@@ -235,8 +238,18 @@ def container_details(request: HttpRequest, container_id: str) -> HttpResponse:
     with DockerClient() as client:
         container = client.containers.get(container_id)
 
+        # Get log parameters from request
+        tail_param = request.GET.get("tail", "all")
+        tail: int | Literal["all"] = int(tail_param) if tail_param.isdigit() else "all"
+        timestamps: bool = request.GET.get("timestamps", "false").lower() == "true"
+        since_param = request.GET.get("since")
+        since: datetime | float | None = float(since_param) if since_param and since_param.isdigit() else None
+        until_param = request.GET.get("until")
+        until: datetime | float | None = float(until_param) if until_param and until_param.isdigit() else None
+        follow: bool | None = request.GET.get("follow", "false").lower() == "true"
+
         container_stats = container.stats(stream=False)
-        logs: str = container.logs(tail=100).decode("utf-8")
+        logs: str = container.logs(tail=tail, timestamps=timestamps, since=since, until=until, follow=follow).decode("utf-8")
 
         # Convert ansi codes to HTML
         logs = remove_ansi(logs)

@@ -7,10 +7,11 @@ RUN --mount=type=cache,target=/root/.cache/uv \
     --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
     uv sync --no-install-project
 
-COPY /agent /app
+COPY . /app
+COPY agent /app/agent
 
 ENV PYTHONUNBUFFERED=1
 ENV PYTHONDONTWRITEBYTECODE=1
-ENV DJANGO_SETTINGS_MODULE=settings
+ENV DJANGO_SETTINGS_MODULE=dwui.settings
 
-CMD ["uv", "run", "gunicorn", "main", "--bind", "0.0.0.0:8000"]
+CMD ["uv", "run", "gunicorn", "dwui.wsgi:application", "--bind", "0.0.0.0:8000"]

@@ -1,3 +1,12 @@
 <div class="container-logs p-3 bg-dark text-light">
     <pre style="max-height: 400px; overflow-y: auto;" id="container-logs">{{ logs }}</pre>
 </div>
+<div id="timestamp-toggle-wrapper" hx-swap-oob="true">
+    <div class="btn-group" role="group">
+        <button id="timestamp-toggle" class="btn btn-secondary"
+            hx-get="{% url 'container_details' container.id %}?timestamps={% if request.GET.timestamps == 'true' %}false{% else %}true{% endif %}"
+            hx-target="#container-logs" hx-swap="innerHTML">
+            {% if request.GET.timestamps == "true" %}Hide Timestamps{% else %}Show Timestamps{% endif %}
+        </button>
+    </div>
+</div>

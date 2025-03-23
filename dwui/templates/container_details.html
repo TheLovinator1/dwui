@@ -1,9 +1,9 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
 {% block title %}Container Details - {{ container.name }}{% endblock %}
 
 {% block content %}
-<div class="container mt-4">
+<div class="container mt-4" id="container-details">
     <div class="d-flex justify-content-between align-items-center">
         <h1>Container: {{ container.name }}</h1>
         <a href="{% url 'index' %}" class="btn btn-secondary">Back to List</a>
@@ -193,24 +193,10 @@
             <a href="" class="btn btn-sm btn-primary">View Full Logs</a>
         </div>
         <div class="card-body">
-            <div class="container-logs p-3 bg-dark text-light">
+            <div class="container-logs p-3">
                 <div id="container-logs" hx-swap-oob="true">
                     {% include 'partials/container_logs.html' %}
                 </div>
-            </div>
-            <div class="mt-3">
-                <button class="btn btn-secondary" hx-get="{% url 'container_details' container.id %}?tail=100"
-                    hx-target="#container-logs" hx-swap="outerHTML">Tail 100</button>
-                <button class="btn btn-secondary" hx-get="{% url 'container_details' container.id %}?tail=all"
-                    hx-target="#container-logs" hx-swap="outerHTML">Tail All</button>
-                <button class="btn btn-secondary" hx-get="{% url 'container_details' container.id %}?timestamps=true"
-                    hx-target="#container-logs" hx-swap="outerHTML">Show Timestamps</button>
-                <button class="btn btn-secondary" hx-get="{% url 'container_details' container.id %}?timestamps=false"
-                    hx-target="#container-logs" hx-swap="outerHTML">Hide Timestamps</button>
-                <button class="btn btn-secondary" hx-get="{% url 'container_details' container.id %}?follow=true"
-                    hx-target="#container-logs" hx-swap="outerHTML">Follow Logs</button>
-                <button class="btn btn-secondary" hx-get="{% url 'container_details' container.id %}?follow=false"
-                    hx-target="#container-logs" hx-swap="outerHTML">Unfollow Logs</button>
             </div>
         </div>
     </div>

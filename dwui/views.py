@@ -11,6 +11,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.utils.html import format_html
 from docker import errors
+from docker.models.networks import Network
 from packaging import version
 
 from dwui.console import remove_ansi
@@ -500,7 +501,22 @@ def networks(request: HttpRequest) -> HttpResponse:
     # Move host, none and bridge networks to the end of the list
     networks.sort(key=lambda net: net.name in {"host", "none", "bridge"})
 
-    context = {"networks": networks}
+    # Filter networks with search query if provided
+    search: str = request.GET.get("search", "").strip().lower()
+    if search:
+        logger.info("Filtering networks with search term: %s", search)
+        networks = [
+            net
+            for net in networks
+            if search in (net.name or "").lower()
+            or search in (net.short_id or "").lower()
+            or search in (net.attrs.get("Created", "")).lower()
+            or search in (net.attrs.get("Driver", "")).lower()
+            or search in (net.attrs.get("Labels", {}).get("com.docker.compose.network", "N/A")).lower()
+            or search in (net.attrs.get("Labels", {}).get("com.docker.compose.project", "N/A")).lower()
+        ]
+
+    context: dict[str, list[Network]] = {"networks": networks}
     if request.headers.get("HX-Request"):
         return render(request, "partials/networks_table.html", context)
     return render(request, "networks.html", context)

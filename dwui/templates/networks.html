@@ -5,7 +5,12 @@
 
 {% block content %}
 <h1>Docker Networks</h1>
-<div class="container mt-4" hx-get="{% url 'networks' %}" hx-trigger="load, every 5s">
+<input type="text" id="networkSearch" name="search" class="form-control mb-3" placeholder="Search networks..."
+    hx-trigger="keyup changed delay:14ms" hx-get="{% url 'networks' %}" hx-target=".networks-list"
+    hx-include="#networkSearch" />
+
+<div class="container mt-4 networks-list" hx-get="{% url 'networks' %}" hx-trigger="every 5s"
+    hx-include="#networkSearch">
     {% include "partials/networks_table.html" %}
 </div>
 {% endblock %}

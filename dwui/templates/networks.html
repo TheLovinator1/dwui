@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% load app_filters %}
+
+{% block title %}Docker Web UI - Networks{% endblock title %}
+
+
+{% block content %}
+<div class="container mt-4">
+    <h1>Docker Networks</h1>
+    <table class="table table-striped table-bordered table-sm">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>ID</th>
+                <th>Created</th>
+                <th>Driver</th>
+                <th>Containers</th>
+                <th>docker.compose.network</th>
+                <th>docker.compose.project</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for network in networks %}
+            <tr>
+                <td>{{ network.name }}</td>
+                <td>{{ network.short_id }}</td>
+                <td>{{ network.attrs.Created }}</td>
+                <td>
+                    {% if network.attrs.Driver == "bridge" %}
+                    <span class="text-success">{{ network.attrs.Driver }}</span>
+                    {% elif network.attrs.Driver == "overlay" %}
+                    <span class="text-warning">{{ network.attrs.Driver }}</span>
+                    {% else %}
+                    <span class="text-secondary">{{ network.attrs.Driver }}</span>
+                    {% endif %}
+                </td>
+                <td>
+                    <ul>
+                        {% for container_id, container in network.containers.items %}
+                        <li>{{ container.name }} (ID: {{ container_id }})</li>
+                        {% endfor %}
+                    </ul>
+                </td>
+                <td>
+                    {% if network.attrs.Labels|dict_get:"com.docker.compose.network" %}
+                    {{ network.attrs.Labels|dict_get:"com.docker.compose.network" }}
+                    {% else %}
+                    N/A
+                    {% endif %}
+                </td>
+                <td>
+                    {% if network.attrs.Labels|dict_get:'com.docker.compose.project' %}
+                    {{ network.attrs.Labels|dict_get:'com.docker.compose.project' }}
+                    {% else %}
+                    N/A
+                    {% endif %}
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5">No networks found</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

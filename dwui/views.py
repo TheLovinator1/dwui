@@ -22,6 +22,7 @@ if TYPE_CHECKING:
 
     from django.http import HttpRequest
     from docker.models.containers import Container, _RestartPolicy
+    from docker.models.networks import Network
 
 logger: logging.Logger = logging.getLogger("dwui.views")
 
@@ -478,3 +479,25 @@ def containers(request: HttpRequest) -> HttpResponse:
         containers = client.containers.list(all=True)
     context = {"containers": containers}
     return render(request, "containers.html", context)
+
+
+@login_not_required
+def networks(request: HttpRequest) -> HttpResponse:
+    """Render a view with a table of all Docker networks.
+
+    Args:
+        request (HttpRequest): The request object.
+
+    Returns:
+        HttpResponse: The response object containing the networks view.
+    """
+    with DockerClient() as client:
+        networks: list[Network] = client.networks.list()
+
+    # Sort networks by name
+    networks.sort(key=lambda net: net.name or "")
+
+    # Move host, none and bridge networks to the end of the list
+    networks.sort(key=lambda net: net.name in {"host", "none", "bridge"})
+
+    return render(request, "networks.html", {"networks": networks})

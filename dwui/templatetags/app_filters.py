@@ -28,7 +28,7 @@ def split(value: str, arg: str) -> list[str]:
 
 
 @register.filter
-def groupby(value: list[Container]) -> list[tuple[str, list[Container]]]:
+def groupby_container(value: list[Container]) -> list[tuple[str, list[Container]]]:
     """Group containers by their labels.
 
     Args:
@@ -43,3 +43,17 @@ def groupby(value: list[Container]) -> list[tuple[str, list[Container]]]:
         key: str = labels.get("com.docker.compose.project", "default")
         grouped[key].append(item)
     return list(grouped.items())
+
+
+@register.filter
+def dict_get(dictionary: dict[str, str], key: str) -> str | None:
+    """Safely gets a key from a dictionary in Django templates.
+
+    Args:
+        dictionary: The dictionary to get the value from
+        key: The key to look for
+
+    Returns:
+        The value associated with the key, or None if the key does not exist.
+    """
+    return dictionary.get(key) if isinstance(dictionary, dict) else None

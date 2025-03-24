@@ -465,3 +465,16 @@ def image_config(request: HttpRequest) -> HttpResponse:
     }
 
     return render(request, "partials/container_config_form.html", context)
+
+
+@login_not_required
+def containers(request: HttpRequest) -> HttpResponse:
+    """Render a view with a table of all Docker containers.
+
+    Returns:
+        HttpResponse: The response object containing the containers view.
+    """
+    with DockerClient() as client:
+        containers = client.containers.list(all=True)
+    context = {"containers": containers}
+    return render(request, "containers.html", context)

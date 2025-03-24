@@ -31,6 +31,7 @@ urlpatterns: list[URLResolver | URLPattern] = [
     path("new-container/", new_container, name="new_container"),
     path("image-config/", image_config, name="image_config"),
     path("get-containers/", get_containers, name="get_containers"),
+    path("containers/", views.containers, name="containers"),
     path("accounts/", include("allauth.urls")),
     path("accounts/password_reset/", auth_views.PasswordResetView.as_view(), name="password_reset"),
     path("accounts/password_reset/done/", auth_views.PasswordResetDoneView.as_view(), name="password_reset_done"),

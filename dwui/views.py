@@ -239,51 +239,51 @@ def container_details(request: HttpRequest, container_id: str) -> HttpResponse: 
     with DockerClient() as client:
         container = client.containers.get(container_id)
 
-        # Get log parameters from request
-        tail_param = request.GET.get("tail", "all")
-        tail: int | Literal["all"] = int(tail_param) if tail_param.isdigit() else "all"
-        timestamps: bool = request.GET.get("timestamps", "false").lower() == "true"
-        since_param = request.GET.get("since")
-        since: datetime | float | None = float(since_param) if since_param and since_param.isdigit() else None
-        until_param = request.GET.get("until")
-        until: datetime | float | None = float(until_param) if until_param and until_param.isdigit() else None
-        follow: bool | None = request.GET.get("follow", "false").lower() == "true"
+    # Get log parameters from request
+    tail_param = request.GET.get("tail", "all")
+    tail: int | Literal["all"] = int(tail_param) if tail_param.isdigit() else "all"
+    timestamps: bool = request.GET.get("timestamps", "false").lower() == "true"
+    since_param = request.GET.get("since")
+    since: datetime | float | None = float(since_param) if since_param and since_param.isdigit() else None
+    until_param = request.GET.get("until")
+    until: datetime | float | None = float(until_param) if until_param and until_param.isdigit() else None
+    follow: bool | None = request.GET.get("follow", "false").lower() == "true"
 
-        container_stats = container.stats(stream=False)
-        logs: str = container.logs(tail=tail, timestamps=timestamps, since=since, until=until, follow=follow).decode("utf-8")
+    container_stats = container.stats(stream=False)
+    logs: str = container.logs(tail=tail, timestamps=timestamps, since=since, until=until, follow=follow).decode("utf-8")
 
-        # Convert ansi codes to HTML
-        logs = remove_ansi(logs)
+    # Convert ansi codes to HTML
+    logs = remove_ansi(logs)
 
-        # Extract and sort environment variables alphabetically
-        env_vars: list[str] = container.attrs.get("Config", {}).get("Env", [])
-        sorted_env_vars: list[str] = sorted(env_vars)
+    # Extract and sort environment variables alphabetically
+    env_vars: list[str] = container.attrs.get("Config", {}).get("Env", [])
+    sorted_env_vars: list[str] = sorted(env_vars)
 
-        # Format environment variables for display
-        # Blur sensitive information and convert URLs to clickable links
-        url_pattern: re.Pattern[str] = re.compile(r"(https?://\S+)")
-        formatted_env_vars: list[str] = []
-        blur_list: list[str] = ["SECRET", "TOKEN", "PASSWORD"]
-        for env in sorted_env_vars:
-            key, value = env.split("=", 1)
-            if any(blur in key for blur in blur_list):
-                formatted_env_vars.append(
-                    format_html(
-                        '{}=<span class="blurred" onclick="this.classList.remove(\'blurred\')">{}</span>',
-                        key,
-                        value,
-                    )
+    # Format environment variables for display
+    # Blur sensitive information and convert URLs to clickable links
+    url_pattern: re.Pattern[str] = re.compile(r"(https?://\S+)")
+    formatted_env_vars: list[str] = []
+    blur_list: list[str] = ["SECRET", "TOKEN", "PASSWORD"]
+    for env in sorted_env_vars:
+        key, value = env.split("=", 1)
+        if any(blur in key for blur in blur_list):
+            formatted_env_vars.append(
+                format_html(
+                    '{}=<span class="blurred" onclick="this.classList.remove(\'blurred\')">{}</span>',
+                    key,
+                    value,
                 )
-            else:
-                formatted_env_vars.append(format_html(url_pattern.sub(r'<a href="\1">\1</a>', env)))
+            )
+        else:
+            formatted_env_vars.append(format_html(url_pattern.sub(r'<a href="\1">\1</a>', env)))
 
-        context: dict[str, Any] = {
-            "container": container,
-            "container_stats": container_stats,
-            "logs": logs,
-            "sorted_env_vars": formatted_env_vars,
-            "container_metadata": container.attrs.get("Config", {}).get("Labels", {}),
-        }
+    context: dict[str, Any] = {
+        "container": container,
+        "container_stats": container_stats,
+        "logs": logs,
+        "sorted_env_vars": formatted_env_vars,
+        "container_metadata": container.attrs.get("Config", {}).get("Labels", {}),
+    }
 
     return render(request, "container_details.html", context)
 

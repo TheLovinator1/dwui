@@ -32,6 +32,7 @@ INTERNAL_IPS: list[str] = ["127.0.0.1", "::1"]
 SITE_ID = 1
 WSGI_APPLICATION = "dwui.wsgi.application"
 ROOT_URLCONF = "dwui.urls"
+AUTH_USER_MODEL = "dwui.CustomUser"
 
 INSTALLED_APPS: list[str] = [
     "dwui.apps.DWUIAppConfig",

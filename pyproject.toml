@@ -71,6 +71,10 @@ line-length = 140
     "S311",    # Standard pseudo-random generators are not suitable for cryptographic purposes
 ]
 
+"**/migrations/*.py" = [
+    "RUF012", # Checks for mutable default values in class attributes.
+]
+
 # https://github.com/astral-sh/ruff/issues/12200#issuecomment-2244480290
 [tool.ruff.lint.flake8-tidy-imports.banned-api]
 "dwui.settings".msg = "See https://docs.djangoproject.com/en/dev/topics/settings/#using-settings-in-python-code. Use 'from django.conf import settings' instead."

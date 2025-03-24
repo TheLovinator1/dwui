@@ -500,4 +500,7 @@ def networks(request: HttpRequest) -> HttpResponse:
     # Move host, none and bridge networks to the end of the list
     networks.sort(key=lambda net: net.name in {"host", "none", "bridge"})
 
-    return render(request, "networks.html", {"networks": networks})
+    context = {"networks": networks}
+    if request.headers.get("HX-Request"):
+        return render(request, "partials/networks_table.html", context)
+    return render(request, "networks.html", context)

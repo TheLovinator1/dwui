@@ -1,16 +1,15 @@
 from __future__ import annotations
 
 import logging
+import re
 from typing import TYPE_CHECKING, Any, Literal, cast
-
-if TYPE_CHECKING:
-    from datetime import datetime
 
 import requests
 from django.contrib.auth.decorators import login_not_required  # pyright: ignore[reportAttributeAccessIssue]
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
+from django.utils.html import format_html
 from docker import errors
 from packaging import version
 
@@ -19,6 +18,8 @@ from dwui.container_images import get_categories, get_container_image_by_name, g
 from dwui.docker_helper import DockerClient
 
 if TYPE_CHECKING:
+    from datetime import datetime
+
     from django.http import HttpRequest
     from docker.models.containers import Container, _RestartPolicy
 
@@ -225,7 +226,7 @@ def new_container(request: HttpRequest) -> HttpResponse:
 
 
 @login_not_required
-def container_details(request: HttpRequest, container_id: str) -> HttpResponse:
+def container_details(request: HttpRequest, container_id: str) -> HttpResponse:  # noqa: PLR0914
     """Show details for a specific container.
 
     Args:
@@ -258,11 +259,15 @@ def container_details(request: HttpRequest, container_id: str) -> HttpResponse:
         env_vars: list[str] = container.attrs.get("Config", {}).get("Env", [])
         sorted_env_vars: list[str] = sorted(env_vars)
 
+        # Format environment variables for HTML rendering
+        url_pattern = re.compile(r"(https?://\S+)")
+        formatted_env_vars: list[str] = [format_html(url_pattern.sub(r'<a href="\1">\1</a>', env)) for env in sorted_env_vars]
+
         context: dict[str, Any] = {
             "container": container,
             "container_stats": container_stats,
             "logs": logs,
-            "sorted_env_vars": sorted_env_vars,
+            "sorted_env_vars": formatted_env_vars,
             "container_metadata": container.attrs.get("Config", {}).get("Labels", {}),
         }
 

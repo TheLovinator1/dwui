@@ -5,7 +5,7 @@
 {% block content %}
 <div class="container mt-4" id="container-details">
     <div class="d-flex justify-content-between align-items-center">
-        <h1>Container: {{ container.name }}</h1>
+        <h1>{{ container.name }}</h1>
         <a href="{% url 'index' %}" class="btn btn-secondary">Back to List</a>
     </div>
 
@@ -47,7 +47,7 @@
                     <p><strong>ID:</strong> {{ container.short_id }}</p>
                     <p><strong>Name:</strong> {{ container.name }}</p>
                     <p><strong>Image:</strong> {{ container.image.tags.0|default:container.image.short_id }}</p>
-                    <p><strong>Created:</strong> {{ container.attrs.Created|date:"Y-m-d H:i:s" }}</p>
+                    <p><strong>Created:</strong> {{ container.attrs.Created }}</p>
                     <p><strong>Status:</strong>
                         {% if container.status == "running" %}
                         <span class="badge bg-success">Running</span>
@@ -67,8 +67,9 @@
                     {% endif %}
                 </div>
                 <div class="col-md-6">
+                    {% if container.health and container.health != "unknown" %}
                     <p><strong>Health:</strong> {{ container.health }}</p>
-                    <p><strong>IP Address:</strong> {{ container.attrs.NetworkSettings.IPAddress }}</p>
+                    {% endif %}
                     <p><strong>Restart Policy:</strong> {{ container.attrs.HostConfig.RestartPolicy.Name }}</p>
                     <p><strong>Command:</strong> {{ container.attrs.Config.Cmd|join:" " }}</p>
                     {% if container_metadata.version %}
@@ -183,6 +184,112 @@
                     {% endfor %}
                 </tbody>
             </table>
+        </div>
+    </div>
+
+    <div class="card mt-4">
+        <div class="card-header">
+            <h3>Network Settings</h3>
+        </div>
+        <div class="card-body">
+            {% if container.attrs.NetworkSettings.Bridge %}
+            <p><strong>Bridge:</strong> {{ container.attrs.NetworkSettings.Bridge }}</p>
+            {% endif %}
+            {% if container.attrs.NetworkSettings.SandboxID %}
+            <p><strong>Sandbox ID:</strong> {{ container.attrs.NetworkSettings.SandboxID }}</p>
+            {% endif %}
+            {% if container.attrs.NetworkSettings.SandboxKey %}
+            <p><strong>Sandbox Key:</strong> {{ container.attrs.NetworkSettings.SandboxKey }}</p>
+            {% endif %}
+            {% if container.attrs.NetworkSettings.HairpinMode is not none %}
+            <p><strong>Hairpin Mode:</strong> {{ container.attrs.NetworkSettings.HairpinMode }}</p>
+            {% endif %}
+            {% if container.attrs.NetworkSettings.LinkLocalIPv6Address %}
+            <p><strong>Link Local IPv6 Address:</strong> {{ container.attrs.NetworkSettings.LinkLocalIPv6Address }}</p>
+            {% endif %}
+            {% if container.attrs.NetworkSettings.LinkLocalIPv6PrefixLen %}
+            <p><strong>Link Local IPv6 Prefix Length:</strong>
+                {{ container.attrs.NetworkSettings.LinkLocalIPv6PrefixLen }}</p>
+            {% endif %}
+            {% if container.attrs.NetworkSettings.SecondaryIPAddresses %}
+            <p><strong>Secondary IP Addresses:</strong> {{ container.attrs.NetworkSettings.SecondaryIPAddresses }}</p>
+            {% endif %}
+            {% if container.attrs.NetworkSettings.SecondaryIPv6Addresses %}
+            <p><strong>Secondary IPv6 Addresses:</strong> {{ container.attrs.NetworkSettings.SecondaryIPv6Addresses }}
+            </p>
+            {% endif %}
+            {% if container.attrs.NetworkSettings.EndpointID %}
+            <p><strong>Endpoint ID:</strong> {{ container.attrs.NetworkSettings.EndpointID }}</p>
+            {% endif %}
+            {% if container.attrs.NetworkSettings.Gateway %}
+            <p><strong>Gateway:</strong> {{ container.attrs.NetworkSettings.Gateway }}</p>
+            {% endif %}
+            {% if container.attrs.NetworkSettings.GlobalIPv6Address %}
+            <p><strong>Global IPv6 Address:</strong> {{ container.attrs.NetworkSettings.GlobalIPv6Address }}</p>
+            {% endif %}
+            {% if container.attrs.NetworkSettings.GlobalIPv6PrefixLen %}
+            <p><strong>Global IPv6 Prefix Length:</strong> {{ container.attrs.NetworkSettings.GlobalIPv6PrefixLen }}</p>
+            {% endif %}
+            {% if container.attrs.NetworkSettings.IPAddress %}
+            <p><strong>IP Address:</strong> {{ container.attrs.NetworkSettings.IPAddress }}</p>
+            {% endif %}
+            {% if container.attrs.NetworkSettings.IPPrefixLen %}
+            <p><strong>IP Prefix Length:</strong> {{ container.attrs.NetworkSettings.IPPrefixLen }}</p>
+            {% endif %}
+            {% if container.attrs.NetworkSettings.IPv6Gateway %}
+            <p><strong>IPv6 Gateway:</strong> {{ container.attrs.NetworkSettings.IPv6Gateway }}</p>
+            {% endif %}
+            {% if container.attrs.NetworkSettings.MacAddress %}
+            <p><strong>MAC Address:</strong> {{ container.attrs.NetworkSettings.MacAddress }}</p>
+            {% endif %}
+            <h4>Networks</h4>
+            {% for network_name, network_config in container.attrs.NetworkSettings.Networks.items %}
+            <div class="network p-3 mb-3">
+                <h5>{{ network_name }}</h5>
+                {% if network_config.IPAMConfig %}
+                <p><strong>IPAM Config:</strong> {{ network_config.IPAMConfig }}</p>
+                {% endif %}
+                {% if network_config.Links %}
+                <p><strong>Links:</strong> {{ network_config.Links }}</p>
+                {% endif %}
+                {% if network_config.Aliases %}
+                <p><strong>Aliases:</strong> {{ network_config.Aliases }}</p>
+                {% endif %}
+                {% if network_config.MacAddress %}
+                <p><strong>MAC Address:</strong> {{ network_config.MacAddress }}</p>
+                {% endif %}
+                {% if network_config.DriverOpts %}
+                <p><strong>Driver Options:</strong> {{ network_config.DriverOpts }}</p>
+                {% endif %}
+                {% if network_config.NetworkID %}
+                <p><strong>Network ID:</strong> {{ network_config.NetworkID }}</p>
+                {% endif %}
+                {% if network_config.EndpointID %}
+                <p><strong>Endpoint ID:</strong> {{ network_config.EndpointID }}</p>
+                {% endif %}
+                {% if network_config.Gateway %}
+                <p><strong>Gateway:</strong> {{ network_config.Gateway }}</p>
+                {% endif %}
+                {% if network_config.IPAddress %}
+                <p><strong>IP Address:</strong> {{ network_config.IPAddress }}</p>
+                {% endif %}
+                {% if network_config.IPPrefixLen %}
+                <p><strong>IP Prefix Length:</strong> {{ network_config.IPPrefixLen }}</p>
+                {% endif %}
+                {% if network_config.IPv6Gateway %}
+                <p><strong>IPv6 Gateway:</strong> {{ network_config.IPv6Gateway }}</p>
+                {% endif %}
+                {% if network_config.GlobalIPv6Address %}
+                <p><strong>Global IPv6 Address:</strong> {{ network_config.GlobalIPv6Address }}</p>
+                {% endif %}
+                {% if network_config.GlobalIPv6PrefixLen %}
+                <p><strong>Global IPv6 Prefix Length:</strong> {{ network_config.GlobalIPv6PrefixLen }}</p>
+                {% endif %}
+                {% if network_config.DNSNames %}
+                <p><strong>DNS Names:</strong> {{ network_config.DNSNames }}</p>
+                {% endif %}
+            </div>
+            {% endfor %}
         </div>
     </div>
 

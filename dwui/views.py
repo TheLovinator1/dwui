@@ -272,7 +272,7 @@ def container_details(request: HttpRequest, container_id: str) -> HttpResponse: 
                     '{}=<span class="blurred" onclick="this.classList.remove(\'blurred\')">{}</span>',
                     key,
                     value,
-                )
+                ),
             )
         else:
             formatted_env_vars.append(format_html(url_pattern.sub(r'<a href="\1">\1</a>', env)))

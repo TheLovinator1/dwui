@@ -259,9 +259,23 @@ def container_details(request: HttpRequest, container_id: str) -> HttpResponse: 
         env_vars: list[str] = container.attrs.get("Config", {}).get("Env", [])
         sorted_env_vars: list[str] = sorted(env_vars)
 
-        # Format environment variables for HTML rendering
-        url_pattern = re.compile(r"(https?://\S+)")
-        formatted_env_vars: list[str] = [format_html(url_pattern.sub(r'<a href="\1">\1</a>', env)) for env in sorted_env_vars]
+        # Format environment variables for display
+        # Blur sensitive information and convert URLs to clickable links
+        url_pattern: re.Pattern[str] = re.compile(r"(https?://\S+)")
+        formatted_env_vars: list[str] = []
+        blur_list: list[str] = ["SECRET", "TOKEN", "PASSWORD"]
+        for env in sorted_env_vars:
+            key, value = env.split("=", 1)
+            if any(blur in key for blur in blur_list):
+                formatted_env_vars.append(
+                    format_html(
+                        '{}=<span class="blurred" onclick="this.classList.remove(\'blurred\')">{}</span>',
+                        key,
+                        value,
+                    )
+                )
+            else:
+                formatted_env_vars.append(format_html(url_pattern.sub(r'<a href="\1">\1</a>', env)))
 
         context: dict[str, Any] = {
             "container": container,

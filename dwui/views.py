@@ -254,10 +254,15 @@ def container_details(request: HttpRequest, container_id: str) -> HttpResponse:
         # Convert ansi codes to HTML
         logs = remove_ansi(logs)
 
+        # Extract and sort environment variables alphabetically
+        env_vars: list[str] = container.attrs.get("Config", {}).get("Env", [])
+        sorted_env_vars: list[str] = sorted(env_vars)
+
         context: dict[str, Any] = {
             "container": container,
             "container_stats": container_stats,
             "logs": logs,
+            "sorted_env_vars": sorted_env_vars,
             "container_metadata": container.attrs.get("Config", {}).get("Labels", {}),
         }
 

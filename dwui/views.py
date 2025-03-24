@@ -24,6 +24,7 @@ if TYPE_CHECKING:
     from django.http import HttpRequest
     from docker.models.containers import Container, _RestartPolicy
     from docker.models.networks import Network
+    from docker.models.volumes import Volume
 
 logger: logging.Logger = logging.getLogger("dwui.views")
 
@@ -517,6 +518,46 @@ def networks(request: HttpRequest) -> HttpResponse:
         ]
 
     context: dict[str, list[Network]] = {"networks": networks}
+
     if request.headers.get("HX-Request"):
         return render(request, "partials/networks_table.html", context)
+
     return render(request, "networks.html", context)
+
+
+@login_not_required
+def volumes(request: HttpRequest) -> HttpResponse:
+    """Render a view with a table of all Docker volumes.
+
+    Args:
+        request: HttpRequest object.
+
+    Returns:
+        HttpResponse: The response object containing the volumes view.
+    """
+    with DockerClient() as client:
+        volumes: list[Volume] = client.volumes.list()
+
+    # Sort volumes by name
+    volumes.sort(key=lambda vol: vol.name or "")
+
+    # Filter volumes with search query if provided
+    search: str = request.GET.get("search", "")
+    if search:
+        logger.info("Filtering volumes with search term: %s", search)
+        low_search = search.lower()
+        volumes = [
+            vol
+            for vol in volumes
+            if low_search in (vol.name or "").lower()
+            or low_search in (str(vol.attrs.get("CreatedAt", ""))).lower()
+            or low_search in (str(vol.attrs.get("Driver", ""))).lower()
+            or low_search in (str(vol.attrs.get("Mountpoint", ""))).lower()
+        ]
+
+    context: dict[str, list[Volume]] = {"volumes": volumes}
+
+    if request.headers.get("HX-Request"):
+        return render(request, "partials/volumes_table.html", context)
+
+    return render(request, "volumes.html", context)

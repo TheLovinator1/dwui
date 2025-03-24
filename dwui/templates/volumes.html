@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Volumes - dwui{% endblock title %}
+
+{% block content %}
+<h1>Docker Volumes</h1>
+<input type="text" id="volumeSearch" name="search" class="form-control mb-3" placeholder="Search volumes..."
+    hx-trigger="keyup changed delay:14ms" hx-get="{% url 'volumes' %}" hx-target="#volumesTable"
+    hx-include="#volumeSearch" />
+<div id="volumesTable" class="container mt-4" hx-get="{% url 'volumes' %}" hx-trigger="every 5s"
+    hx-include="#volumeSearch">
+    {% include "partials/volumes_table.html" %}
+</div>
+{% endblock content %}

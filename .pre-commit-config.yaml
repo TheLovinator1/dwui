@@ -23,6 +23,12 @@ repos:
         args: ["--pytest-test-first"]
       - id: trailing-whitespace
 
+  - repo: https://github.com/adamchainz/django-upgrade
+    rev: "1.23.1"
+    hooks:
+      - id: django-upgrade
+        args: [--target-version, "5.1"]
+
   - repo: https://github.com/asottile/pyupgrade
     rev: v3.19.1
     hooks:

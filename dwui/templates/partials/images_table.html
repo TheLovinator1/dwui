@@ -1,0 +1,34 @@
+{% load app_filters %}
+<table id="imagesTable" class="table table-striped table-bordered table-sm">
+    <thead>
+        <tr>
+            <th>Repository</th>
+            <th>Tag</th>
+            <th>Created</th>
+            <th>Size</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for image in images %}
+        <tr>
+            <td>
+                {% if image.attrs.Config.Labels|dict_get:"org.opencontainers.image.source" %}
+                <a href='{{ image.attrs.Config.Labels|dict_get:"org.opencontainers.image.source" }}'>{{ image.attrs.RepoTags.0|default:"<none>" }}
+                </a>
+                {% else %}
+                {{ image.attrs.RepoTags.0|default:"<none>" }}
+                {% endif %}
+            </td>
+            <td>{{ image.id|truncatechars:12 }}</td>
+            <td>{{ image.attrs.Created }}</td>
+            <td>{{ image.attrs.Size|filesizeformat }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="5">No images found.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<p class="text-end text-muted">Last updated: {% now "Y-m-d H:i:s" %}</p>
+<p class="text-end text-muted">Total size: {{ total_size|filesizeformat }}</p>

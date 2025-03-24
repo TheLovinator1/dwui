@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% load app_filters %}
+
+{% block title %}Docker Web UI - Images{% endblock title %}
+
+{% block content %}
+<h1>Docker Images</h1>
+<div class="container mt-4 images-list" hx-get="{% url 'images' %}" hx-trigger="every 5s">
+    {% include "partials/images_table.html" %}
+</div>
+{% endblock content %}

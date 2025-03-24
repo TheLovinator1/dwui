@@ -23,6 +23,7 @@ if TYPE_CHECKING:
 
     from django.http import HttpRequest
     from docker.models.containers import Container, _RestartPolicy
+    from docker.models.images import Image
     from docker.models.networks import Network
     from docker.models.volumes import Volume
 
@@ -561,3 +562,26 @@ def volumes(request: HttpRequest) -> HttpResponse:
         return render(request, "partials/volumes_table.html", context)
 
     return render(request, "volumes.html", context)
+
+
+@login_not_required
+def images(request: HttpRequest) -> HttpResponse:
+    """Render a view with a table of all Docker images.
+
+    Args:
+        request (HttpRequest): The request object.
+
+    Returns:
+        HttpResponse: The response object containing the images view.
+    """
+    with DockerClient() as client:
+        images: list[Image] = client.images.list()
+
+    total_size: int = sum(image.attrs.get("Size", 0) for image in images)
+
+    context: dict[str, list[Image] | float] = {"images": images, "total_size": total_size}
+
+    if request.headers.get("HX-Request"):
+        return render(request, "partials/images_table.html", context)
+
+    return render(request, "images.html", context)

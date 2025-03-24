@@ -34,6 +34,7 @@ urlpatterns: list[URLResolver | URLPattern] = [
     path("containers/", views.containers, name="containers"),
     path("networks/", views.networks, name="networks"),
     path("volumes/", views.volumes, name="volumes"),
+    path("images/", views.images, name="images"),
     path("accounts/", include("allauth.urls")),
     path("accounts/password_reset/", auth_views.PasswordResetView.as_view(), name="password_reset"),
     path("accounts/password_reset/done/", auth_views.PasswordResetDoneView.as_view(), name="password_reset_done"),

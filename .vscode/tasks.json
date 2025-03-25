@@ -1,0 +1,87 @@
+{
+    "version": "2.0.0",
+    "options": {
+        "env": {
+            "DJANGO_SETTINGS_MODULE": "dwui.settings"
+        }
+    },
+    "tasks": [
+        {
+            "label": "Run Django Server",
+            "type": "shell",
+            "command": "uv run python manage.py runserver",
+            "group": "build",
+            "problemMatcher": [],
+            "detail": "Runs the Django development server"
+        },
+        {
+            "label": "Make Migrations",
+            "type": "shell",
+            "command": "uv run python manage.py makemigrations",
+            "group": "build",
+            "problemMatcher": [
+                "$python"
+            ],
+            "detail": "Creates new migrations based on the changes detected to your models"
+        },
+        {
+            "label": "Apply Migrations",
+            "type": "shell",
+            "command": "uv run python manage.py migrate",
+            "group": "build",
+            "problemMatcher": [
+                "$python"
+            ],
+            "detail": "Applies migrations to the database"
+        },
+        {
+            "label": "Create Superuser",
+            "type": "shell",
+            "command": "uv run python manage.py createsuperuser --noinput",
+            "options": {
+                "cwd": "${workspaceFolder}",
+                "env": {
+                    "DJANGO_SUPERUSER_USERNAME": "${input:superuser_username}",
+                    "DJANGO_SUPERUSER_EMAIL": "${input:superuser_email}",
+                    "DJANGO_SUPERUSER_PASSWORD": "${input:superuser_password}"
+                }
+            },
+            "group": "build",
+            "problemMatcher": [
+                "$python"
+            ],
+            "detail": "Creates a new superuser"
+        },
+        {
+            "label": "Collect Static Files",
+            "type": "shell",
+            "command": "uv run python manage.py collectstatic --noinput",
+            "group": "build",
+            "problemMatcher": [
+                "$python"
+            ],
+            "detail": "Collects static files into STATIC_ROOT"
+        }
+    ],
+    "inputs": [
+        {
+            "id": "superuser_username",
+            "type": "promptString",
+            "description": "Enter the username for the superuser",
+            "default": "TheLovinator",
+        },
+        {
+            "id": "superuser_email",
+            "type": "promptString",
+            "description": "Enter the email for the superuser",
+            "default": "tlovinator@gmail.com",
+        },
+        {
+            "id": "superuser_password",
+            "type": "promptString",
+            "description": "Enter the password for the superuser",
+            "default": "",
+            "password": true,
+        }
+    ]
+}

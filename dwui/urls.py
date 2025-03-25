@@ -4,7 +4,6 @@ import sys
 from typing import TYPE_CHECKING
 
 from debug_toolbar.toolbar import debug_toolbar_urls
-from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.urls import URLPattern, include, path
 
@@ -19,7 +18,6 @@ if TYPE_CHECKING:
     from django.urls.resolvers import URLResolver
 
 urlpatterns: list[URLResolver | URLPattern] = [
-    path("admin/", admin.site.urls),
     path("", views.index, name="index"),
     path("containers/new/", views.new_container, name="new_container"),
     path("container/<str:container_id>/", views.container_details, name="container_details"),
@@ -35,6 +33,7 @@ urlpatterns: list[URLResolver | URLPattern] = [
     path("networks/", views.networks, name="networks"),
     path("volumes/", views.volumes, name="volumes"),
     path("images/", views.images, name="images"),
+    path("admin/", views.settings_page, name="admin_settings"),
     path("accounts/", include("allauth.urls")),
     path("accounts/password_reset/", auth_views.PasswordResetView.as_view(), name="password_reset"),
     path("accounts/password_reset/done/", auth_views.PasswordResetDoneView.as_view(), name="password_reset_done"),

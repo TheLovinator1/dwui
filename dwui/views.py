@@ -5,9 +5,10 @@ import re
 from typing import TYPE_CHECKING, Any, Literal, cast
 
 import requests
+from django.conf import settings
 from django.contrib.auth.decorators import login_not_required  # pyright: ignore[reportAttributeAccessIssue]
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.utils.html import format_html
 from docker import errors
@@ -17,6 +18,8 @@ from packaging import version
 from dwui.console import remove_ansi
 from dwui.container_images import get_categories, get_container_image_by_name, get_container_images
 from dwui.docker_helper import DockerClient
+from dwui.forms import SettingsForm
+from dwui.models import AdminSettings
 
 if TYPE_CHECKING:
     from datetime import datetime
@@ -585,3 +588,39 @@ def images(request: HttpRequest) -> HttpResponse:
         return render(request, "partials/images_table.html", context)
 
     return render(request, "images.html", context)
+
+
+@login_not_required
+def settings_page(request: HttpRequest) -> HttpResponse:
+    """Render the settings page and handle form submission.
+
+    Args:
+        request (HttpRequest): The request object.
+
+    Returns:
+        HttpResponse: The response object.
+    """
+    if request.method == "POST":
+        form = SettingsForm(request.POST)
+        if form.is_valid():
+            # Process the form data
+            site_name = form.cleaned_data["site_name"]
+            admin_email = form.cleaned_data["admin_email"]
+            enable_notifications = form.cleaned_data["enable_notifications"]
+
+            # Save the settings to the database
+            AdminSettings.objects.update_or_create(
+                id=settings.SITE_ID,
+                defaults={
+                    "site_id": settings.SITE_ID,
+                    "site_name": site_name,
+                    "admin_email": admin_email,
+                    "enable_notifications": enable_notifications,
+                },
+            )
+            return redirect("admin_settings")
+    else:
+        form = SettingsForm()
+
+    context = {"form": form, "site_id": settings.SITE_ID}
+    return render(request, "admin.html", context)

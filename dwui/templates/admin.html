@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load django_bootstrap5 %}
+{% block title %}Settings - dwui{% endblock title %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1>Settings</h1>
+    <p>
+        Site id: {{ site_id }}<br>
+    </p>
+    <p>Manage your application settings here.</p>
+    <form method="post" novalidate>
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        <button type="submit" class="btn btn-primary">Save Settings</button>
+    </form>
+</div>
+{% endblock content %}

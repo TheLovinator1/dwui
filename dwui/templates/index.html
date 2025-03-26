@@ -34,13 +34,7 @@
                     <h5>Docker Info</h5>
                 </div>
                 <div class="card-body">
-                    {% if is_outdated %}
-                    <p><strong>Docker Version:</strong> {{ version.Version }}
-                        <a href="{{ changelog_url }}" class="badge bg-warning">{{ latest_version }} available</a>
-                    </p>
-                    {% else %}
                     <p><strong>Docker Version:</strong> {{ version.Version }}</p>
-                    {% endif %}
                     <p><strong>API Version:</strong> {{ version.ApiVersion }}</p>
                     <p><strong>OS:</strong> {{ version.Os }} / {{ version.Arch }}</p>
                 </div>

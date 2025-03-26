@@ -27,10 +27,6 @@ dependencies = [
 
     # For reading .env files
     "python-dotenv>=1.0.1",
-
-    # For Docker version parsing
-    "packaging>=24.2",
-    "requests>=2.32.3",
 ]
 
 [dependency-groups]

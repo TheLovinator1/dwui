@@ -4,7 +4,6 @@ import logging
 import re
 from typing import TYPE_CHECKING, Any, Literal, cast
 
-import requests
 from django.conf import settings
 from django.contrib.auth.decorators import login_not_required  # pyright: ignore[reportAttributeAccessIssue]
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
@@ -13,7 +12,6 @@ from django.urls import reverse
 from django.utils.html import format_html
 from docker import errors
 from docker.models.networks import Network
-from packaging import version
 
 from dwui.console import remove_ansi
 from dwui.container_images import get_categories, get_container_image_by_name, get_container_images
@@ -32,26 +30,6 @@ if TYPE_CHECKING:
     from docker.models.volumes import Volume
 
 logger: logging.Logger = logging.getLogger("dwui.views")
-
-
-def get_latest_docker_version() -> str | None:
-    """Get the latest Docker version from Arch Linux package repository.
-
-    Returns:
-        str | None: The latest version string or None if unable to fetch.
-    """
-    try:
-        response: requests.Response = requests.get("https://archlinux.org/packages/extra/x86_64/docker/json/", timeout=5)
-        response.raise_for_status()
-        data: dict[str, Any] = response.json()
-
-        # Extract the version from the JSON data
-        latest_version: str = data.get("pkgver", "")
-        if latest_version:
-            return latest_version
-    except Exception:
-        logger.exception("Failed to fetch latest Docker version")
-    return None
 
 
 @login_not_required
@@ -90,32 +68,7 @@ def index(request: HttpRequest) -> HttpResponse:
     with DockerClient() as client:
         current_version_info: dict = client.version()
 
-        current_version: str = current_version_info.get("Version", "")
-        latest_version: str | None = get_latest_docker_version()
-        is_outdated = False
-        version_message: str | None = None
-        changelog_url: str = "https://docs.docker.com/engine/release-notes/"
-
-        if latest_version and current_version:
-            try:
-                # Remove any leading 'v' prefix if present
-                latest_version = latest_version.removeprefix("v")
-                current_version = current_version.removeprefix("v")
-
-                logger.info("Current Docker version: %s, Latest version: %s", current_version, latest_version)
-
-                # Compare versions
-                is_outdated: bool = version.parse(current_version) < version.parse(latest_version)
-                if is_outdated:
-                    version_message = f"Your Docker version ({current_version}) is outdated. Latest version is {latest_version}."
-            except Exception:
-                logger.exception("Error comparing Docker versions")
-
         context: dict[str, Any] = {
-            "changelog_url": changelog_url,
-            "is_outdated": is_outdated,
-            "latest_version": latest_version,
-            "version_message": version_message,
             "version": current_version_info,
         }
 

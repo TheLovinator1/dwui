@@ -1,6 +1,7 @@
 {
     "python.analysis.typeCheckingMode": "standard",
     "cSpell.words": [
+        "adminsettings",
         "Airsonic",
         "allauth",
         "appauthor",
@@ -35,6 +36,7 @@
         "PYTHONDONTWRITEBYTECODE",
         "PYTHONUNBUFFERED",
         "pyupgrade",
+        "pywin",
         "socialaccount",
         "TheLovinator",
         "uidb"

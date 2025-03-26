@@ -19,16 +19,17 @@ class AdminSettings(models.Model):
 
     Attributes:
         site_name (str): The name of the site.
-        admin_email (str): The email address of the site administrator.
-        enable_notifications (bool): A flag indicating whether notifications are enabled.
+        enable_notifications (bool): Flag to enable or disable notifications.
+        apprise_urls (str): A newline-separated list of URLs for notifications.
 
     Methods:
         __str__(): Returns the site name as the string representation of the model.
     """
 
-    site_name = models.CharField(max_length=100)
-    admin_email = models.EmailField()
-    enable_notifications = models.BooleanField(default=False)
+    site_id = models.AutoField(primary_key=True, help_text="Site ID")
+    site_name = models.TextField(blank=True, max_length=100, default="dwui", help_text="Site Name")
+    enable_notifications = models.BooleanField(default=False, help_text="Send notifications to apprise URLs")
+    apprise_urls = models.TextField(blank=True, help_text="Newline separated list of apprise URLs")
 
     def __str__(self) -> str:
         """Return the site name."""

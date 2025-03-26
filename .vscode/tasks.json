@@ -7,14 +7,6 @@
     },
     "tasks": [
         {
-            "label": "Run Django Server",
-            "type": "shell",
-            "command": "uv run python manage.py runserver",
-            "group": "build",
-            "problemMatcher": [],
-            "detail": "Runs the Django development server"
-        },
-        {
             "label": "Make Migrations",
             "type": "shell",
             "command": "uv run python manage.py makemigrations",

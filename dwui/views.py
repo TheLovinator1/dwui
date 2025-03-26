@@ -7,7 +7,7 @@ from typing import TYPE_CHECKING, Any, Literal, cast
 import requests
 from django.conf import settings
 from django.contrib.auth.decorators import login_not_required  # pyright: ignore[reportAttributeAccessIssue]
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.utils.html import format_html
@@ -20,6 +20,7 @@ from dwui.container_images import get_categories, get_container_image_by_name, g
 from dwui.docker_helper import DockerClient
 from dwui.forms import SettingsForm
 from dwui.models import AdminSettings
+from dwui.notifications import send_notification
 
 if TYPE_CHECKING:
     from datetime import datetime
@@ -605,22 +606,42 @@ def settings_page(request: HttpRequest) -> HttpResponse:
         if form.is_valid():
             # Process the form data
             site_name = form.cleaned_data["site_name"]
-            admin_email = form.cleaned_data["admin_email"]
             enable_notifications = form.cleaned_data["enable_notifications"]
+            apprise_urls = form.cleaned_data["apprise_urls"]
 
             # Save the settings to the database
             AdminSettings.objects.update_or_create(
-                id=settings.SITE_ID,
+                site_id=settings.SITE_ID,
                 defaults={
-                    "site_id": settings.SITE_ID,
                     "site_name": site_name,
-                    "admin_email": admin_email,
                     "enable_notifications": enable_notifications,
+                    "apprise_urls": apprise_urls,
                 },
             )
             return redirect("admin_settings")
     else:
         form = SettingsForm()
 
-    context = {"form": form, "site_id": settings.SITE_ID}
+    context: dict[str, SettingsForm | Any] = {"form": form, "site_id": settings.SITE_ID}
     return render(request, "admin.html", context)
+
+
+@login_not_required
+def test_notifications(request: HttpRequest) -> JsonResponse:
+    """Handle the test notifications request.
+
+    Returns:
+        JsonResponse: A JSON response with a success message.
+    """
+    # This function returns True if all notifications were successfully
+    # sent, False if even just one of them fails, and None if no
+    # notifications were sent at all.
+    success: bool | None = send_notification(
+        title="Test Notification",
+        body="This is a test notification from the DWUI application.",
+    )
+    if success is None:
+        return JsonResponse({"message": "No notifications were sent."}, status=400)
+    if success is False:
+        return JsonResponse({"message": "One or more notifications failed to send."}, status=500)
+    return JsonResponse({"message": "Test notification sent successfully."})

@@ -7,16 +7,30 @@ license = "GPL-3.0-or-later"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
+    # For notifications
+    "apprise>=1.9.2",
+    "pywin32>=310",
+
+    # Django and dependencies
     "django-allauth>=65.4.1",
     "django-bootstrap5>=25.1",
     "django>=5.1.7",
-    "docker>=7.1.0",
-    "packaging>=24.2",
-    "paramiko>=3.5.1",
-    "platformdirs>=4.3.6",
-    "python-dotenv>=1.0.1",
-    "requests>=2.32.3",
     "gunicorn>=23.0.0",
+
+    # For communication with Docker
+    "docker>=7.1.0",
+    "paramiko>=3.5.1",
+
+    # For determining platform-specific directories
+    # e.g. for storing configuration files in %APPDATA%, ~/.config, etc.
+    "platformdirs>=4.3.6",
+
+    # For reading .env files
+    "python-dotenv>=1.0.1",
+
+    # For Docker version parsing
+    "packaging>=24.2",
+    "requests>=2.32.3",
 ]
 
 [dependency-groups]

@@ -81,6 +81,7 @@ TEMPLATES: list[dict[str, Any]] = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "dwui.context_processors.site_name",
             ],
         },
     },

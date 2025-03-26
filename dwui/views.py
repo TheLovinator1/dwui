@@ -14,7 +14,6 @@ from docker import errors
 from docker.models.networks import Network
 
 from dwui.console import remove_ansi
-from dwui.container_images import get_categories, get_container_image_by_name, get_container_images
 from dwui.docker_helper import DockerClient
 from dwui.forms import SettingsForm
 from dwui.models import AdminSettings
@@ -169,8 +168,8 @@ def new_container(request: HttpRequest) -> HttpResponse:
         HttpResponse: The response object.
     """
     # Get container images from the container_images module
-    container_images: list[dict] = get_container_images()
-    categories: list[str] = get_categories()
+    container_images: list[dict] = []
+    categories: list[str] = []
 
     if request.method == "POST":
         logger.info("Form submitted with POST method. %s", request.POST)
@@ -405,7 +404,7 @@ def image_config(request: HttpRequest) -> HttpResponse:
     display_name: str = request.GET.get("display_name", "")
 
     # Get container image configuration
-    image_config_dict: dict | None = get_container_image_by_name(image_name)
+    image_config_dict: dict | None = None
 
     if not image_config_dict:
         # Handle case when image is not found

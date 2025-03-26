@@ -14,11 +14,28 @@
         {% bootstrap_form form %}
         <button type="submit" class="btn btn-primary">Save Settings</button>
         <button type="button" class="btn btn-secondary" id="test-notifications">Test Notifications</button>
+        <button type="button" class="btn btn-info" id="import-data">Import Data</button>
     </form>
 </div>
 <script>
     document.getElementById('test-notifications').addEventListener('click', function () {
         fetch('/admin/test-notifications/', {
+            method: 'GET',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    });
+
+    document.getElementById('import-data').addEventListener('click', function () {
+        fetch('/admin/import-data/', {
             method: 'GET',
             headers: {
                 'X-Requested-With': 'XMLHttpRequest'

@@ -14,6 +14,7 @@ from docker import errors
 from docker.models.networks import Network
 
 from dwui.console import remove_ansi
+from dwui.data_importer import add_data_to_model, download_json
 from dwui.docker_helper import DockerClient
 from dwui.forms import SettingsForm
 from dwui.models import AdminSettings
@@ -597,3 +598,34 @@ def test_notifications(request: HttpRequest) -> JsonResponse:
     if success is False:
         return JsonResponse({"message": "One or more notifications failed to send."}, status=500)
     return JsonResponse({"message": "Test notification sent successfully."})
+
+
+@login_not_required
+def import_data(request: HttpRequest) -> JsonResponse:
+    """Handle the import data request.
+
+    Imports data from the LinuxServer.io API and adds it to the database.
+
+    Args:
+        request (HttpRequest): The request object.
+
+    Returns:
+        JsonResponse: A JSON response indicating success or failure.
+    """
+    try:
+        downloaded_json: dict[str, str] | None = download_json()
+        if not downloaded_json:
+            logger.error("Failed to download JSON data.")
+            return JsonResponse({"message": "Failed to download JSON data."}, status=500)
+
+        # Add data to model within a try-except block to catch any database errors
+        try:
+            add_data_to_model(downloaded_json)
+            logger.info("Data imported successfully.")
+            return JsonResponse({"message": "Data imported successfully."}, status=200)
+        except Exception as e:
+            logger.exception("Error importing data")
+            return JsonResponse({"message": f"Error importing data: {e!s}"}, status=500)
+    except Exception as e:
+        logger.exception("Unexpected error during data import")
+        return JsonResponse({"message": f"Unexpected error: {e!s}"}, status=500)

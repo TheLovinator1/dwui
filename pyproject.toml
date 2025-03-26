@@ -45,6 +45,7 @@ lint.ignore = [
     "CPY001",  # Checks for the absence of copyright notices within Python files.
     "D100",    # Checks for undocumented public module definitions.
     "D104",    # Checks for undocumented public package definitions.
+    "D105",    # Checks for undocumented magic method definitions.
     "D106",    # Checks for undocumented public class definitions, for nested classes
     "ERA001",  # Checks for commented-out Python code.
     "FIX002",  # Checks for "TODO" comments.

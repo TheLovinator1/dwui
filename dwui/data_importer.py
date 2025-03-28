@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import logging
+from datetime import UTC, datetime
 from typing import Any
 
 import requests
@@ -63,12 +64,36 @@ def add_data_to_model(data: dict[str, Any]) -> None:
         logger.warning("No LinuxServer repositories found in the data")
         return
 
-    # Process each container within a transaction to ensure database consistency
     for container in linux_servers:
         try:
             with transaction.atomic():
-                # Create main Linuxserver object
-                linuxserver, _ = Linuxserver.objects.get_or_create(name=container["name"])
+                # Extract version_timestamp or set default value before creating the instance
+                version_timestamp = None
+                version_timestamp_str = container.get("version_timestamp")
+                if version_timestamp_str and isinstance(version_timestamp_str, str):
+                    try:
+                        version_timestamp = datetime.fromisoformat(version_timestamp_str)
+                    except ValueError:
+                        logger.warning("Invalid version_timestamp format: %s, using current time", version_timestamp_str)
+                        version_timestamp = datetime.now(tz=UTC)
+                else:
+                    version_timestamp = datetime.now(tz=UTC)
+
+                # Use get_or_create with default values for non-nullable fields
+                linuxserver, _created = Linuxserver.objects.get_or_create(
+                    name=container["name"],
+                    defaults={
+                        "version_timestamp": version_timestamp,
+                        "description": container.get("description", ""),
+                        "version": container.get("version", ""),
+                        "category": container.get("category", ""),
+                        "stars": container.get("stars", 0),
+                    },
+                )
+
+                # If instance is newly created, version_timestamp is already set
+                # Otherwise, update via from_dict
+                linuxserver.from_dict(container)
 
                 logger.info("Successfully imported data for %s", linuxserver.name)
         except Exception:

@@ -17,7 +17,7 @@ from dwui.console import remove_ansi
 from dwui.data_importer import add_data_to_model, download_json
 from dwui.docker_helper import DockerClient
 from dwui.forms import SettingsForm
-from dwui.models import AdminSettings
+from dwui.models import AdminSettings, Linuxserver
 from dwui.notifications import send_notification
 
 if TYPE_CHECKING:
@@ -166,22 +166,45 @@ def new_container(request: HttpRequest) -> HttpResponse:
         request (HttpRequest): The request object.
 
     Returns:
-        HttpResponse: The response object.
+        HttpResponse: The response for the new container form.
     """
-    # Get container images from the container_images module
-    container_images: list[dict] = []
-    categories: list[str] = []
-
     if request.method == "POST":
-        logger.info("Form submitted with POST method. %s", request.POST)
         name: str | None = request.POST.get("name")
         image: str | None = request.POST.get("image")
 
         if name and image:
-            logger.info("Creating container with name: %s, image: %s", name, image)
             return create_container(request, name, image)
 
-    context: dict[str, Any] = {"container_images": container_images, "categories": categories}
+    # Fetch Linuxserver data and organize into categories
+    linuxserver_data = Linuxserver.objects.all()
+
+    # Organize images by category
+    categories: dict[str, list[dict[str, Any]]] = {}
+
+    for container_image in linuxserver_data:
+        # Get the category or default to "Other"
+        category: str = str(container_image.category) or "Other"
+
+        # Convert the model instance to a dictionary for the template
+        image_dict: dict[str, str] = {
+            "name": str(container_image.name),
+            "display_name": str(container_image.name),
+            "description": str(container_image.description),
+            "project_logo": str(container_image.project_logo),
+        }
+
+        # Add the image to the appropriate category
+        if category not in categories:
+            categories[category] = []
+
+        categories[category].append(image_dict)
+
+    # Sort categories alphabetically
+    sorted_categories = dict(sorted(categories.items()))
+
+    context: dict[str, Any] = {
+        "categories": sorted_categories,
+    }
 
     return render(request, "new_container.html", context)
 
@@ -392,7 +415,7 @@ def update_container(request: HttpRequest, container_id: str) -> HttpResponse:
 
 
 @login_not_required
-def image_config(request: HttpRequest) -> HttpResponse:
+def image_config(request: HttpRequest) -> HttpResponse:  # noqa: C901, PLR0912
     """Handle htmx request for container image configuration.
 
     Args:
@@ -404,28 +427,107 @@ def image_config(request: HttpRequest) -> HttpResponse:
     image_name: str = request.GET.get("image", "")
     display_name: str = request.GET.get("display_name", "")
 
-    # Get container image configuration
-    image_config_dict: dict | None = None
+    if not image_name:
+        return HttpResponse("Image name is required", status=400)
 
-    if not image_config_dict:
-        # Handle case when image is not found
-        return HttpResponse("Image configuration not found", status=404)
+    # Get container image configuration from the database
+    try:
+        # Try to fetch configuration from Linuxserver database
+        linuxserver_image = Linuxserver.objects.filter(name=image_name).first()
 
-    # Create a suggested name based on the image display name
-    suggested_name: str = display_name.lower().replace(" ", "-").replace("/", "-")
-    suggested_name = "".join(c for c in suggested_name if c.isalnum() or c == "-")
+        if linuxserver_image:
+            # Convert model instance to a dictionary for the template
+            image_config_dict = {
+                "name": linuxserver_image.name,
+                "display_name": display_name or linuxserver_image.name,  # Use display_name or fallback to name
+                "description": linuxserver_image.description,
+                "project_logo": linuxserver_image.project_logo,
+                "github_url": linuxserver_image.github_url,
+                "project_url": linuxserver_image.project_url,
+                "ports": [],
+                "volumes": [],
+                "env_vars": [],
+                "devices": [],
+            }
 
-    # Get all available networks
+            # Add any port mappings from the configuration
+            if linuxserver_image.config:
+                config = linuxserver_image.config
 
-    context: dict[str, Any] = {
-        "image_config": image_config_dict,
-        "image_name": image_name,
-        "image_display_name": display_name,
-        "suggested_name": suggested_name,
-        "networks": "",
-    }
+                # Add ports if defined
+                if "ports" not in image_config_dict or not isinstance(image_config_dict["ports"], list):
+                    image_config_dict["ports"] = []
+                for port in config.ports.all():
+                    image_config_dict["ports"].append({
+                        "container": port.internal,
+                        "host": port.external,
+                        "protocol": "tcp",  # Default to TCP
+                        "description": port.description,
+                    })
 
-    return render(request, "partials/container_config_form.html", context)
+                # Add volumes if defined
+                for volume in config.volumes.all():
+                    if "volumes" not in image_config_dict or not isinstance(image_config_dict["volumes"], list):
+                        image_config_dict["volumes"] = []
+                    image_config_dict["volumes"].append({
+                        "target": volume.path,
+                        "source": volume.host_path,
+                        "description": volume.description,
+                        "required": not volume.optional,
+                    })
+
+                # Add environment variables if defined
+                for env in config.env_vars.all():
+                    if "env_vars" not in image_config_dict or not isinstance(image_config_dict["env_vars"], list):
+                        image_config_dict["env_vars"] = []
+                    image_config_dict["env_vars"].append({
+                        "name": env.name,
+                        "value": env.value,
+                        "description": env.description,
+                        "required": not env.optional,
+                    })
+
+                # Add devices if defined
+                for device in config.devices.all():
+                    if "devices" not in image_config_dict or not isinstance(image_config_dict["devices"], list):
+                        image_config_dict["devices"] = []
+                    image_config_dict["devices"].append({"path": device.path, "host_path": device.host_path, "desc": device.description})
+        else:
+            # For custom Docker Hub images, create a minimal configuration
+            image_config_dict = {
+                "name": image_name,
+                "display_name": display_name or image_name,
+                "description": f"Custom Docker image: {image_name}",
+                "ports": [],
+                "volumes": [],
+                "env_vars": [],
+                "devices": [],
+            }
+
+        # Create a suggested name based on the image display name
+        suggested_name: str = display_name.lower().replace(" ", "-").replace("/", "-")
+        suggested_name = "".join(c for c in suggested_name if c.isalnum() or c == "-")
+
+        # Get all available networks
+        with DockerClient() as client:
+            networks = client.networks.list()
+            network_options = [
+                {"name": network.name, "id": network.id} for network in networks if network.name not in {"host", "none", "bridge"}
+            ]
+
+        context: dict[str, Any] = {
+            "image_config": image_config_dict,
+            "image_name": image_name,
+            "image_display_name": display_name or image_name,
+            "suggested_name": suggested_name,
+            "networks": network_options,
+        }
+
+        return render(request, "partials/container_config_form.html", context)
+
+    except Exception as e:
+        logger.exception("Error loading image configuration for %s", image_name)
+        return HttpResponse(f"Error loading image configuration: {e!s}", status=500)
 
 
 @login_not_required
@@ -617,8 +719,6 @@ def import_data(request: HttpRequest) -> JsonResponse:
         if not downloaded_json:
             logger.error("Failed to download JSON data.")
             return JsonResponse({"message": "Failed to download JSON data."}, status=500)
-
-        # Add data to model within a try-except block to catch any database errors
         try:
             add_data_to_model(downloaded_json)
             logger.info("Data imported successfully.")

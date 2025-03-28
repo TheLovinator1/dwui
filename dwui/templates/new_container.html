@@ -20,7 +20,7 @@
                 </div>
                 <div class="card-body">
                     <div class="accordion" id="imageAccordion">
-                        {% for category in categories %}
+                        {% for category, images in categories.items %}
                         <div class="accordion-item">
                             <h2 class="accordion-header" id="heading{{ forloop.counter }}">
                                 <button class="accordion-button {% if forloop.counter > 1 %}collapsed{% endif %}"
@@ -36,26 +36,58 @@
                                 aria-labelledby="heading{{ forloop.counter }}" data-bs-parent="#imageAccordion">
                                 <div class="accordion-body p-0">
                                     <div class="list-group list-group-flush">
-                                        {% for image in container_images %}
-                                        {% if image.category == category or "," in image.category and category in image.category|split:"," %}
-                                        <button type="button" class="list-group-item list-group-item-action"
-                                            hx-get="{% url 'image_config' %}" hx-target="#configForm"
-                                            hx-vals='{"image": "{{ image.image }}", "display_name": "{{ image.name }}"}'>
-                                            <h6 class="mb-1">{{ image.name }}</h6>
-                                            <p class="mb-1 small">{{ image.description }}</p>
-                                            <small class="text-muted">{{ image.image }}</small>
+                                        {% for image in images %}
+                                        <button type="button"
+                                            class="list-group-item list-group-item-action d-flex align-items-center"
+                                            hx-get="{% url 'image_config' %}?image={{ image.name }}&display_name={{ image.display_name|default:image.name }}"
+                                            hx-target="#configurationForm" hx-swap="innerHTML"
+                                            hx-indicator=".htmx-indicator">
                                             {% if image.project_logo %}
-                                            <img src="{{ image.project_logo }}" alt="{{ image.name }}" class="float-end"
-                                                style="max-height: 40px; max-width: 80px;">
+                                            <img src="{{ image.project_logo }}" alt="{{ image.display_name }}"
+                                                class="me-2" style="max-width: 24px; max-height: 24px;">
                                             {% endif %}
+                                            <div>
+                                                <div>{{ image.display_name|default:image.name }}</div>
+                                                {% if image.description %}
+                                                <small
+                                                    class="text-muted">{{ image.description|truncatechars:50 }}</small>
+                                                {% endif %}
+                                            </div>
                                         </button>
-                                        {% endif %}
+                                        {% empty %}
+                                        <div class="list-group-item text-muted">No images in this category</div>
                                         {% endfor %}
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        {% empty %}
+                        <div class="alert alert-info">
+                            No container images found. <a href="{% url 'admin_settings' %}">Import images from
+                                Linuxserver.io</a>
+                        </div>
                         {% endfor %}
+                    </div>
+
+                    <!-- Search for any Docker Hub image -->
+                    <div class="mt-4">
+                        <div class="card">
+                            <div class="card-header">
+                                Custom Image
+                            </div>
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <label for="customImage" class="form-label">Docker Hub Image</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="customImage"
+                                            placeholder="e.g., nginx:latest">
+                                        <button class="btn btn-outline-primary" type="button"
+                                            onclick="selectCustomImage()">Use</button>
+                                    </div>
+                                    <div class="form-text">Enter a Docker Hub image name with optional tag</div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -63,14 +95,16 @@
 
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">
-                    New Container Configuration
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <span>Container Configuration</span>
+                    <div class="spinner-border spinner-border-sm htmx-indicator" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
                 </div>
                 <div class="card-body">
-                    <div id="configForm">
-                        <!-- This content will be replaced by the htmx request -->
-                        <div class="text-center text-muted my-5">
-                            <p>Select an image from the list to configure your container</p>
+                    <div id="configurationForm" class="container-fluid">
+                        <div class="text-center py-5">
+                            <p class="text-muted">Select an image from the list to configure a new container</p>
                         </div>
                     </div>
                 </div>
@@ -78,4 +112,290 @@
         </div>
     </div>
 </div>
+
+<!-- Container configuration form template that will be loaded via HTMX -->
+<script id="container-form-template" type="text/template">
+    <form id="containerForm" action="{% url 'new_container' %}" method="POST">
+        {% csrf_token %}
+
+        <input type="hidden" name="image" value="${image}">
+
+        <div class="mb-3">
+            <label for="containerName" class="form-label">Container Name</label>
+            <input type="text" class="form-control" id="containerName" name="name"
+                   value="${suggestedName}" required>
+            <div class="form-text">Must be unique, lowercase, and contain only letters, numbers, and dashes</div>
+        </div>
+
+        <!-- Port mappings section will be populated dynamically -->
+        <!-- Environment variables section will be populated dynamically -->
+        <!-- Volume mappings section will be populated dynamically -->
+
+        <div class="mb-3">
+            <label class="form-label">Restart Policy</label>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="restart_policy"
+                       id="restartAlways" value="always" checked>
+                <label class="form-check-label" for="restartAlways">
+                    Always restart
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="restart_policy"
+                       id="restartOnFailure" value="on-failure">
+                <label class="form-check-label" for="restartOnFailure">
+                    Restart on failure
+                </label>
+            </div>
+            <div class="form-text">Determines when the container will automatically restart</div>
+        </div>
+
+        <div class="mb-3">
+            <label for="maxRetryCount" class="form-label">Maximum Retry Count</label>
+            <input type="number" class="form-control" id="maxRetryCount"
+                   name="max_retry_count" value="5" min="0" max="10">
+            <div class="form-text">Maximum number of restart attempts (for on-failure policy)</div>
+        </div>
+
+        <div class="d-grid gap-2 mt-4">
+            <button type="submit" class="btn btn-primary">Create Container</button>
+        </div>
+    </form>
+</script>
+
 {% endblock content %}
+
+{% block extra_js %}
+<script>
+    // Function to handle custom image selection
+    function selectCustomImage() {
+        const imageInput = document.getElementById('customImage');
+        const imageName = imageInput.value.trim();
+
+        if (!imageName) {
+            alert('Please enter a Docker image name');
+            return;
+        }
+
+        // Generate a suggested name from the image
+        const suggestedName = imageName.split(':')[0]  // Remove tag if present
+            .split('/').pop()  // Take just the image name without registry/user
+            .toLowerCase()
+            .replace(/[^a-z0-9-]/g, '-');  // Replace invalid chars with dashes
+
+        // Create a simple configuration form for custom images
+        const formHtml = `
+        <form id="containerForm" action="{% url 'new_container' %}" method="POST">
+            {% csrf_token %}
+
+            <input type="hidden" name="image" value="${imageName}">
+
+            <div class="mb-3">
+                <label for="containerName" class="form-label">Container Name</label>
+                <input type="text" class="form-control" id="containerName" name="name"
+                       value="${suggestedName}" required>
+                <div class="form-text">Must be unique, lowercase, and contain only letters, numbers, and dashes</div>
+            </div>
+
+            <!-- Port mappings -->
+            <div class="mb-3">
+                <label class="form-label">Port Mappings</label>
+                <div id="portMappings">
+                    <div class="row mb-2 port-row">
+                        <div class="col-4">
+                            <input type="text" class="form-control" name="port_1_host"
+                                   placeholder="Host port">
+                        </div>
+                        <div class="col-4">
+                            <input type="text" class="form-control" name="port_1_container"
+                                   placeholder="Container port">
+                        </div>
+                        <div class="col-3">
+                            <select class="form-select" name="port_1_protocol">
+                                <option value="tcp">TCP</option>
+                                <option value="udp">UDP</option>
+                            </select>
+                        </div>
+                        <div class="col-1">
+                            <button type="button" class="btn btn-outline-danger btn-sm"
+                                    onclick="removePort(this)">×</button>
+                        </div>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-outline-secondary btn-sm mt-2"
+                        onclick="addPort()">Add Port</button>
+            </div>
+
+            <!-- Volume mappings -->
+            <div class="mb-3">
+                <label class="form-label">Volume Mappings</label>
+                <div id="volumeMappings">
+                    <div class="row mb-2 volume-row">
+                        <div class="col-5">
+                            <input type="text" class="form-control" name="volume_1_source"
+                                   placeholder="Host path">
+                        </div>
+                        <div class="col-6">
+                            <input type="text" class="form-control" name="volume_1_target"
+                                   placeholder="Container path">
+                        </div>
+                        <div class="col-1">
+                            <button type="button" class="btn btn-outline-danger btn-sm"
+                                    onclick="removeVolume(this)">×</button>
+                        </div>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-outline-secondary btn-sm mt-2"
+                        onclick="addVolume()">Add Volume</button>
+            </div>
+
+            <!-- Environment variables -->
+            <div class="mb-3">
+                <label class="form-label">Environment Variables</label>
+                <div id="envMappings">
+                    <div class="row mb-2 env-row">
+                        <div class="col-5">
+                            <input type="text" class="form-control" placeholder="Variable name"
+                                   oninput="updateEnvName(this)">
+                        </div>
+                        <div class="col-6">
+                            <input type="text" class="form-control" name="env_PLACEHOLDER"
+                                   placeholder="Value">
+                        </div>
+                        <div class="col-1">
+                            <button type="button" class="btn btn-outline-danger btn-sm"
+                                    onclick="removeEnv(this)">×</button>
+                        </div>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-outline-secondary btn-sm mt-2"
+                        onclick="addEnv()">Add Variable</button>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Restart Policy</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="restart_policy"
+                           id="restartAlways" value="always" checked>
+                    <label class="form-check-label" for="restartAlways">
+                        Always restart
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="restart_policy"
+                           id="restartOnFailure" value="on-failure">
+                    <label class="form-check-label" for="restartOnFailure">
+                        Restart on failure
+                    </label>
+                </div>
+                <div class="form-text">Determines when the container will automatically restart</div>
+            </div>
+
+            <div class="mb-3">
+                <label for="maxRetryCount" class="form-label">Maximum Retry Count</label>
+                <input type="number" class="form-control" id="maxRetryCount"
+                       name="max_retry_count" value="5" min="0" max="10">
+                <div class="form-text">Maximum number of restart attempts (for on-failure policy)</div>
+            </div>
+
+            <div class="d-grid gap-2 mt-4">
+                <button type="submit" class="btn btn-primary">Create Container</button>
+            </div>
+        </form>
+    `;
+
+        document.getElementById('configurationForm').innerHTML = formHtml;
+    }
+
+    // Helper functions for dynamic form fields
+    let portCounter = 1;
+    function addPort() {
+        portCounter++;
+        const portDiv = document.createElement('div');
+        portDiv.className = 'row mb-2 port-row';
+        portDiv.innerHTML = `
+        <div class="col-4">
+            <input type="text" class="form-control" name="port_${portCounter}_host"
+                   placeholder="Host port">
+        </div>
+        <div class="col-4">
+            <input type="text" class="form-control" name="port_${portCounter}_container"
+                   placeholder="Container port">
+        </div>
+        <div class="col-3">
+            <select class="form-select" name="port_${portCounter}_protocol">
+                <option value="tcp">TCP</option>
+                <option value="udp">UDP</option>
+            </select>
+        </div>
+        <div class="col-1">
+            <button type="button" class="btn btn-outline-danger btn-sm"
+                    onclick="removePort(this)">×</button>
+        </div>
+    `;
+        document.getElementById('portMappings').appendChild(portDiv);
+    }
+
+    function removePort(button) {
+        button.closest('.port-row').remove();
+    }
+
+    let volumeCounter = 1;
+    function addVolume() {
+        volumeCounter++;
+        const volumeDiv = document.createElement('div');
+        volumeDiv.className = 'row mb-2 volume-row';
+        volumeDiv.innerHTML = `
+        <div class="col-5">
+            <input type="text" class="form-control" name="volume_${volumeCounter}_source"
+                   placeholder="Host path">
+        </div>
+        <div class="col-6">
+            <input type="text" class="form-control" name="volume_${volumeCounter}_target"
+                   placeholder="Container path">
+        </div>
+        <div class="col-1">
+            <button type="button" class="btn btn-outline-danger btn-sm"
+                    onclick="removeVolume(this)">×</button>
+        </div>
+    `;
+        document.getElementById('volumeMappings').appendChild(volumeDiv);
+    }
+
+    function removeVolume(button) {
+        button.closest('.volume-row').remove();
+    }
+
+    let envCounter = 1;
+    function addEnv() {
+        envCounter++;
+        const envDiv = document.createElement('div');
+        envDiv.className = 'row mb-2 env-row';
+        envDiv.innerHTML = `
+        <div class="col-5">
+            <input type="text" class="form-control" placeholder="Variable name"
+                   oninput="updateEnvName(this)">
+        </div>
+        <div class="col-6">
+            <input type="text" class="form-control" name="env_PLACEHOLDER"
+                   placeholder="Value">
+        </div>
+        <div class="col-1">
+            <button type="button" class="btn btn-outline-danger btn-sm"
+                    onclick="removeEnv(this)">×</button>
+        </div>
+    `;
+        document.getElementById('envMappings').appendChild(envDiv);
+    }
+
+    function removeEnv(button) {
+        button.closest('.env-row').remove();
+    }
+
+    function updateEnvName(input) {
+        const row = input.closest('.env-row');
+        const valueInput = row.querySelector('input[name^="env_"]');
+        valueInput.name = `env_${input.value}`;
+    }
+</script>
+{% endblock extra_js %}

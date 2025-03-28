@@ -15,6 +15,7 @@
         "gunicorn",
         "healthz",
         "Hellsén",
+        "hostnames",
         "htmx",
         "httpx",
         "isort",

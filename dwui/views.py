@@ -186,35 +186,21 @@ def new_container(request: HttpRequest) -> HttpResponse:
         if name and image:
             return create_container(request, name, image)
 
-    # Fetch Linuxserver data and organize into categories
+    # Fetch Linuxserver data and prepare a flat list of images
     linuxserver_data = Linuxserver.objects.all()
 
-    # Organize images by category
-    categories: dict[str, list[dict[str, Any]]] = {}
-
-    for container_image in linuxserver_data:
-        # Get the category or default to "Other"
-        category: str = str(container_image.category) or "Other"
-
-        # Convert the model instance to a dictionary for the template
-        image_dict: dict[str, str] = {
+    images: list[dict[str, str]] = [
+        {
             "name": str(container_image.name),
             "display_name": str(container_image.name),
             "description": str(container_image.description),
             "project_logo": str(container_image.project_logo),
         }
-
-        # Add the image to the appropriate category
-        if category not in categories:
-            categories[category] = []
-
-        categories[category].append(image_dict)
-
-    # Sort categories alphabetically
-    sorted_categories = dict(sorted(categories.items()))
+        for container_image in linuxserver_data
+    ]
 
     context: dict[str, Any] = {
-        "categories": sorted_categories,
+        "images": images,
     }
 
     return render(request, "new_container.html", context)

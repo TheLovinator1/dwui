@@ -21,14 +21,12 @@
                 <div class="card-body">
                     <div class="list-group list-group-flush">
                         {% for image in images %}
-                        <button type="button"
-                            class="list-group-item list-group-item-action d-flex align-items-center"
+                        <button type="button" class="list-group-item list-group-item-action d-flex align-items-center"
                             hx-get="{% url 'image_config' %}?image={{ image.name }}&display_name={{ image.display_name|default:image.name }}"
-                            hx-target="#configurationForm" hx-swap="innerHTML"
-                            hx-indicator=".htmx-indicator">
+                            hx-target="#configurationForm" hx-swap="innerHTML" hx-indicator=".htmx-indicator">
                             {% if image.project_logo %}
-                            <img src="{{ image.project_logo }}" alt="{{ image.display_name }}"
-                                class="me-2" style="max-width: 24px; max-height: 24px;">
+                            <img src="{{ image.project_logo }}" alt="{{ image.display_name }}" class="me-2"
+                                style="max-width: 24px; max-height: 24px;">
                             {% endif %}
                             <div>
                                 <div>{{ image.display_name|default:image.name }}</div>

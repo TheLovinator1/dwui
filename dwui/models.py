@@ -26,6 +26,8 @@ class AdminSettings(models.Model):
         site_name (str): The name of the site.
         enable_notifications (bool): Flag to enable or disable notifications.
         apprise_urls (str): A newline-separated list of URLs for notifications.
+        default_data_path (str): Default path for container data storage (e.g., HDD).
+        default_config_path (str): Default path for container configuration storage (e.g., NVMe).
 
     Methods:
         __str__(): Returns the site name as the string representation of the model.
@@ -35,6 +37,12 @@ class AdminSettings(models.Model):
     site_name = models.TextField(blank=True, max_length=100, default="dwui", help_text="Site Name")
     enable_notifications = models.BooleanField(default=False, help_text="Send notifications to apprise URLs")
     apprise_urls = models.TextField(blank=True, help_text="Newline separated list of apprise URLs")
+    default_data_path = models.TextField(blank=True, default="", help_text="Default path for container data storage (e.g., HDD)")
+    default_config_path = models.TextField(
+        blank=True,
+        default="",
+        help_text="Default path for container configuration storage (e.g., NVMe)",
+    )
 
     def __str__(self) -> str:
         """Return the site name."""

@@ -28,6 +28,24 @@ class SettingsForm(forms.Form):
         help_text="Flag to enable or disable notifications",
     )
 
+    default_data_path = forms.CharField(
+        label="Default Data Path",
+        max_length=500,
+        required=False,
+        initial="",
+        help_text="Default path for container data storage (e.g., HDD path like /mnt/storage/data)",
+        widget=forms.TextInput(attrs={"placeholder": "/mnt/storage/data"}),
+    )
+
+    default_config_path = forms.CharField(
+        label="Default Config Path",
+        max_length=500,
+        required=False,
+        initial="",
+        help_text="Default path for container configuration storage (e.g., NVMe path like /mnt/nvme/configs)",
+        widget=forms.TextInput(attrs={"placeholder": "/mnt/nvme/configs"}),
+    )
+
     def __init__(self, *args: Any, **kwargs: dict[str, Any]) -> None:  # noqa: ANN401
         """Initialize the form with existing settings."""
         super().__init__(*args, **kwargs)
@@ -36,7 +54,11 @@ class SettingsForm(forms.Form):
             self.fields["site_name"].initial = settings_instance.site_name
             self.fields["apprise_urls"].initial = settings_instance.apprise_urls
             self.fields["enable_notifications"].initial = settings_instance.enable_notifications
+            self.fields["default_data_path"].initial = settings_instance.default_data_path
+            self.fields["default_config_path"].initial = settings_instance.default_config_path
         except AdminSettings.DoesNotExist:
             self.fields["site_name"].initial = ""
             self.fields["apprise_urls"].initial = ""
             self.fields["enable_notifications"].initial = False
+            self.fields["default_data_path"].initial = ""
+            self.fields["default_config_path"].initial = ""

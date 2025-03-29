@@ -47,6 +47,14 @@
         {% if not image_config.volumes %}
         <p class="text-muted">No volumes required for this container.</p>
         {% else %}
+        <div class="mb-4" id="defaultPathsSection">
+            <div class="form-text mb-2">Default paths for data and configuration:
+            </div>
+            <ul>
+                <li><strong>Data Path:</strong> {{ default_data_path|default:"Not configured" }}</li>
+                <li><strong>Config Path:</strong> {{ default_config_path|default:"Not configured" }}</li>
+            </ul>
+        </div>
         {% for volume in image_config.volumes %}
         <div class="card mb-3">
             <div class="card-body">

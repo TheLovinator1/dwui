@@ -441,6 +441,15 @@ def image_config(request: HttpRequest) -> HttpResponse:  # noqa: C901, PLR0912
     if not image_name:
         return HttpResponse("Image name is required", status=400)
 
+    # Get default mount paths from admin settings
+    try:
+        admin_settings = AdminSettings.objects.get(site_id=settings.SITE_ID)
+        default_data_path = admin_settings.default_data_path
+        default_config_path = admin_settings.default_config_path
+    except AdminSettings.DoesNotExist:
+        default_data_path = ""
+        default_config_path = ""
+
     # Get container image configuration from the database
     try:
         # Try to fetch configuration from Linuxserver database
@@ -480,9 +489,26 @@ def image_config(request: HttpRequest) -> HttpResponse:  # noqa: C901, PLR0912
                 for volume in config.volumes.all():
                     if "volumes" not in image_config_dict or not isinstance(image_config_dict["volumes"], list):
                         image_config_dict["volumes"] = []
+
+                    # Determine appropriate default path based on volume purpose
+                    default_source = ""
+                    if default_data_path and (
+                        "/data" in volume.path or "downloads" in volume.path.lower() or "media" in volume.path.lower()
+                    ):
+                        # Use default data path for data volumes
+                        default_source = f"{default_data_path}/{linuxserver_image.name}"
+                    elif default_config_path and (
+                        "/config" in volume.path or "db" in volume.path.lower() or "database" in volume.path.lower()
+                    ):
+                        # Use default config path for configuration volumes
+                        default_source = f"{default_config_path}/{linuxserver_image.name}"
+                    else:
+                        # Use the host_path from the configuration or an empty string
+                        default_source = volume.host_path
+
                     image_config_dict["volumes"].append({
                         "target": volume.path,
-                        "source": volume.host_path,
+                        "source": default_source,
                         "description": volume.description,
                         "required": not volume.optional,
                     })
@@ -532,6 +558,8 @@ def image_config(request: HttpRequest) -> HttpResponse:  # noqa: C901, PLR0912
             "image_display_name": display_name or image_name,
             "suggested_name": suggested_name,
             "networks": network_options,
+            "default_data_path": default_data_path,
+            "default_config_path": default_config_path,
         }
 
         return render(request, "partials/container_config_form.html", context)
@@ -674,6 +702,8 @@ def settings_page(request: HttpRequest) -> HttpResponse:
             site_name = form.cleaned_data["site_name"]
             enable_notifications = form.cleaned_data["enable_notifications"]
             apprise_urls = form.cleaned_data["apprise_urls"]
+            default_data_path = form.cleaned_data["default_data_path"]
+            default_config_path = form.cleaned_data["default_config_path"]
 
             # Save the settings to the database
             AdminSettings.objects.update_or_create(
@@ -682,6 +712,8 @@ def settings_page(request: HttpRequest) -> HttpResponse:
                     "site_name": site_name,
                     "enable_notifications": enable_notifications,
                     "apprise_urls": apprise_urls,
+                    "default_data_path": default_data_path,
+                    "default_config_path": default_config_path,
                 },
             )
             return redirect("admin_settings")

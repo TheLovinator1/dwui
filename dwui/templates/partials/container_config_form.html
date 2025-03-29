@@ -8,9 +8,6 @@
         <header>
             <h1>{{ image_display_name }}</h1>
         </header>
-        <p>
-            <strong>{{ image_name }}</strong>
-        </p>
         <p>{{ image_config.description }}</p>
     </div>
 
@@ -214,9 +211,17 @@
         {% for device in image_config.devices %}
         <div class="card mb-3">
             <div class="card-body">
+                <div class="form-check form-switch mb-2">
+                    <input class="form-check-input device-toggle" type="checkbox"
+                        id="device_{{ forloop.counter0 }}_enabled" name="device_{{ forloop.counter0 }}_enabled"
+                        data-target="device_{{ forloop.counter0 }}_path">
+                    <label class="form-check-label" for="device_{{ forloop.counter0 }}_enabled">
+                        Enable device mapping
+                    </label>
+                </div>
                 <div class="mb-2">
                     <input type="text" class="form-control" id="device_{{ forloop.counter0 }}_path"
-                        name="device_{{ forloop.counter0 }}_path" value="{{ device.path }}">
+                        name="device_{{ forloop.counter0 }}_path" value="{{ device.path }}" disabled>
                     <div class="form-text">{{ device.desc }} (Host path: {{ device.host_path }})</div>
                     <input type="hidden" name="device_{{ forloop.counter0 }}_host_path" value="{{ device.host_path }}">
                 </div>
@@ -251,3 +256,20 @@
         <a href="{% url 'index' %}" class="btn btn-secondary">Cancel</a>
     </div>
 </form>
+
+<!-- Add JavaScript to handle device toggling -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Add event listeners to all device toggle switches
+        const deviceToggles = document.querySelectorAll('.device-toggle');
+        deviceToggles.forEach(toggle => {
+            toggle.addEventListener('change', function () {
+                const targetId = this.dataset.target;
+                const targetInput = document.getElementById(targetId);
+                if (targetInput) {
+                    targetInput.disabled = !this.checked;
+                }
+            });
+        });
+    });
+</script>

@@ -75,7 +75,7 @@ def index(request: HttpRequest) -> HttpResponse:
     return render(request, "index.html", context)
 
 
-def create_container(request: HttpRequest, name: str, image: str) -> HttpResponse:  # noqa: C901, PLR0912
+def create_container(request: HttpRequest, name: str, image: str) -> HttpResponse:  # noqa: C901, PLR0912, PLR0914
     """Create a new Docker container with the provided configurations.
 
     Args:
@@ -137,6 +137,16 @@ def create_container(request: HttpRequest, name: str, image: str) -> HttpRespons
                     env_name = parts[2]
                     env_vars.append(f"{env_name}={value}")
 
+        # Process device mappings from form - only include enabled devices
+        devices = []
+        for key, value in request.POST.items():
+            if key.startswith("device_") and key.endswith("_enabled") and value == "on":
+                device_id = key.split("_")[1]
+                device_path = request.POST.get(f"device_{device_id}_path")
+                host_path = request.POST.get(f"device_{device_id}_host_path")
+                if device_path and host_path:
+                    devices.append(f"{host_path}:{device_path}")
+
         max_retries = int(request.POST.get("max_retry_count", "5"))
 
         restart_policy: str = request.POST.get("restart_policy", "on-failure")
@@ -150,6 +160,7 @@ def create_container(request: HttpRequest, name: str, image: str) -> HttpRespons
             detach=True,
             ports=ports,
             volumes=binds,
+            devices=devices,  # Add the devices parameter
             environment=env_vars,
             restart_policy=restart_policy_dict,
         )

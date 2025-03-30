@@ -27,6 +27,8 @@ class AdminSettings(models.Model):
         apprise_urls (str): A newline-separated list of URLs for notifications.
         default_data_path (str): Default path for container data storage (e.g., HDD).
         default_config_path (str): Default path for container configuration storage (e.g., NVMe).
+        default_uid (int): Default user ID for container operations.
+        default_gid (int): Default group ID for container operations.
 
     Methods:
         __str__(): Returns the site name as the string representation of the model.
@@ -42,6 +44,8 @@ class AdminSettings(models.Model):
         default="",
         help_text="Default path for container configuration storage (e.g., NVMe)",
     )
+    default_uid = models.IntegerField(default=1000, help_text="Default user ID for container operations")
+    default_gid = models.IntegerField(default=1000, help_text="Default group ID for container operations")
 
     def __str__(self) -> str:
         """Return the site name."""

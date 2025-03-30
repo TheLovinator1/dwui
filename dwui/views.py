@@ -31,7 +31,7 @@ if TYPE_CHECKING:
     from docker.models.networks import Network
     from docker.models.volumes import Volume
 
-logger: logging.Logger = logging.getLogger("dwui.views")
+logger: logging.Logger = logging.getLogger("dwui")
 
 
 @login_not_required
@@ -112,7 +112,7 @@ def create_container(request: HttpRequest, name: str, image: str) -> HttpRespons
                     volume_data[volume_id][field] = value
 
         # Format volumes for Docker
-        binds = [
+        binds: list[str] = [
             f"{vol['source']}:{vol['target']}"
             for vol in volume_data.values()
             if "source" in vol and "target" in vol and vol["source"].strip()
@@ -122,11 +122,11 @@ def create_container(request: HttpRequest, name: str, image: str) -> HttpRespons
         ports = {}
         for key, value in request.POST.items():
             if key.startswith("port_") and value.strip():
-                parts = key.split("_", 3)
+                parts: list[str] = key.split("_", 3)
                 if len(parts) == 4 and parts[2] == "host":
-                    port_id = parts[1]
-                    container_port = request.POST.get(f"port_{port_id}_container")
-                    protocol = request.POST.get(f"port_{port_id}_protocol", "tcp")
+                    port_id: str = parts[1]
+                    container_port: str | None = request.POST.get(f"port_{port_id}_container")
+                    protocol: str = request.POST.get(f"port_{port_id}_protocol", "tcp")
                     if container_port:
                         ports[f"{container_port}/{protocol}"] = value
 
@@ -136,16 +136,16 @@ def create_container(request: HttpRequest, name: str, image: str) -> HttpRespons
             if key.startswith("env_") and value.strip():
                 parts = key.split("_", 2)
                 if len(parts) == 3:
-                    env_name = parts[2]
+                    env_name: str = parts[2]
                     env_vars.append(f"{env_name}={value}")
 
         # Process device mappings from form - only include enabled devices
         devices = []
         for key, value in request.POST.items():
             if key.startswith("device_") and key.endswith("_enabled") and value == "on":
-                device_id = key.split("_")[1]
-                device_path = request.POST.get(f"device_{device_id}_path")
-                host_path = request.POST.get(f"device_{device_id}_host_path")
+                device_id: str = key.split("_")[1]
+                device_path: str | None = request.POST.get(f"device_{device_id}_path")
+                host_path: str | None = request.POST.get(f"device_{device_id}_host_path")
                 if device_path and host_path:
                     devices.append(f"{host_path}:{device_path}")
 
@@ -162,7 +162,7 @@ def create_container(request: HttpRequest, name: str, image: str) -> HttpRespons
             detach=True,
             ports=ports,
             volumes=binds,
-            devices=devices,  # Add the devices parameter
+            devices=devices,
             environment=env_vars,
             restart_policy=restart_policy_dict,
         )
@@ -439,12 +439,16 @@ def image_config(request: HttpRequest) -> HttpResponse:
 
     # Get default mount paths from admin settings
     try:
-        admin_settings = AdminSettings.objects.get(site_id=settings.SITE_ID)
-        default_data_path = admin_settings.default_data_path
-        default_config_path = admin_settings.default_config_path
+        admin_settings: AdminSettings = AdminSettings.objects.get(site_id=settings.SITE_ID)
+        default_data_path: str = admin_settings.default_data_path
+        default_config_path: str = admin_settings.default_config_path
+        default_uid: int = admin_settings.default_uid
+        default_gid: int = admin_settings.default_gid
     except AdminSettings.DoesNotExist:
         default_data_path = ""
         default_config_path = ""
+        default_uid = 1000
+        default_gid = 1000
 
     # Get container image configuration from JSON files
     linuxserver_image = None
@@ -507,6 +511,8 @@ def image_config(request: HttpRequest) -> HttpResponse:
         "networks": network_options,
         "default_data_path": default_data_path,
         "default_config_path": default_config_path,
+        "default_uid": default_uid,
+        "default_gid": default_gid,
     }
 
     return render(request, "partials/container_config_form.html", context)
@@ -647,6 +653,8 @@ def settings_page(request: HttpRequest) -> HttpResponse:
             apprise_urls = form.cleaned_data["apprise_urls"]
             default_data_path = form.cleaned_data["default_data_path"]
             default_config_path = form.cleaned_data["default_config_path"]
+            default_uid = form.cleaned_data["default_uid"]
+            default_gid = form.cleaned_data["default_gid"]
 
             # Save the settings to the database
             AdminSettings.objects.update_or_create(
@@ -657,6 +665,8 @@ def settings_page(request: HttpRequest) -> HttpResponse:
                     "apprise_urls": apprise_urls,
                     "default_data_path": default_data_path,
                     "default_config_path": default_config_path,
+                    "default_uid": default_uid,
+                    "default_gid": default_gid,
                 },
             )
             return redirect("admin_settings")

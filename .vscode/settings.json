@@ -26,6 +26,7 @@
         "Mountpoint",
         "Nextcloud",
         "nonroot",
+        "nvme",
         "paramiko",
         "PGID",
         "pkgver",

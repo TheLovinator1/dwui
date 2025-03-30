@@ -46,6 +46,22 @@ class SettingsForm(forms.Form):
         widget=forms.TextInput(attrs={"placeholder": "/mnt/nvme/configs"}),
     )
 
+    default_uid = forms.IntegerField(
+        label="Default UID",
+        required=False,
+        initial=1000,
+        help_text="Default user ID for container operations",
+        widget=forms.NumberInput(attrs={"placeholder": "1000"}),
+    )
+
+    default_gid = forms.IntegerField(
+        label="Default GID",
+        required=False,
+        initial=1000,
+        help_text="Default group ID for container operations",
+        widget=forms.NumberInput(attrs={"placeholder": "1000"}),
+    )
+
     def __init__(self, *args: Any, **kwargs: dict[str, Any]) -> None:  # noqa: ANN401
         """Initialize the form with existing settings."""
         super().__init__(*args, **kwargs)
@@ -56,9 +72,13 @@ class SettingsForm(forms.Form):
             self.fields["enable_notifications"].initial = settings_instance.enable_notifications
             self.fields["default_data_path"].initial = settings_instance.default_data_path
             self.fields["default_config_path"].initial = settings_instance.default_config_path
+            self.fields["default_uid"].initial = settings_instance.default_uid
+            self.fields["default_gid"].initial = settings_instance.default_gid
         except AdminSettings.DoesNotExist:
             self.fields["site_name"].initial = ""
             self.fields["apprise_urls"].initial = ""
             self.fields["enable_notifications"].initial = False
             self.fields["default_data_path"].initial = ""
             self.fields["default_config_path"].initial = ""
+            self.fields["default_uid"].initial = 1000
+            self.fields["default_gid"].initial = 1000

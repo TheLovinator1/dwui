@@ -1,2 +1,2 @@
-**/images.json linguist-generated=true
+**/*.json linguist-generated=true
 *.html linguist-language=django

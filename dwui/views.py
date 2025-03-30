@@ -449,20 +449,33 @@ def image_config(request: HttpRequest) -> HttpResponse:
     # Get container image configuration from JSON files
     linuxserver_image = None
 
+    config_dir: Path = Path(__file__).parent / "container_configs" / "lsio"
+    for filename in config_dir.iterdir():
+        if filename.suffix == ".json":
+            with filename.open(encoding="utf-8") as file:
+                try:
+                    container_image = json.load(file)
+                    if container_image["name"] == image_name:
+                        linuxserver_image = container_image
+                        break
+                except json.JSONDecodeError as e:
+                    logger.warning("Failed to load JSON from %s: %s", filename, e)
+
     if linuxserver_image:
         # Convert model instance to a dictionary for the template
         image_config_dict = {
-            "name": linuxserver_image.name,
-            "display_name": display_name or linuxserver_image.name,  # Use display_name or fallback to name
-            "description": linuxserver_image.description,
-            "project_logo": linuxserver_image.project_logo,
-            "github_url": linuxserver_image.github_url,
-            "project_url": linuxserver_image.project_url,
-            "ports": [],
-            "volumes": [],
-            "env_vars": [],
+            "name": linuxserver_image["name"],
+            "display_name": display_name or linuxserver_image["name"],  # Use display_name or fallback to name
+            "description": linuxserver_image["description"],
+            "project_logo": linuxserver_image["project_logo"],
+            "github_url": linuxserver_image["github_url"],
+            "project_url": linuxserver_image["project_url"],
+            "ports": linuxserver_image["config"]["ports"],
+            "volumes": linuxserver_image["config"]["volumes"],
+            "env_vars": linuxserver_image["config"]["env_vars"],
             "devices": [],
         }
+
     else:
         # For custom Docker Hub images, create a minimal configuration
         image_config_dict = {
@@ -481,8 +494,8 @@ def image_config(request: HttpRequest) -> HttpResponse:
 
     # Get all available networks
     with DockerClient() as client:
-        networks = client.networks.list()
-        network_options = [
+        networks: list[Network] = client.networks.list()
+        network_options: list[dict[str, str | None]] = [
             {"name": network.name, "id": network.id} for network in networks if network.name not in {"host", "none", "bridge"}
         ]
 

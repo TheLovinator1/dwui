@@ -62,8 +62,8 @@
                     <input type="text" class="form-control" id="volume_{{ forloop.counter0 }}_source"
                         name="volume_{{ forloop.counter0 }}_source" value="{{ volume.source }}"
                         {% if volume.required %}required{% endif %}>
-                    <div class="form-text">{{ volume.description }} (maps to {{ volume.target }})</div>
-                    <input type="hidden" name="volume_{{ forloop.counter0 }}_target" value="{{ volume.target }}">
+                    <div class="form-text">{{ volume.desc }} (maps to {{ volume.path }})</div>
+                    <input type="hidden" name="volume_{{ forloop.counter0 }}_target" value="{{ volume.path }}">
                 </div>
             </div>
         </div>
@@ -83,11 +83,14 @@
         <div class="card mb-3">
             <div class="card-body">
                 <div class="mb-2">
-                    <label for="port_{{ forloop.counter0 }}_host" class="form-label">Host Port</label>
+                    <label for="port_{{ forloop.counter0 }}_host" class="form-label">{{ port.desc }}
+                        {% if port.optional %}(optional){% else %}<span class="text-danger">*</span>{% endif %}</label>
                     <input type="text" class="form-control" id="port_{{ forloop.counter0 }}_host"
-                        name="port_{{ forloop.counter0 }}_host" value="{{ port.host }}">
-                    <div class="form-text">{{ port.description }} (Container port: {{ port.container }})</div>
-                    <input type="hidden" name="port_{{ forloop.counter0 }}_container" value="{{ port.container }}">
+                        name="port_{{ forloop.counter0 }}_host" value="{{ port.host }}"
+                        {% if not port.optional %}required{% endif %} placeholder="{{ port.internal }}">
+
+                    <div class="form-text">Internal port: {{ port.internal }}</div>
+                    <input type="hidden" name="port_{{ forloop.counter0 }}_container" value="{{ port.internal }}">
                     <input type="hidden" name="port_{{ forloop.counter0 }}_protocol" value="{{ port.protocol }}">
                 </div>
             </div>

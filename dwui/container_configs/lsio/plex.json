@@ -1,0 +1,103 @@
+{
+    "name": "plex",
+    "initial_date": "2015-07-03",
+    "github_url": "https://github.com/linuxserver/docker-plex",
+    "project_url": "https://plex.tv",
+    "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/plex-logo.png",
+    "description": "plex organizes video, music and photos from personal media libraries and streams them to smart TVs, streaming boxes and mobile devices. This container is packaged as a standalone Plex Media Server. Straightforward design and bulk actions mean getting things done faster.",
+    "version": "1.41.5.9522-a96edc606-ls260",
+    "version_timestamp": "2025-03-24 09:35:47+00:00",
+    "category": "Media Servers,Music,Audiobooks",
+    "stable": true,
+    "deprecated": false,
+    "stars": 1261,
+    "monthly_pulls": 849026,
+    "tags": [
+        {
+            "tag": "latest",
+            "desc": "Stable releases"
+        }
+    ],
+    "architectures": [
+        {
+            "arch": "x86_64",
+            "tag": "amd64-latest"
+        },
+        {
+            "arch": "arm64",
+            "tag": "arm64v8-latest"
+        }
+    ],
+    "changelog": [
+        {
+            "date": "2024-11-04",
+            "desc": "Add Nvidia capability needed for h265"
+        },
+        {
+            "date": "2024-07-18",
+            "desc": "Rebase to Ubuntu Noble."
+        },
+        {
+            "date": "2024-02-12",
+            "desc": "Use universal hardware acceleration blurb"
+        }
+    ],
+    "config": {
+        "application_setup": "https://github.com/linuxserver/docker-plex?tab=readme-ov-file#application-setup",
+        "readonly_supported": true,
+        "nonroot_supported": true,
+        "networking": "host",
+        "env_vars": [
+            {
+                "name": "PUID",
+                "value": "1000",
+                "desc": "User ID",
+                "optional": false
+            },
+            {
+                "name": "PGID",
+                "value": "1000",
+                "desc": "Group ID",
+                "optional": false
+            },
+            {
+                "name": "TZ",
+                "value": "Etc/UTC",
+                "desc": "Timezone",
+                "optional": false
+            },
+            {
+                "name": "VERSION",
+                "value": "docker",
+                "desc": "Set whether to update plex or not - see Application Setup section.",
+                "optional": false
+            },
+            {
+                "name": "PLEX_CLAIM",
+                "value": "",
+                "desc": "Optionally you can obtain a claim token from https://plex.tv/claim and input here. Keep in mind that the claim tokens expire within 4 minutes.",
+                "optional": true
+            }
+        ],
+        "volumes": [
+            {
+                "path": "/config",
+                "host_path": "/path/to/plex/library",
+                "desc": "Plex library location. *This can grow very large, 50gb+ is likely for a large collection.*",
+                "optional": false
+            },
+            {
+                "path": "/tv",
+                "host_path": "/path/to/tvseries",
+                "desc": "Media goes here. Add as many as needed e.g. `/movies`, `/tv`, etc.",
+                "optional": false
+            },
+            {
+                "path": "/movies",
+                "host_path": "/path/to/movies",
+                "desc": "Media goes here. Add as many as needed e.g. `/movies`, `/tv`, etc.",
+                "optional": false
+            }
+        ]
+    }
+}

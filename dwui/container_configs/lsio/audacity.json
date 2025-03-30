@@ -1,0 +1,86 @@
+{
+    "name": "audacity",
+    "initial_date": "2021-04-07",
+    "github_url": "https://github.com/linuxserver/docker-audacity",
+    "project_url": "https://www.audacityteam.org/",
+    "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/audacity-logo.png",
+    "description": "[Audacity] is an easy-to-use, multi-track audio editor and recorder. Developed by a group of volunteers as open source.",
+    "version": "3.7.3-ls197",
+    "version_timestamp": "2025-03-25 05:05:04+00:00",
+    "category": "Audio Processing",
+    "stable": true,
+    "deprecated": false,
+    "stars": 23,
+    "monthly_pulls": 1584,
+    "tags": [
+        {
+            "tag": "latest",
+            "desc": "Stable releases"
+        }
+    ],
+    "architectures": [
+        {
+            "arch": "x86_64",
+            "tag": "latest"
+        }
+    ],
+    "changelog": [
+        {
+            "date": "2024-10-31",
+            "desc": "Fix artifact name."
+        },
+        {
+            "date": "2024-08-19",
+            "desc": "Rebase to noble."
+        },
+        {
+            "date": "2024-02-10",
+            "desc": "Update Readme with new env vars, ingest proper PWA icon, and pre-extract appimage."
+        }
+    ],
+    "config": {
+        "application_setup": "https://github.com/linuxserver/docker-audacity?tab=readme-ov-file#application-setup",
+        "env_vars": [
+            {
+                "name": "PUID",
+                "value": "1000",
+                "desc": "User ID",
+                "optional": false
+            },
+            {
+                "name": "PGID",
+                "value": "1000",
+                "desc": "Group ID",
+                "optional": false
+            },
+            {
+                "name": "TZ",
+                "value": "Etc/UTC",
+                "desc": "Timezone",
+                "optional": false
+            }
+        ],
+        "volumes": [
+            {
+                "path": "/config",
+                "host_path": "/path/to/audacity/config",
+                "desc": "Users home directory in the container, stores program settings and images",
+                "optional": false
+            }
+        ],
+        "ports": [
+            {
+                "external": "3000",
+                "internal": "3000",
+                "desc": "Audacity desktop gui.",
+                "optional": false
+            },
+            {
+                "external": "3001",
+                "internal": "3001",
+                "desc": "Audacity desktop gui HTTPS.",
+                "optional": false
+            }
+        ]
+    }
+}

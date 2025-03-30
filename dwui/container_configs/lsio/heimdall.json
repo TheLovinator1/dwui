@@ -1,0 +1,94 @@
+{
+    "name": "heimdall",
+    "initial_date": "2018-02-12",
+    "github_url": "https://github.com/linuxserver/docker-heimdall",
+    "project_url": "https://heimdall.site",
+    "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/heimdall-banner.png",
+    "description": "heimdall is a way to organise all those links to your most used web sites and web applications in a simple way.  Simplicity is the key to Heimdall.  Why not use it as your browser start page? It even has the ability to include a search bar using either Google, Bing or DuckDuckGo.",
+    "version": "v2.6.3-ls304",
+    "version_timestamp": "2025-03-21 18:48:30+00:00",
+    "category": "Dashboard",
+    "stable": true,
+    "deprecated": false,
+    "stars": 340,
+    "monthly_pulls": 919685,
+    "tags": [
+        {
+            "tag": "latest",
+            "desc": "Stable Heimdall releases."
+        },
+        {
+            "tag": "development",
+            "desc": "Latest commit from the github 2.x branch."
+        }
+    ],
+    "architectures": [
+        {
+            "arch": "x86_64",
+            "tag": "amd64-latest"
+        },
+        {
+            "arch": "arm64",
+            "tag": "arm64v8-latest"
+        }
+    ],
+    "changelog": [
+        {
+            "date": "2024-06-27",
+            "desc": "Rebase to Alpine 3.20. Existing users should update their nginx confs to avoid http2 deprecation warnings."
+        },
+        {
+            "date": "2024-03-07",
+            "desc": "Enable the opcache and disable file revalidation."
+        },
+        {
+            "date": "2024-03-06",
+            "desc": "Existing users should update: site-confs/default.conf - Cleanup default site conf."
+        }
+    ],
+    "config": {
+        "application_setup": "https://github.com/linuxserver/docker-heimdall?tab=readme-ov-file#application-setup",
+        "env_vars": [
+            {
+                "name": "PUID",
+                "value": "1000",
+                "desc": "User ID",
+                "optional": false
+            },
+            {
+                "name": "PGID",
+                "value": "1000",
+                "desc": "Group ID",
+                "optional": false
+            },
+            {
+                "name": "TZ",
+                "value": "Etc/UTC",
+                "desc": "Timezone",
+                "optional": false
+            }
+        ],
+        "volumes": [
+            {
+                "path": "/config",
+                "host_path": "/path/to/heimdall/config",
+                "desc": "Persistent config files",
+                "optional": false
+            }
+        ],
+        "ports": [
+            {
+                "external": "80",
+                "internal": "80",
+                "desc": "http gui",
+                "optional": false
+            },
+            {
+                "external": "443",
+                "internal": "443",
+                "desc": "https gui",
+                "optional": false
+            }
+        ]
+    }
+}

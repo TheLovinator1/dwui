@@ -1,0 +1,76 @@
+{
+    "name": "sickchill",
+    "initial_date": "2018-10-10",
+    "github_url": "https://github.com/linuxserver/docker-sickchill",
+    "project_url": "https://github.com/SickChill/SickChill",
+    "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/sickchill-banner.png",
+    "description": "sickchill is an Automatic Video Library Manager for TV Shows. It watches for new episodes of your favorite shows, and when they are posted it does its magic.",
+    "version": "2024.3.1-ls243",
+    "version_timestamp": "2025-03-27 06:42:30+00:00",
+    "category": "Media Management",
+    "stable": true,
+    "deprecated": false,
+    "stars": 31,
+    "monthly_pulls": 4171,
+    "tags": [
+        {
+            "tag": "latest",
+            "desc": "Stable releases"
+        }
+    ],
+    "architectures": [
+        {
+            "arch": "x86_64",
+            "tag": "amd64-latest"
+        },
+        {
+            "arch": "arm64",
+            "tag": "arm64v8-latest"
+        }
+    ],
+    "changelog": [
+        {
+            "date": "2024-07-10",
+            "desc": "Rebase to Alpine 3.20."
+        },
+        {
+            "date": "2024-02-13",
+            "desc": "Rebase to Alpine 3.19."
+        },
+        {
+            "date": "2023-10-07",
+            "desc": "Install unrar from [linuxserver repo](https://github.com/linuxserver/docker-unrar)."
+        }
+    ],
+    "config": {
+        "application_setup": "https://github.com/linuxserver/docker-sickchill?tab=readme-ov-file#application-setup",
+        "volumes": [
+            {
+                "path": "/config",
+                "host_path": "/path/to/sickchill/config",
+                "desc": "Persistent config files",
+                "optional": false
+            },
+            {
+                "path": "/downloads",
+                "host_path": "/path/to/downloads",
+                "desc": "this will store any downloaded data on the docker host",
+                "optional": true
+            },
+            {
+                "path": "/tv",
+                "host_path": "/path/to/tv",
+                "desc": "this will allow sickchill to view what you already have",
+                "optional": true
+            }
+        ],
+        "ports": [
+            {
+                "external": "8081",
+                "internal": "8081",
+                "desc": "will map the container's port 8081 to port 8081 on the host",
+                "optional": false
+            }
+        ]
+    }
+}

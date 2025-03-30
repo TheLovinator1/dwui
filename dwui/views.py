@@ -1,7 +1,9 @@
 from __future__ import annotations
 
+import json
 import logging
 import re
+from pathlib import Path
 from typing import TYPE_CHECKING, Any, Literal, cast
 
 from django.conf import settings
@@ -14,10 +16,10 @@ from docker import errors
 from docker.models.networks import Network
 
 from dwui.console import remove_ansi
-from dwui.data_importer import add_data_to_model, download_json
+from dwui.data_importer import fetch_and_store_container_data
 from dwui.docker_helper import DockerClient
 from dwui.forms import SettingsForm
-from dwui.models import AdminSettings, Linuxserver
+from dwui.models import AdminSettings
 from dwui.notifications import send_notification
 
 if TYPE_CHECKING:
@@ -186,15 +188,23 @@ def new_container(request: HttpRequest) -> HttpResponse:
         if name and image:
             return create_container(request, name, image)
 
-    # Fetch Linuxserver data and prepare a flat list of images
-    linuxserver_data = Linuxserver.objects.all()
+    config_dir: Path = Path(__file__).parent / "container_configs" / "lsio"
+    linuxserver_data = []
+
+    for filename in config_dir.iterdir():
+        if filename.suffix == ".json":
+            with filename.open(encoding="utf-8") as file:
+                try:
+                    linuxserver_data.append(json.load(file))
+                except json.JSONDecodeError as e:
+                    logger.warning("Failed to load JSON from %s: %s", filename, e)
 
     images: list[dict[str, str]] = [
         {
-            "name": str(container_image.name),
-            "display_name": str(container_image.name),
-            "description": str(container_image.description),
-            "project_logo": str(container_image.project_logo),
+            "name": str(container_image["name"]),
+            "display_name": str(container_image.get("name", "")),
+            "description": str(container_image.get("description", "")),
+            "project_logo": str(container_image.get("project_logo", "")),
         }
         for container_image in linuxserver_data
     ]
@@ -412,7 +422,7 @@ def update_container(request: HttpRequest, container_id: str) -> HttpResponse:
 
 
 @login_not_required
-def image_config(request: HttpRequest) -> HttpResponse:  # noqa: C901, PLR0912
+def image_config(request: HttpRequest) -> HttpResponse:
     """Handle htmx request for container image configuration.
 
     Args:
@@ -436,123 +446,57 @@ def image_config(request: HttpRequest) -> HttpResponse:  # noqa: C901, PLR0912
         default_data_path = ""
         default_config_path = ""
 
-    # Get container image configuration from the database
-    try:
-        # Try to fetch configuration from Linuxserver database
-        linuxserver_image = Linuxserver.objects.filter(name=image_name).first()
+    # Get container image configuration from JSON files
+    linuxserver_image = None
 
-        if linuxserver_image:
-            # Convert model instance to a dictionary for the template
-            image_config_dict = {
-                "name": linuxserver_image.name,
-                "display_name": display_name or linuxserver_image.name,  # Use display_name or fallback to name
-                "description": linuxserver_image.description,
-                "project_logo": linuxserver_image.project_logo,
-                "github_url": linuxserver_image.github_url,
-                "project_url": linuxserver_image.project_url,
-                "ports": [],
-                "volumes": [],
-                "env_vars": [],
-                "devices": [],
-            }
-
-            # Add any port mappings from the configuration
-            if linuxserver_image.config:
-                config = linuxserver_image.config
-
-                # Add ports if defined
-                if "ports" not in image_config_dict or not isinstance(image_config_dict["ports"], list):
-                    image_config_dict["ports"] = []
-                for port in config.ports.all():
-                    image_config_dict["ports"].append({
-                        "container": port.internal,
-                        "host": port.external,
-                        "protocol": "tcp",  # Default to TCP
-                        "description": port.description,
-                    })
-
-                # Add volumes if defined
-                for volume in config.volumes.all():
-                    if "volumes" not in image_config_dict or not isinstance(image_config_dict["volumes"], list):
-                        image_config_dict["volumes"] = []
-
-                    # Determine appropriate default path based on volume purpose
-                    default_source = ""
-                    if default_data_path and (
-                        "/data" in volume.path or "downloads" in volume.path.lower() or "media" in volume.path.lower()
-                    ):
-                        # Use default data path for data volumes
-                        default_source = f"{default_data_path}/{linuxserver_image.name}"
-                    elif default_config_path and (
-                        "/config" in volume.path or "db" in volume.path.lower() or "database" in volume.path.lower()
-                    ):
-                        # Use default config path for configuration volumes
-                        default_source = f"{default_config_path}/{linuxserver_image.name}"
-                    else:
-                        # Use the host_path from the configuration or an empty string
-                        default_source = volume.host_path
-
-                    image_config_dict["volumes"].append({
-                        "target": volume.path,
-                        "source": default_source,
-                        "description": volume.description,
-                        "required": not volume.optional,
-                    })
-
-                # Add environment variables if defined
-                for env in config.env_vars.all():
-                    if "env_vars" not in image_config_dict or not isinstance(image_config_dict["env_vars"], list):
-                        image_config_dict["env_vars"] = []
-                    image_config_dict["env_vars"].append({
-                        "name": env.name,
-                        "value": env.value,
-                        "description": env.description,
-                        "required": not env.optional,
-                    })
-
-                # Add devices if defined
-                for device in config.devices.all():
-                    if "devices" not in image_config_dict or not isinstance(image_config_dict["devices"], list):
-                        image_config_dict["devices"] = []
-                    image_config_dict["devices"].append({"path": device.path, "host_path": device.host_path, "desc": device.description})
-        else:
-            # For custom Docker Hub images, create a minimal configuration
-            image_config_dict = {
-                "name": image_name,
-                "display_name": display_name or image_name,
-                "description": f"Custom Docker image: {image_name}",
-                "ports": [],
-                "volumes": [],
-                "env_vars": [],
-                "devices": [],
-            }
-
-        # Create a suggested name based on the image display name
-        suggested_name: str = display_name.lower().replace(" ", "-").replace("/", "-")
-        suggested_name = "".join(c for c in suggested_name if c.isalnum() or c == "-")
-
-        # Get all available networks
-        with DockerClient() as client:
-            networks = client.networks.list()
-            network_options = [
-                {"name": network.name, "id": network.id} for network in networks if network.name not in {"host", "none", "bridge"}
-            ]
-
-        context: dict[str, Any] = {
-            "image_config": image_config_dict,
-            "image_name": image_name,
-            "image_display_name": display_name or image_name,
-            "suggested_name": suggested_name,
-            "networks": network_options,
-            "default_data_path": default_data_path,
-            "default_config_path": default_config_path,
+    if linuxserver_image:
+        # Convert model instance to a dictionary for the template
+        image_config_dict = {
+            "name": linuxserver_image.name,
+            "display_name": display_name or linuxserver_image.name,  # Use display_name or fallback to name
+            "description": linuxserver_image.description,
+            "project_logo": linuxserver_image.project_logo,
+            "github_url": linuxserver_image.github_url,
+            "project_url": linuxserver_image.project_url,
+            "ports": [],
+            "volumes": [],
+            "env_vars": [],
+            "devices": [],
+        }
+    else:
+        # For custom Docker Hub images, create a minimal configuration
+        image_config_dict = {
+            "name": image_name,
+            "display_name": display_name or image_name,
+            "description": f"Custom Docker image: {image_name}",
+            "ports": [],
+            "volumes": [],
+            "env_vars": [],
+            "devices": [],
         }
 
-        return render(request, "partials/container_config_form.html", context)
+    # Create a suggested name based on the image display name
+    suggested_name: str = display_name.lower().replace(" ", "-").replace("/", "-")
+    suggested_name = "".join(c for c in suggested_name if c.isalnum() or c == "-")
 
-    except Exception as e:
-        logger.exception("Error loading image configuration for %s", image_name)
-        return HttpResponse(f"Error loading image configuration: {e!s}", status=500)
+    # Get all available networks
+    with DockerClient() as client:
+        networks = client.networks.list()
+        network_options = [
+            {"name": network.name, "id": network.id} for network in networks if network.name not in {"host", "none", "bridge"}
+        ]
+
+    context: dict[str, Any] = {
+        "image_config": image_config_dict,
+        "image_name": image_name,
+        "image_display_name": display_name or image_name,
+        "suggested_name": suggested_name,
+        "networks": network_options,
+        "default_data_path": default_data_path,
+        "default_config_path": default_config_path,
+    }
+
+    return render(request, "partials/container_config_form.html", context)
 
 
 @login_not_required
@@ -744,17 +688,9 @@ def import_data(request: HttpRequest) -> JsonResponse:
         JsonResponse: A JSON response indicating success or failure.
     """
     try:
-        downloaded_json: dict[str, str] | None = download_json()
-        if not downloaded_json:
-            logger.error("Failed to download JSON data.")
-            return JsonResponse({"message": "Failed to download JSON data."}, status=500)
-        try:
-            add_data_to_model(downloaded_json)
-            logger.info("Data imported successfully.")
-            return JsonResponse({"message": "Data imported successfully."}, status=200)
-        except Exception as e:
-            logger.exception("Error importing data")
-            return JsonResponse({"message": f"Error importing data: {e!s}"}, status=500)
+        fetch_and_store_container_data()
     except Exception as e:
         logger.exception("Unexpected error during data import")
         return JsonResponse({"message": f"Unexpected error: {e!s}"}, status=500)
+    else:
+        return JsonResponse({"message": "Data import completed successfully."})

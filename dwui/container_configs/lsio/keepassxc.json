@@ -1,0 +1,104 @@
+{
+    "name": "keepassxc",
+    "initial_date": "2024-04-10",
+    "github_url": "https://github.com/linuxserver/docker-keepassxc",
+    "project_url": "https://keepassxc.org/",
+    "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/keepassxc-logo.png",
+    "description": "[KeePassXC] is a free and open-source password manager. It started as a community fork of KeePassX (itself a cross-platform port of KeePass).",
+    "version": "2.7.9-r1-ls52",
+    "version_timestamp": "2025-03-27 07:05:13+00:00",
+    "category": "Password Manager",
+    "stable": true,
+    "deprecated": false,
+    "stars": 21,
+    "monthly_pulls": 8212,
+    "tags": [
+        {
+            "tag": "latest",
+            "desc": "Stable releases"
+        }
+    ],
+    "architectures": [
+        {
+            "arch": "x86_64",
+            "tag": "latest"
+        },
+        {
+            "arch": "arm64",
+            "tag": "arm64v8-latest"
+        }
+    ],
+    "changelog": [
+        {
+            "date": "2024-12-06",
+            "desc": "Rebase to Alpine 3.21."
+        },
+        {
+            "date": "2024-05-23",
+            "desc": "Rebase to Alpine 3.20."
+        },
+        {
+            "date": "2024-04-10",
+            "desc": "Initial release."
+        }
+    ],
+    "config": {
+        "application_setup": "https://github.com/linuxserver/docker-keepassxc?tab=readme-ov-file#application-setup",
+        "env_vars": [
+            {
+                "name": "PUID",
+                "value": "1000",
+                "desc": "User ID",
+                "optional": false
+            },
+            {
+                "name": "PGID",
+                "value": "1000",
+                "desc": "Group ID",
+                "optional": false
+            },
+            {
+                "name": "TZ",
+                "value": "Etc/UTC",
+                "desc": "Timezone",
+                "optional": false
+            },
+            {
+                "name": "TZ",
+                "value": "Europe/London",
+                "desc": "Specify a timezone to use EG Europe/London.",
+                "optional": false
+            }
+        ],
+        "volumes": [
+            {
+                "path": "/config",
+                "host_path": "/path/to/config",
+                "desc": "Users home directory in the container, stores local files and settings",
+                "optional": false
+            }
+        ],
+        "ports": [
+            {
+                "external": "3000",
+                "internal": "3000",
+                "desc": "KeePassXC desktop gui.",
+                "optional": false
+            },
+            {
+                "external": "3001",
+                "internal": "3001",
+                "desc": "KeePassXC desktop gui HTTPS.",
+                "optional": false
+            }
+        ],
+        "security_opt": [
+            {
+                "run_var": "seccomp=unconfined",
+                "compose_var": "seccomp:unconfined",
+                "desc": "For Docker Engine only, many modern gui apps need this to function on older hosts as syscalls are unknown to Docker.",
+                "optional": true
+            }
+        ]
+    }
+}

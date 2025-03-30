@@ -1,0 +1,105 @@
+{
+    "name": "zotero",
+    "initial_date": "2024-01-31",
+    "github_url": "https://github.com/linuxserver/docker-zotero",
+    "project_url": "https://www.zotero.org/",
+    "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/zotero-icon.png",
+    "description": "[Zotero] is a free, easy-to-use tool to help you collect, organize, annotate, cite, and share research.",
+    "version": "7.0.15-ls70",
+    "version_timestamp": "2025-03-28 07:11:33+00:00",
+    "category": "Documents",
+    "stable": true,
+    "deprecated": false,
+    "stars": 84,
+    "monthly_pulls": 1896,
+    "tags": [
+        {
+            "tag": "latest",
+            "desc": "Stable releases"
+        }
+    ],
+    "architectures": [
+        {
+            "arch": "x86_64",
+            "tag": "amd64-latest"
+        }
+    ],
+    "changelog": [
+        {
+            "date": "2024-02-10",
+            "desc": "Update Readme with new env vars and ingest proper PWA icon."
+        },
+        {
+            "date": "2024-01-31",
+            "desc": "Initial release."
+        }
+    ],
+    "config": {
+        "application_setup": "https://github.com/linuxserver/docker-zotero?tab=readme-ov-file#application-setup",
+        "env_vars": [
+            {
+                "name": "PUID",
+                "value": "1000",
+                "desc": "User ID",
+                "optional": false
+            },
+            {
+                "name": "PGID",
+                "value": "1000",
+                "desc": "Group ID",
+                "optional": false
+            },
+            {
+                "name": "TZ",
+                "value": "Etc/UTC",
+                "desc": "Timezone",
+                "optional": false
+            },
+            {
+                "name": "TZ",
+                "value": "Europe/London",
+                "desc": "Specify a timezone to use EG Europe/London.",
+                "optional": false
+            }
+        ],
+        "volumes": [
+            {
+                "path": "/config",
+                "host_path": "/path/to/config",
+                "desc": "Users home directory in the container, stores local files and settings",
+                "optional": false
+            }
+        ],
+        "ports": [
+            {
+                "external": "3000",
+                "internal": "3000",
+                "desc": "Zotero gui.",
+                "optional": false
+            },
+            {
+                "external": "3001",
+                "internal": "3001",
+                "desc": "HTTPS Zotero gui.",
+                "optional": false
+            }
+        ],
+        "custom": [
+            {
+                "name": "shm-size",
+                "name_compose": "shm_size",
+                "value": "1gb",
+                "desc": "This is needed for Chromium to function properly.",
+                "optional": false
+            }
+        ],
+        "security_opt": [
+            {
+                "run_var": "seccomp=unconfined",
+                "compose_var": "seccomp:unconfined",
+                "desc": "For Docker Engine only, many modern gui apps need this to function on older hosts as syscalls are unknown to Docker. Chromium runs in no-sandbox mode without it.",
+                "optional": true
+            }
+        ]
+    }
+}

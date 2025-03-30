@@ -1,0 +1,96 @@
+{
+    "name": "kimai",
+    "initial_date": "2023-08-09",
+    "github_url": "https://github.com/linuxserver/docker-kimai",
+    "project_url": "https://kimai.org/",
+    "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/kimai-logo.png",
+    "description": "kimai is a professional grade time-tracking application, free and open-source. It handles use-cases of freelancers as well as companies with dozens or hundreds of users. Kimai was build to track your project times and ships with many advanced features, including but not limited to:  JSON API, invoicing, data exports, multi-timer and punch-in punch-out mode, tagging, multi-user - multi-timezones - multi-language ([over 30 translations existing](https://hosted.weblate.org/projects/kimai/)!), authentication via SAML/LDAP/Database, two-factor authentication (2FA) with TOTP, customizable role and team permissions, responsive design, user/customer/project specific rates, advanced search & filtering, money and time budgets, advanced reporting, support for [plugins](https://www.kimai.org/store/) and so much more.",
+    "version": "2.31.0-ls108",
+    "version_timestamp": "2025-03-21 22:49:25+00:00",
+    "category": "Finance,Business",
+    "stable": true,
+    "deprecated": false,
+    "stars": 20,
+    "monthly_pulls": 1284,
+    "tags": [
+        {
+            "tag": "latest",
+            "desc": "Stable releases"
+        }
+    ],
+    "architectures": [
+        {
+            "arch": "x86_64",
+            "tag": "amd64-latest"
+        },
+        {
+            "arch": "arm64",
+            "tag": "arm64v8-latest"
+        }
+    ],
+    "changelog": [
+        {
+            "date": "2024-06-30",
+            "desc": "Rebase to Alpine 3.20. Existing users should update their nginx confs to avoid http2 deprecation warnings."
+        },
+        {
+            "date": "2024-03-24",
+            "desc": "Added LDAP module to composer"
+        },
+        {
+            "date": "2024-03-06",
+            "desc": "Existing users should update: site-confs/default.conf - Cleanup default site conf."
+        }
+    ],
+    "config": {
+        "application_setup": "https://github.com/linuxserver/docker-kimai?tab=readme-ov-file#application-setup",
+        "env_vars": [
+            {
+                "name": "PUID",
+                "value": "1000",
+                "desc": "User ID",
+                "optional": false
+            },
+            {
+                "name": "PGID",
+                "value": "1000",
+                "desc": "Group ID",
+                "optional": false
+            },
+            {
+                "name": "TZ",
+                "value": "Etc/UTC",
+                "desc": "Timezone",
+                "optional": false
+            },
+            {
+                "name": "DATABASE_URL",
+                "value": "mysql://your_db_user:your_db_pass@your_db_host:3306/your_db_name?charset=your_db_charset&serverVersion=your_db_version",
+                "desc": "Configure your database connection, see Application Setup instructions.",
+                "optional": false
+            }
+        ],
+        "volumes": [
+            {
+                "path": "/config",
+                "host_path": "/path/to/kimai/config",
+                "desc": "Persistent config files",
+                "optional": false
+            }
+        ],
+        "ports": [
+            {
+                "external": "80",
+                "internal": "80",
+                "desc": "http gui",
+                "optional": false
+            },
+            {
+                "external": "443",
+                "internal": "443",
+                "desc": "https gui",
+                "optional": false
+            }
+        ]
+    }
+}

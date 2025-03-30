@@ -1,0 +1,66 @@
+{
+    "name": "synclounge",
+    "initial_date": "2020-05-11",
+    "github_url": "https://github.com/linuxserver/docker-synclounge",
+    "project_url": "https://github.com/samcm/synclounge",
+    "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/synclounge-banner.png",
+    "description": "synclounge is a third party tool that allows you to watch Plex in sync with your friends/family, wherever you are.",
+    "version": "5.2.35-ls111",
+    "version_timestamp": "2025-03-25 14:43:56+00:00",
+    "category": "Media Tools",
+    "stable": true,
+    "deprecated": false,
+    "stars": 9,
+    "monthly_pulls": 3937,
+    "tags": [
+        {
+            "tag": "latest",
+            "desc": "Stable releases"
+        }
+    ],
+    "architectures": [
+        {
+            "arch": "x86_64",
+            "tag": "amd64-latest"
+        },
+        {
+            "arch": "arm64",
+            "tag": "arm64v8-latest"
+        }
+    ],
+    "changelog": [
+        {
+            "date": "2024-12-19",
+            "desc": "Add support for read-only and non-root operation."
+        },
+        {
+            "date": "2024-12-05",
+            "desc": "Rebase to Alpine 3.21."
+        },
+        {
+            "date": "2024-06-04",
+            "desc": "Rebase to Alpine 3.20."
+        }
+    ],
+    "config": {
+        "application_setup": "https://github.com/linuxserver/docker-synclounge?tab=readme-ov-file#application-setup",
+        "readonly_supported": true,
+        "nonroot_supported": true,
+        "env_vars": [
+            {
+                "name": "AUTH_LIST",
+                "value": "plexuser1,plexuser2,email1,machineid1",
+                "desc": "If set, only the users defined here and the users of the plex servers defined here will be able to access the server. Use e-mails, plex usernames and/or plex server machine ids, comma separated, no spaces.",
+                "optional": true
+            }
+        ],
+        "ports": [
+            {
+                "external": "8088",
+                "internal": "8088",
+                "desc": "Web app and server port",
+                "optional": false
+            }
+        ]
+    }
+}

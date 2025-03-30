@@ -1,0 +1,120 @@
+{
+    "name": "calibre",
+    "initial_date": "2019-04-29",
+    "github_url": "https://github.com/linuxserver/docker-calibre",
+    "project_url": "https://calibre-ebook.com/",
+    "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/calibre-logo.png",
+    "description": "calibre is a powerful and easy to use e-book manager. Users say it's outstanding and a must-have. It'll allow you to do nearly everything and it takes things a step beyond normal e-book software. It's also completely free and open source and great for both casual users and computer experts.",
+    "version": "v8.1.1-ls327",
+    "version_timestamp": "2025-03-28 07:49:11+00:00",
+    "category": "Books",
+    "stable": true,
+    "deprecated": false,
+    "stars": 421,
+    "monthly_pulls": 382682,
+    "tags": [
+        {
+            "tag": "latest",
+            "desc": "Latest Calibre releases"
+        },
+        {
+            "tag": "v4",
+            "desc": "Calibre v4 releases (x86_64 only)"
+        }
+    ],
+    "architectures": [
+        {
+            "arch": "x86_64",
+            "tag": "amd64-<version tag>"
+        },
+        {
+            "arch": "arm64",
+            "tag": "arm64v8-<version tag>"
+        }
+    ],
+    "changelog": [
+        {
+            "date": "2024-08-19",
+            "desc": "Rebase to noble."
+        },
+        {
+            "date": "2024-02-10",
+            "desc": "Update Readme with new env vars and ingest proper PWA icon."
+        },
+        {
+            "date": "2024-01-31",
+            "desc": "Fix fullscreen on start."
+        }
+    ],
+    "config": {
+        "application_setup": "https://github.com/linuxserver/docker-calibre?tab=readme-ov-file#application-setup",
+        "env_vars": [
+            {
+                "name": "PUID",
+                "value": "1000",
+                "desc": "User ID",
+                "optional": false
+            },
+            {
+                "name": "PGID",
+                "value": "1000",
+                "desc": "Group ID",
+                "optional": false
+            },
+            {
+                "name": "TZ",
+                "value": "Etc/UTC",
+                "desc": "Timezone",
+                "optional": false
+            },
+            {
+                "name": "PASSWORD",
+                "value": "",
+                "desc": "Optionally set a password for the gui.",
+                "optional": true
+            },
+            {
+                "name": "CLI_ARGS",
+                "value": "",
+                "desc": "Optionally pass cli start arguments to calibre.",
+                "optional": true
+            }
+        ],
+        "volumes": [
+            {
+                "path": "/config",
+                "host_path": "/path/to/calibre/config",
+                "desc": "Where calibre should store its database and library.",
+                "optional": false
+            }
+        ],
+        "ports": [
+            {
+                "external": "8080",
+                "internal": "8080",
+                "desc": "Calibre desktop gui.",
+                "optional": false
+            },
+            {
+                "external": "8181",
+                "internal": "8181",
+                "desc": "Calibre desktop gui HTTPS.",
+                "optional": false
+            },
+            {
+                "external": "8081",
+                "internal": "8081",
+                "desc": "Calibre webserver gui.",
+                "optional": false
+            }
+        ],
+        "security_opt": [
+            {
+                "run_var": "seccomp=unconfined",
+                "compose_var": "seccomp:unconfined",
+                "desc": "For Docker Engine only, many modern gui apps need this to function as syscalls are unkown to Docker.",
+                "optional": true
+            }
+        ]
+    }
+}

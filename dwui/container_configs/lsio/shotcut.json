@@ -1,0 +1,92 @@
+{
+    "name": "shotcut",
+    "initial_date": "2024-01-31",
+    "github_url": "https://github.com/linuxserver/docker-shotcut",
+    "project_url": "https://www.shotcut.org/",
+    "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/shotcut-logo.png",
+    "description": "shotcut is a free, open source, cross-platform video editor.",
+    "version": "v25.01.25-ls66",
+    "version_timestamp": "2025-03-26 03:25:14+00:00",
+    "category": "Video Editor",
+    "stable": true,
+    "deprecated": false,
+    "stars": 8,
+    "monthly_pulls": 1084,
+    "tags": [
+        {
+            "tag": "latest",
+            "desc": "Stable releases"
+        }
+    ],
+    "architectures": [
+        {
+            "arch": "x86_64",
+            "tag": "amd64-<version tag>"
+        }
+    ],
+    "changelog": [
+        {
+            "date": "2024-01-31",
+            "desc": "Initial release."
+        }
+    ],
+    "config": {
+        "application_setup": "https://github.com/linuxserver/docker-shotcut?tab=readme-ov-file#application-setup",
+        "env_vars": [
+            {
+                "name": "PUID",
+                "value": "1000",
+                "desc": "User ID",
+                "optional": false
+            },
+            {
+                "name": "PGID",
+                "value": "1000",
+                "desc": "Group ID",
+                "optional": false
+            },
+            {
+                "name": "TZ",
+                "value": "Etc/UTC",
+                "desc": "Timezone",
+                "optional": false
+            },
+            {
+                "name": "TZ",
+                "value": "Europe/London",
+                "desc": "Specify a timezone to use EG Europe/London.",
+                "optional": false
+            }
+        ],
+        "volumes": [
+            {
+                "path": "/config",
+                "host_path": "/path/to/data",
+                "desc": "Where Shotcut should store its config.",
+                "optional": false
+            }
+        ],
+        "ports": [
+            {
+                "external": "3000",
+                "internal": "3000",
+                "desc": "Shotcut desktop gui.",
+                "optional": false
+            },
+            {
+                "external": "3001",
+                "internal": "3001",
+                "desc": "Shotcut desktop gui HTTPS.",
+                "optional": false
+            }
+        ],
+        "security_opt": [
+            {
+                "run_var": "seccomp=unconfined",
+                "compose_var": "seccomp:unconfined",
+                "desc": "For Docker Engine only, many modern gui apps need this to function as syscalls are unkown to Docker.",
+                "optional": true
+            }
+        ]
+    }
+}

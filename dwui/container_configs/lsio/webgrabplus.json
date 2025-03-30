@@ -1,0 +1,94 @@
+{
+    "name": "webgrabplus",
+    "initial_date": "2018-01-18",
+    "github_url": "https://github.com/linuxserver/docker-webgrabplus",
+    "project_url": "https://www.webgrabplus.com",
+    "project_logo": "https://www.webgrabplus.com/sites/default/themes/WgTheme/images/slideshows/EPG_fading.jpg",
+    "description": "webgrabplus is a multi-site incremental xmltv epg grabber. It collects tv-program guide data from selected tvguide sites for your favourite channels.",
+    "version": "5.3.1-ls261",
+    "version_timestamp": "2025-03-27 08:49:40+00:00",
+    "category": "Media Tools",
+    "stable": true,
+    "deprecated": false,
+    "stars": 24,
+    "monthly_pulls": 1811,
+    "tags": [
+        {
+            "tag": "latest",
+            "desc": "Stable releases"
+        }
+    ],
+    "architectures": [
+        {
+            "arch": "x86_64",
+            "tag": "amd64-latest"
+        },
+        {
+            "arch": "arm64",
+            "tag": "arm64v8-latest"
+        }
+    ],
+    "changelog": [
+        {
+            "date": "2024-06-25",
+            "desc": "Rebase to Alpine 3.21."
+        },
+        {
+            "date": "2024-06-25",
+            "desc": "Rebase to Alpine 3.20."
+        },
+        {
+            "date": "2024-04-23",
+            "desc": "Bump dotnet framework to 8.x."
+        }
+    ],
+    "config": {
+        "application_setup": "https://github.com/linuxserver/docker-webgrabplus?tab=readme-ov-file#application-setup",
+        "readonly_supported": false,
+        "nonroot_supported": false,
+        "hostname": {
+            "hostname": "webgrabplus",
+            "desc": "Set the hostname for the container for the license check.",
+            "optional": false
+        },
+        "mac_address": {
+            "mac_address": "00:00:00:00:00:00",
+            "desc": "Set the mac_address for the container for the license check.",
+            "optional": false
+        },
+        "env_vars": [
+            {
+                "name": "PUID",
+                "value": "1000",
+                "desc": "User ID",
+                "optional": false
+            },
+            {
+                "name": "PGID",
+                "value": "1000",
+                "desc": "Group ID",
+                "optional": false
+            },
+            {
+                "name": "TZ",
+                "value": "Etc/UTC",
+                "desc": "Timezone",
+                "optional": false
+            }
+        ],
+        "volumes": [
+            {
+                "path": "/config",
+                "host_path": "/path/to/webgrabplus/config",
+                "desc": "Persistent config files",
+                "optional": false
+            },
+            {
+                "path": "/data",
+                "host_path": "/path/to/data",
+                "desc": "Where webgrabplus should store it's data files.",
+                "optional": false
+            }
+        ]
+    }
+}

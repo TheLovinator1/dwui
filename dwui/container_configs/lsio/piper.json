@@ -1,0 +1,121 @@
+{
+    "name": "piper",
+    "initial_date": "2023-11-25",
+    "github_url": "https://github.com/linuxserver/docker-piper",
+    "project_url": "https://github.com/rhasspy/piper/",
+    "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/piper-logo.png",
+    "description": "piper is a fast, local neural text to speech system that sounds great and is optimized for the Raspberry Pi 4. This container provides a Wyoming protocol server for Piper.",
+    "version": "1.4.0-ls55",
+    "version_timestamp": "2025-03-24 09:04:51+00:00",
+    "category": "Machine Learning",
+    "stable": true,
+    "deprecated": false,
+    "stars": 43,
+    "monthly_pulls": 21561,
+    "tags": [
+        {
+            "tag": "latest",
+            "desc": "Stable releases"
+        },
+        {
+            "tag": "gpu",
+            "desc": "Releases with Nvidia GPU support (amd64 only)"
+        }
+    ],
+    "architectures": [
+        {
+            "arch": "x86_64",
+            "tag": "amd64-latest"
+        },
+        {
+            "arch": "arm64",
+            "tag": "arm64v8-latest"
+        }
+    ],
+    "changelog": [
+        {
+            "date": "2024-07-18",
+            "desc": "Rebase to Ubuntu Noble."
+        },
+        {
+            "date": "2023-11-25",
+            "desc": "Initial Release."
+        }
+    ],
+    "config": {
+        "application_setup": "https://github.com/linuxserver/docker-piper?tab=readme-ov-file#application-setup",
+        "readonly_supported": true,
+        "env_vars": [
+            {
+                "name": "PUID",
+                "value": "1000",
+                "desc": "User ID",
+                "optional": false
+            },
+            {
+                "name": "PGID",
+                "value": "1000",
+                "desc": "Group ID",
+                "optional": false
+            },
+            {
+                "name": "TZ",
+                "value": "Etc/UTC",
+                "desc": "Timezone",
+                "optional": false
+            },
+            {
+                "name": "PIPER_VOICE",
+                "value": "en_US-lessac-medium",
+                "desc": "The [Piper voice](https://huggingface.co/rhasspy/piper-voices/tree/main) to use, in the format `<language>-<name>-<quality>`",
+                "optional": false
+            },
+            {
+                "name": "PIPER_LENGTH",
+                "value": "1.0",
+                "desc": "Voice speaking rate, 1.0 is default with < 1.0 being faster and > 1.0 being slower.",
+                "optional": true
+            },
+            {
+                "name": "PIPER_NOISE",
+                "value": "0.667",
+                "desc": "Controls the variability of the voice by adding noise. Values above 1 will start to degrade audio.",
+                "optional": true
+            },
+            {
+                "name": "PIPER_NOISEW",
+                "value": "0.333",
+                "desc": "Controls the variability of speaking cadence. Values above 1 produce extreme stutters and pauses.",
+                "optional": true
+            },
+            {
+                "name": "PIPER_SPEAKER",
+                "value": "0",
+                "desc": "Speaker number to use if the voice supports multiple speakers.",
+                "optional": true
+            },
+            {
+                "name": "PIPER_PROCS",
+                "value": "1",
+                "desc": "Number of Piper processes to run simultaneously.",
+                "optional": true
+            }
+        ],
+        "volumes": [
+            {
+                "path": "/config",
+                "host_path": "/path/to/piper/data",
+                "desc": "Local path for piper config files.",
+                "optional": false
+            }
+        ],
+        "ports": [
+            {
+                "external": "10200",
+                "internal": "10200",
+                "desc": "Wyoming connection port.",
+                "optional": false
+            }
+        ]
+    }
+}

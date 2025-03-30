@@ -1,0 +1,119 @@
+{
+    "name": "firefox",
+    "initial_date": "2021-04-19",
+    "github_url": "https://github.com/linuxserver/docker-firefox",
+    "project_url": "https://www.mozilla.org/en-US/firefox/",
+    "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/firefox-logo.png",
+    "description": "[Firefox] Browser, also known as Mozilla Firefox or simply Firefox, is a free and open-source web browser developed by the Mozilla Foundation and its subsidiary, the Mozilla Corporation. Firefox uses the Gecko layout engine to render web pages, which implements current and anticipated web standards.",
+    "version": "136.0.4build1-0ubuntu0.24.04.1mt1-ls228",
+    "version_timestamp": "2025-03-28 16:59:04+00:00",
+    "category": "Web Browser",
+    "stable": true,
+    "deprecated": false,
+    "stars": 192,
+    "monthly_pulls": 171143,
+    "tags": [
+        {
+            "tag": "latest",
+            "desc": "Stable releases"
+        }
+    ],
+    "architectures": [
+        {
+            "arch": "x86_64",
+            "tag": "latest"
+        },
+        {
+            "arch": "arm64",
+            "tag": "arm64v8-latest"
+        }
+    ],
+    "changelog": [
+        {
+            "date": "2024-09-25",
+            "desc": "Rebase to Ubuntu Noble."
+        },
+        {
+            "date": "2024-05-23",
+            "desc": "Rebase to Alpine 3.20."
+        },
+        {
+            "date": "2024-02-13",
+            "desc": "Add ability to pass CLI args to Firefox."
+        }
+    ],
+    "config": {
+        "application_setup": "https://github.com/linuxserver/docker-firefox?tab=readme-ov-file#application-setup",
+        "env_vars": [
+            {
+                "name": "PUID",
+                "value": "1000",
+                "desc": "User ID",
+                "optional": false
+            },
+            {
+                "name": "PGID",
+                "value": "1000",
+                "desc": "Group ID",
+                "optional": false
+            },
+            {
+                "name": "TZ",
+                "value": "Etc/UTC",
+                "desc": "Timezone",
+                "optional": false
+            },
+            {
+                "name": "TZ",
+                "value": "Europe/London",
+                "desc": "Specify a timezone to use EG Europe/London.",
+                "optional": false
+            },
+            {
+                "name": "FIREFOX_CLI",
+                "value": "https://www.linuxserver.io/",
+                "desc": "Specify one or multiple Firefox CLI flags, this string will be passed to the application in full.",
+                "optional": true
+            }
+        ],
+        "volumes": [
+            {
+                "path": "/config",
+                "host_path": "/path/to/config",
+                "desc": "Users home directory in the container, stores local files and settings",
+                "optional": false
+            }
+        ],
+        "ports": [
+            {
+                "external": "3000",
+                "internal": "3000",
+                "desc": "Firefox desktop gui.",
+                "optional": false
+            },
+            {
+                "external": "3001",
+                "internal": "3001",
+                "desc": "Firefox desktop gui HTTPS.",
+                "optional": false
+            }
+        ],
+        "custom": [
+            {
+                "name": "shm-size",
+                "name_compose": "shm_size",
+                "value": "1gb",
+                "desc": "This is needed for any modern website to function like youtube.",
+                "optional": false
+            }
+        ],
+        "security_opt": [
+            {
+                "run_var": "seccomp=unconfined",
+                "compose_var": "seccomp:unconfined",
+                "desc": "For Docker Engine only, many modern gui apps need this to function on older hosts as syscalls are unknown to Docker.",
+                "optional": true
+            }
+        ]
+    }
+}

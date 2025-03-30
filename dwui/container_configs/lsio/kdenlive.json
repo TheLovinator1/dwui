@@ -1,0 +1,121 @@
+{
+    "name": "kdenlive",
+    "initial_date": "2022-03-07",
+    "github_url": "https://github.com/linuxserver/docker-kdenlive",
+    "project_url": "https://kdenlive.org/",
+    "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/kdenlive-logo.png",
+    "description": "[Kdenlive] is a powerful free and open source cross-platform video editing program made by the KDE community. Feature rich and production ready.",
+    "version": "423.08.5-0ubuntu4-ls138",
+    "version_timestamp": "2025-03-24 17:20:06+00:00",
+    "category": "Video Editor",
+    "stable": true,
+    "deprecated": false,
+    "stars": 31,
+    "monthly_pulls": 2693,
+    "tags": [
+        {
+            "tag": "latest",
+            "desc": "Stable releases"
+        }
+    ],
+    "architectures": [
+        {
+            "arch": "x86_64",
+            "tag": "latest"
+        },
+        {
+            "arch": "arm64",
+            "tag": "arm64v8-latest"
+        }
+    ],
+    "changelog": [
+        {
+            "date": "2024-08-19",
+            "desc": "Rebase to noble. Use pypi and lsio wheels."
+        },
+        {
+            "date": "2024-02-10",
+            "desc": "Update Readme with new env vars and ingest proper PWA icon."
+        },
+        {
+            "date": "2023-04-24",
+            "desc": "Ensure application launches in fullscreen."
+        }
+    ],
+    "config": {
+        "application_setup": "https://github.com/linuxserver/docker-kdenlive?tab=readme-ov-file#application-setup",
+        "env_vars": [
+            {
+                "name": "PUID",
+                "value": "1000",
+                "desc": "User ID",
+                "optional": false
+            },
+            {
+                "name": "PGID",
+                "value": "1000",
+                "desc": "Group ID",
+                "optional": false
+            },
+            {
+                "name": "TZ",
+                "value": "Etc/UTC",
+                "desc": "Timezone",
+                "optional": false
+            },
+            {
+                "name": "SUBFOLDER",
+                "value": "/",
+                "desc": "Specify a subfolder to use with reverse proxies, IE `/subfolder/`",
+                "optional": true
+            }
+        ],
+        "volumes": [
+            {
+                "path": "/config",
+                "host_path": "/path/to/kdenlive/config",
+                "desc": "Users home directory in the container, stores local files and settings",
+                "optional": false
+            }
+        ],
+        "ports": [
+            {
+                "external": "3000",
+                "internal": "3000",
+                "desc": "Kdenlive desktop gui",
+                "optional": false
+            },
+            {
+                "external": "3001",
+                "internal": "3001",
+                "desc": "Kdenlive desktop gui HTTPS",
+                "optional": false
+            }
+        ],
+        "custom": [
+            {
+                "name": "shm-size",
+                "name_compose": "shm_size",
+                "value": "1gb",
+                "desc": "This might be needed to prevent crashing",
+                "optional": true
+            }
+        ],
+        "security_opt": [
+            {
+                "run_var": "seccomp=unconfined",
+                "compose_var": "seccomp:unconfined",
+                "desc": "For Docker Engine only, this may be required depending on your Docker and storage configuration.",
+                "optional": true
+            }
+        ],
+        "devices": [
+            {
+                "path": "/dev/dri",
+                "host_path": "/dev/dri",
+                "desc": "Add this for hardware acceleration (Linux hosts only)",
+                "optional": true
+            }
+        ]
+    }
+}

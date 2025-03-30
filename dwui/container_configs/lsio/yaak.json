@@ -1,0 +1,86 @@
+{
+    "name": "yaak",
+    "initial_date": "2024-09-12",
+    "github_url": "https://github.com/linuxserver/docker-yaak",
+    "project_url": "https://yaak.app/",
+    "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/yaak-logo.png",
+    "description": "yaak is a desktop API client for organizing and executing REST, GraphQL, and gRPC requests. It's built using [Tauri](https://tauri.app/), [Rust](https://www.rust-lang.org/), and [ReactJS](https://react.dev/).",
+    "version": "v2025.1.2-ls43",
+    "version_timestamp": "2025-03-25 05:02:12+00:00",
+    "category": "Programming",
+    "stable": true,
+    "deprecated": false,
+    "stars": 9,
+    "monthly_pulls": 503,
+    "tags": [
+        {
+            "tag": "latest",
+            "desc": "Stable releases"
+        }
+    ],
+    "architectures": [
+        {
+            "arch": "x86_64",
+            "tag": "amd64-<version tag>"
+        }
+    ],
+    "changelog": [
+        {
+            "date": "2024-09-12",
+            "desc": "Initial release."
+        }
+    ],
+    "config": {
+        "application_setup": "https://github.com/linuxserver/docker-yaak?tab=readme-ov-file#application-setup",
+        "env_vars": [
+            {
+                "name": "PUID",
+                "value": "1000",
+                "desc": "User ID",
+                "optional": false
+            },
+            {
+                "name": "PGID",
+                "value": "1000",
+                "desc": "Group ID",
+                "optional": false
+            },
+            {
+                "name": "TZ",
+                "value": "Etc/UTC",
+                "desc": "Timezone",
+                "optional": false
+            }
+        ],
+        "volumes": [
+            {
+                "path": "/config",
+                "host_path": "/path/to/yaak/config",
+                "desc": "Where yaak should store its config and data.",
+                "optional": false
+            }
+        ],
+        "ports": [
+            {
+                "external": "3000",
+                "internal": "3000",
+                "desc": "Yaak desktop gui.",
+                "optional": false
+            },
+            {
+                "external": "3001",
+                "internal": "3001",
+                "desc": "Yaak desktop gui HTTPS.",
+                "optional": false
+            }
+        ],
+        "security_opt": [
+            {
+                "run_var": "seccomp=unconfined",
+                "compose_var": "seccomp:unconfined",
+                "desc": "For Docker Engine only, many modern gui apps need this to function as syscalls are unkown to Docker.",
+                "optional": true
+            }
+        ]
+    }
+}

@@ -1,0 +1,150 @@
+{
+    "name": "hedgedoc",
+    "initial_date": "2020-12-22",
+    "github_url": "https://github.com/linuxserver/docker-hedgedoc",
+    "project_url": "https://hedgedoc.org/",
+    "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/hedgedoc-banner.png",
+    "description": "[HedgeDoc] gives you access to all your files wherever you are.  HedgeDoc is a real-time, multi-platform collaborative markdown note editor.  This means that you can write notes with other people on your desktop, tablet or even on the phone.  You can sign-in via multiple auth providers like Facebook, Twitter, GitHub and many more on the homepage.",
+    "version": "1.10.2-ls159",
+    "version_timestamp": "2025-03-17 16:41:44+00:00",
+    "category": "Content Management",
+    "stable": true,
+    "deprecated": false,
+    "stars": 49,
+    "monthly_pulls": 10939,
+    "tags": [
+        {
+            "tag": "latest",
+            "desc": "Stable releases"
+        }
+    ],
+    "architectures": [
+        {
+            "arch": "x86_64",
+            "tag": "amd64-latest"
+        },
+        {
+            "arch": "arm64",
+            "tag": "arm64v8-latest"
+        }
+    ],
+    "changelog": [
+        {
+            "date": "2025-02-24",
+            "desc": "Add missing icu-data-full to fix bug with TextDecoder and image uploads."
+        },
+        {
+            "date": "2024-06-21",
+            "desc": "Allow using `CMD_DB_DIALECT` to set up the `CMD_DB_URL`."
+        },
+        {
+            "date": "2024-06-06",
+            "desc": "Rebase to Alpine 3.20."
+        }
+    ],
+    "config": {
+        "application_setup": "https://github.com/linuxserver/docker-hedgedoc?tab=readme-ov-file#application-setup",
+        "env_vars": [
+            {
+                "name": "PUID",
+                "value": "1000",
+                "desc": "User ID",
+                "optional": false
+            },
+            {
+                "name": "PGID",
+                "value": "1000",
+                "desc": "Group ID",
+                "optional": false
+            },
+            {
+                "name": "TZ",
+                "value": "Etc/UTC",
+                "desc": "Timezone",
+                "optional": false
+            },
+            {
+                "name": "DB_HOST",
+                "value": "<hostname or ip>",
+                "desc": "Host address of mariadb database",
+                "optional": false
+            },
+            {
+                "name": "DB_PORT",
+                "value": "3306",
+                "desc": "Port to access mariadb database default is 3306",
+                "optional": false
+            },
+            {
+                "name": "DB_USER",
+                "value": "hedgedoc",
+                "desc": "Database user",
+                "optional": false
+            },
+            {
+                "name": "DB_PASS",
+                "value": "<secret password>",
+                "desc": "Database password",
+                "optional": false
+            },
+            {
+                "name": "DB_NAME",
+                "value": "hedgedoc",
+                "desc": "Database name",
+                "optional": false
+            },
+            {
+                "name": "CMD_DOMAIN",
+                "value": "localhost",
+                "desc": "The address the gui will be accessed at (ie. `192.168.1.1` or `hedgedoc.domain.com`).",
+                "optional": false
+            },
+            {
+                "name": "CMD_URL_ADDPORT",
+                "value": "false",
+                "desc": "Set to `true` if using a port other than `80` or `443`.",
+                "optional": true
+            },
+            {
+                "name": "CMD_PROTOCOL_USESSL",
+                "value": "false",
+                "desc": "Set to `true` if accessing over https via reverse proxy.",
+                "optional": true
+            },
+            {
+                "name": "CMD_PORT",
+                "value": "3000",
+                "desc": "If you wish to access hedgedoc at a port different than 80, 443 or 3000, you need to set this to that port (ie. `CMD_PORT=5000`) and change the port mapping accordingly (5000:5000).",
+                "optional": true
+            },
+            {
+                "name": "CMD_ALLOW_ORIGIN",
+                "value": "['localhost']",
+                "desc": "Comma-separated list of allowed hostnames",
+                "optional": true
+            },
+            {
+                "name": "CMD_DB_DIALECT",
+                "value": "",
+                "desc": "This variable allows selecting a database engine (if DB_HOST not set up). Available options are: `mariadb`, `mysql`, `postgres`, `sqlite`.",
+                "optional": true
+            }
+        ],
+        "volumes": [
+            {
+                "path": "/config",
+                "host_path": "/path/to/hedgedoc/config",
+                "desc": "Persistent config files",
+                "optional": false
+            }
+        ],
+        "ports": [
+            {
+                "external": "3000",
+                "internal": "3000",
+                "desc": "Web gui port (internal port also needs to be changed if accessing at port other than 80, 443 and 3000).",
+                "optional": false
+            }
+        ]
+    }
+}

@@ -1,0 +1,186 @@
+{
+    "name": "healthchecks",
+    "initial_date": "2017-09-27",
+    "github_url": "https://github.com/linuxserver/docker-healthchecks",
+    "project_url": "https://github.com/healthchecks/healthchecks",
+    "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/healthchecks-logo.png",
+    "description": "healthchecks is a watchdog for your cron jobs. It's a web server that listens for pings from your cron jobs, plus a web interface.",
+    "version": "v3.9-ls286",
+    "version_timestamp": "2025-03-24 09:05:37+00:00",
+    "category": "Monitoring",
+    "stable": true,
+    "deprecated": false,
+    "stars": 183,
+    "monthly_pulls": 254446,
+    "tags": [
+        {
+            "tag": "latest",
+            "desc": "Stable releases"
+        }
+    ],
+    "architectures": [
+        {
+            "arch": "x86_64",
+            "tag": "amd64-latest"
+        },
+        {
+            "arch": "arm64",
+            "tag": "arm64v8-latest"
+        }
+    ],
+    "changelog": [
+        {
+            "date": "2024-12-20",
+            "desc": "Rebase to Alpine 3.21."
+        },
+        {
+            "date": "2024-08-31",
+            "desc": "Enable IPv6 on uwsgi."
+        },
+        {
+            "date": "2024-05-31",
+            "desc": "Rebase to Alpine 3.20."
+        }
+    ],
+    "config": {
+        "application_setup": "https://github.com/linuxserver/docker-healthchecks?tab=readme-ov-file#application-setup",
+        "env_vars": [
+            {
+                "name": "SITE_ROOT",
+                "value": "",
+                "desc": "The site's top-level URL and the port it listens to if different than 80 or 443 (e.g., https://healthchecks.example.com:8000).",
+                "optional": false
+            },
+            {
+                "name": "SITE_NAME",
+                "value": "",
+                "desc": "The site's name (e.g., \"Example Corp HealthChecks\").",
+                "optional": false
+            },
+            {
+                "name": "SUPERUSER_EMAIL",
+                "value": "",
+                "desc": "Superuser email.",
+                "optional": false
+            },
+            {
+                "name": "SUPERUSER_PASSWORD",
+                "value": "",
+                "desc": "Superuser password.",
+                "optional": false
+            },
+            {
+                "name": "ALLOWED_HOSTS",
+                "value": "",
+                "desc": "A comma-separated list of valid hostnames for the server. Default is the domain portion of `SITE_ROOT`.",
+                "optional": true
+            },
+            {
+                "name": "APPRISE_ENABLED",
+                "value": "False",
+                "desc": "Set to `True` to enable the Apprise integration (https://github.com/caronc/apprise).",
+                "optional": true
+            },
+            {
+                "name": "CSRF_TRUSTED_ORIGINS",
+                "value": "",
+                "desc": "A [list](https://docs.python.org/3/tutorial/introduction.html#lists) of trusted origins for unsafe requests (e.g. POST). Defaults to the value of `SITE_ROOT`.",
+                "optional": true
+            },
+            {
+                "name": "DEBUG",
+                "value": "True",
+                "desc": "Set to `False` to disable. Debug mode relaxes CSRF protections and increases logging verbosity but should be disabled for production instances as it will impact performance and security.",
+                "optional": true
+            },
+            {
+                "name": "DEFAULT_FROM_EMAIL",
+                "value": "",
+                "desc": "From email for alerts.",
+                "optional": true
+            },
+            {
+                "name": "EMAIL_HOST",
+                "value": "",
+                "desc": "SMTP host.",
+                "optional": true
+            },
+            {
+                "name": "EMAIL_PORT",
+                "value": "",
+                "desc": "SMTP port.",
+                "optional": true
+            },
+            {
+                "name": "EMAIL_HOST_USER",
+                "value": "",
+                "desc": "SMTP user.",
+                "optional": true
+            },
+            {
+                "name": "EMAIL_HOST_PASSWORD",
+                "value": "",
+                "desc": "SMTP password.",
+                "optional": true
+            },
+            {
+                "name": "EMAIL_USE_TLS",
+                "value": "",
+                "desc": "Use TLS for SMTP (`True` or `False`).",
+                "optional": true
+            },
+            {
+                "name": "INTEGRATIONS_ALLOW_PRIVATE_IPS",
+                "value": "",
+                "desc": "Defaults to False. Set to True to allow integrations to connect to private IP addresses.",
+                "optional": true
+            },
+            {
+                "name": "PING_EMAIL_DOMAIN",
+                "value": "",
+                "desc": "The domain to use for generating ping email addresses. Defaults to `localhost`.",
+                "optional": true
+            },
+            {
+                "name": "RP_ID",
+                "value": "",
+                "desc": "If using webauthn for 2FA set this to match your Healthchecks domain. Webauthn will only work over https.",
+                "optional": true
+            },
+            {
+                "name": "SECRET_KEY",
+                "value": "",
+                "desc": "A secret key used for cryptographic signing. Will generate a random value if one is not supplied and save it to `/config/local_settings.py`.",
+                "optional": true
+            },
+            {
+                "name": "SITE_LOGO_URL",
+                "value": "",
+                "desc": "Full URL to custom site logo.",
+                "optional": true
+            }
+        ],
+        "volumes": [
+            {
+                "path": "/config",
+                "host_path": "/path/to/healthchecks/config",
+                "desc": "Persistent config files.",
+                "optional": false
+            }
+        ],
+        "ports": [
+            {
+                "external": "8000",
+                "internal": "8000",
+                "desc": "Healthchecks Web UI",
+                "optional": false
+            },
+            {
+                "external": "2525",
+                "internal": "2525",
+                "desc": "Port for inbound SMTP pings",
+                "optional": true
+            }
+        ]
+    }
+}

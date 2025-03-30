@@ -1,0 +1,194 @@
+{
+    "name": "snipe-it",
+    "initial_date": "2018-06-13",
+    "github_url": "https://github.com/linuxserver/docker-snipe-it",
+    "project_url": "https://github.com/snipe/snipe-it",
+    "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/snipe-it-logo.png",
+    "description": "snipe-it makes asset management easy. It was built by people solving real-world IT and asset management problems, and a solid UX has always been a top priority. Straightforward design and bulk actions mean getting things done faster.",
+    "version": "v8.0.4-ls321",
+    "version_timestamp": "2025-03-17 20:43:30+00:00",
+    "category": "Administration",
+    "stable": true,
+    "deprecated": false,
+    "stars": 132,
+    "monthly_pulls": 13126,
+    "tags": [
+        {
+            "tag": "latest",
+            "desc": "Stable releases"
+        }
+    ],
+    "architectures": [
+        {
+            "arch": "x86_64",
+            "tag": "amd64-latest"
+        },
+        {
+            "arch": "arm64",
+            "tag": "arm64v8-latest"
+        }
+    ],
+    "changelog": [
+        {
+            "date": "2025-01-16",
+            "desc": "Rebase to Alpine 3.21."
+        },
+        {
+            "date": "2024-06-17",
+            "desc": "Rebase to Alpine 3.20. Existing users should update their nginx confs to avoid http2 deprecation warnings."
+        },
+        {
+            "date": "2024-03-06",
+            "desc": "Existing users should update: site-confs/default.conf - Cleanup default site conf."
+        }
+    ],
+    "config": {
+        "application_setup": "https://github.com/linuxserver/docker-snipe-it?tab=readme-ov-file#application-setup",
+        "readonly_supported": false,
+        "nonroot_supported": false,
+        "env_vars": [
+            {
+                "name": "PUID",
+                "value": "1000",
+                "desc": "User ID",
+                "optional": false
+            },
+            {
+                "name": "PGID",
+                "value": "1000",
+                "desc": "Group ID",
+                "optional": false
+            },
+            {
+                "name": "TZ",
+                "value": "Etc/UTC",
+                "desc": "Timezone",
+                "optional": false
+            },
+            {
+                "name": "APP_KEY",
+                "value": "",
+                "desc": "App key used for encrypting stored data. Generate with `docker exec snipe-it php /app/www/artisan key:generate --show`.",
+                "optional": false
+            },
+            {
+                "name": "APP_URL",
+                "value": "http://localhost:8080",
+                "desc": "Hostname or IP and port if applicable, be sure to define https/http",
+                "optional": false
+            },
+            {
+                "name": "MYSQL_PORT_3306_TCP_ADDR",
+                "value": "",
+                "desc": "Mysql hostname or IP to use",
+                "optional": false
+            },
+            {
+                "name": "MYSQL_PORT_3306_TCP_PORT",
+                "value": "",
+                "desc": "Mysql port to use",
+                "optional": false
+            },
+            {
+                "name": "MYSQL_DATABASE",
+                "value": "",
+                "desc": "Mysql database to use",
+                "optional": false
+            },
+            {
+                "name": "MYSQL_USER",
+                "value": "",
+                "desc": "Mysql user to use",
+                "optional": false
+            },
+            {
+                "name": "MYSQL_PASSWORD",
+                "value": "",
+                "desc": "Mysql password to use",
+                "optional": false
+            },
+            {
+                "name": "APP_DEBUG",
+                "value": "false",
+                "desc": "Set to `true` to see debugging output in the web UI.",
+                "optional": true
+            },
+            {
+                "name": "APP_ENV",
+                "value": "production",
+                "desc": "Default is `production` but can use `testing` or `develop`.",
+                "optional": true
+            },
+            {
+                "name": "APP_FORCE_TLS",
+                "value": "false",
+                "desc": "Set to `true` if running behind a reverse proxy",
+                "optional": true
+            },
+            {
+                "name": "APP_LOCALE",
+                "value": "",
+                "desc": "Default is `en-US`. Set to a language from [this list](https://snipe-it.readme.io/docs/configuration#section-setting-a-language).",
+                "optional": true
+            },
+            {
+                "name": "MAIL_PORT_587_TCP_ADDR",
+                "value": "",
+                "desc": "SMTP mail server ip or hostname.",
+                "optional": true
+            },
+            {
+                "name": "MAIL_PORT_587_TCP_PORT",
+                "value": "",
+                "desc": "SMTP mail server port.",
+                "optional": true
+            },
+            {
+                "name": "MAIL_ENV_FROM_ADDR",
+                "value": "",
+                "desc": "The email address mail should be replied to and listed when sent.",
+                "optional": true
+            },
+            {
+                "name": "MAIL_ENV_FROM_NAME",
+                "value": "",
+                "desc": "The name listed on email sent from the default account on the system.",
+                "optional": true
+            },
+            {
+                "name": "MAIL_ENV_ENCRYPTION",
+                "value": "",
+                "desc": "Mail encryption to use e.g. `tls`.",
+                "optional": true
+            },
+            {
+                "name": "MAIL_ENV_USERNAME",
+                "value": "",
+                "desc": "SMTP server login username.",
+                "optional": true
+            },
+            {
+                "name": "MAIL_ENV_PASSWORD",
+                "value": "",
+                "desc": "SMTP server login password.",
+                "optional": true
+            }
+        ],
+        "volumes": [
+            {
+                "path": "/config",
+                "host_path": "/path/to/snipe-it/data",
+                "desc": "Contains your config files and data storage for Snipe-IT",
+                "optional": false
+            }
+        ],
+        "ports": [
+            {
+                "external": "8080",
+                "internal": "80",
+                "desc": "Snipe-IT Web UI",
+                "optional": false
+            }
+        ]
+    }
+}

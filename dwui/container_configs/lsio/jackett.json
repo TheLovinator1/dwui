@@ -1,0 +1,104 @@
+{
+    "name": "jackett",
+    "initial_date": "2016-01-25",
+    "github_url": "https://github.com/linuxserver/docker-jackett",
+    "project_url": "https://github.com/Jackett/Jackett",
+    "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/jackett-banner.png",
+    "description": "jackett works as a proxy server: it translates queries from apps (Sonarr, SickRage, CouchPotato, Mylar, etc) into tracker-site-specific http queries, parses the html response, then sends results back to the requesting software. This allows for getting recent uploads (like RSS) and performing searches. Jackett is a single repository of maintained indexer scraping & translation logic - removing the burden from other apps.",
+    "version": "v0.22.1705-ls720",
+    "version_timestamp": "2025-03-29 06:52:39+00:00",
+    "category": "Indexers",
+    "stable": true,
+    "deprecated": false,
+    "stars": 417,
+    "monthly_pulls": 549611,
+    "tags": [
+        {
+            "tag": "latest",
+            "desc": "Stable releases"
+        }
+    ],
+    "architectures": [
+        {
+            "arch": "x86_64",
+            "tag": "amd64-latest"
+        },
+        {
+            "arch": "arm64",
+            "tag": "arm64v8-latest"
+        }
+    ],
+    "changelog": [
+        {
+            "date": "2025-01-12",
+            "desc": "Rebase to Alpine 3.21."
+        },
+        {
+            "date": "2024-05-31",
+            "desc": "Rebase to Alpine 3.20."
+        },
+        {
+            "date": "2024-03-11",
+            "desc": "Rebase to Alpine 3.19. Deprecate development tag as upstream is publishing nightly stable releases."
+        }
+    ],
+    "config": {
+        "application_setup": "https://github.com/linuxserver/docker-jackett?tab=readme-ov-file#application-setup",
+        "readonly_supported": true,
+        "nonroot_supported": true,
+        "env_vars": [
+            {
+                "name": "PUID",
+                "value": "1000",
+                "desc": "User ID",
+                "optional": false
+            },
+            {
+                "name": "PGID",
+                "value": "1000",
+                "desc": "Group ID",
+                "optional": false
+            },
+            {
+                "name": "TZ",
+                "value": "Etc/UTC",
+                "desc": "Timezone",
+                "optional": false
+            },
+            {
+                "name": "AUTO_UPDATE",
+                "value": "true",
+                "desc": "Allow Jackett to update inside of the container.",
+                "optional": true
+            },
+            {
+                "name": "RUN_OPTS",
+                "value": "",
+                "desc": "Optionally specify additional arguments to be passed.",
+                "optional": true
+            }
+        ],
+        "volumes": [
+            {
+                "path": "/config",
+                "host_path": "/path/to/jackett/data",
+                "desc": "Where Jackett should store its config file.",
+                "optional": false
+            },
+            {
+                "path": "/downloads",
+                "host_path": "/path/to/blackhole",
+                "desc": "Path to torrent blackhole.",
+                "optional": false
+            }
+        ],
+        "ports": [
+            {
+                "external": "9117",
+                "internal": "9117",
+                "desc": "WebUI",
+                "optional": false
+            }
+        ]
+    }
+}

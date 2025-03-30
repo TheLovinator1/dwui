@@ -1,0 +1,144 @@
+{
+    "name": "lychee",
+    "initial_date": "2017-02-12",
+    "github_url": "https://github.com/linuxserver/docker-lychee",
+    "project_url": "https://lycheeorg.github.io/",
+    "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/lychee-icon.png",
+    "description": "lychee is a free photo-management tool, which runs on your server or web-space. Installing is a matter of seconds. Upload, manage and share photos like from a native application. Lychee comes with everything you need and all your photos are stored securely.\"",
+    "version": "v6.4.1-ls283",
+    "version_timestamp": "2025-03-28 10:46:34+00:00",
+    "category": "Photos",
+    "stable": true,
+    "deprecated": false,
+    "stars": 47,
+    "monthly_pulls": 1676,
+    "tags": [
+        {
+            "tag": "latest",
+            "desc": "Stable releases"
+        }
+    ],
+    "architectures": [
+        {
+            "arch": "x86_64",
+            "tag": "amd64-latest"
+        },
+        {
+            "arch": "arm64",
+            "tag": "arm64v8-latest"
+        }
+    ],
+    "changelog": [
+        {
+            "date": "2024-12-03",
+            "desc": "Verify build artifacts with cosign."
+        },
+        {
+            "date": "2024-05-27",
+            "desc": "Rebase to Alpine 3.20. Existing users should update their nginx confs to avoid http2 deprecation warnings."
+        },
+        {
+            "date": "2024-01-18",
+            "desc": "Add php-sodium."
+        }
+    ],
+    "config": {
+        "application_setup": "https://github.com/linuxserver/docker-lychee?tab=readme-ov-file#application-setup",
+        "env_vars": [
+            {
+                "name": "PUID",
+                "value": "1000",
+                "desc": "User ID",
+                "optional": false
+            },
+            {
+                "name": "PGID",
+                "value": "1000",
+                "desc": "Group ID",
+                "optional": false
+            },
+            {
+                "name": "TZ",
+                "value": "Etc/UTC",
+                "desc": "Timezone",
+                "optional": false
+            },
+            {
+                "name": "DB_CONNECTION",
+                "value": "",
+                "desc": "DB type, from `sqlite`, `mysql`, `pqsql`.",
+                "optional": false
+            },
+            {
+                "name": "DB_HOST",
+                "value": "",
+                "desc": "DB server hostname. For `mysql` and `pgsql` only.",
+                "optional": false
+            },
+            {
+                "name": "DB_PORT",
+                "value": "",
+                "desc": "DB server port. For `mysql` and `pgsql` only.",
+                "optional": false
+            },
+            {
+                "name": "DB_USERNAME",
+                "value": "",
+                "desc": "DB user. For `mysql` and `pgsql` only.",
+                "optional": false
+            },
+            {
+                "name": "DB_PASSWORD",
+                "value": "",
+                "desc": "DB password. For `mysql` and `pgsql` only.",
+                "optional": false
+            },
+            {
+                "name": "DB_DATABASE",
+                "value": "",
+                "desc": "Path to DB file for `sqlite`. DB name for `mysql` and `pgsql`.",
+                "optional": false
+            },
+            {
+                "name": "APP_NAME",
+                "value": "Lychee",
+                "desc": "The gallery name.",
+                "optional": true
+            },
+            {
+                "name": "APP_URL",
+                "value": "",
+                "desc": "The URL you will use to access Lychee including protocol, and port where appropriate.",
+                "optional": true
+            },
+            {
+                "name": "TRUSTED_PROXIES",
+                "value": "",
+                "desc": "Set to the IP or netmask covering your reverse proxy, if running behind one. Set to `*` to trust all IPs (**do not** use `*` if exposed to the internet`).",
+                "optional": true
+            }
+        ],
+        "volumes": [
+            {
+                "path": "/config",
+                "host_path": "/path/to/lychee/config",
+                "desc": "Persistent config files.",
+                "optional": false
+            },
+            {
+                "path": "/pictures",
+                "host_path": "/path/to/pictures",
+                "desc": "Where lychee will store uploaded images.",
+                "optional": false
+            }
+        ],
+        "ports": [
+            {
+                "external": "80",
+                "internal": "80",
+                "desc": "http gui",
+                "optional": false
+            }
+        ]
+    }
+}

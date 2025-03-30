@@ -1,0 +1,86 @@
+{
+    "name": "openshot",
+    "initial_date": "2024-12-23",
+    "github_url": "https://github.com/linuxserver/docker-openshot",
+    "project_url": "https://openshot.org/",
+    "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/openshot-logo.png",
+    "description": "[OpenShot] Video Editor is an award-winning free and open-source video editor for Linux, Mac, and Windows, and is dedicated to delivering high quality video editing and animation solutions to the world.",
+    "version": "v3.3.0-ls13",
+    "version_timestamp": "2025-03-28 23:03:19+00:00",
+    "category": "Video Editor",
+    "stable": true,
+    "deprecated": false,
+    "stars": 2,
+    "monthly_pulls": 426,
+    "tags": [
+        {
+            "tag": "latest",
+            "desc": "Stable releases"
+        }
+    ],
+    "architectures": [
+        {
+            "arch": "x86_64",
+            "tag": "latest"
+        }
+    ],
+    "changelog": [
+        {
+            "date": "2024-12-23",
+            "desc": "Initial release."
+        }
+    ],
+    "config": {
+        "application_setup": "https://github.com/linuxserver/docker-openshot?tab=readme-ov-file#application-setup",
+        "env_vars": [
+            {
+                "name": "PUID",
+                "value": "1000",
+                "desc": "User ID",
+                "optional": false
+            },
+            {
+                "name": "PGID",
+                "value": "1000",
+                "desc": "Group ID",
+                "optional": false
+            },
+            {
+                "name": "TZ",
+                "value": "Etc/UTC",
+                "desc": "Timezone",
+                "optional": false
+            }
+        ],
+        "volumes": [
+            {
+                "path": "/config",
+                "host_path": "/path/to/openshot/config",
+                "desc": "User's home directory in the container, stores program settings and files.",
+                "optional": false
+            }
+        ],
+        "ports": [
+            {
+                "external": "3000",
+                "internal": "3000",
+                "desc": "OpenShot desktop gui.",
+                "optional": false
+            },
+            {
+                "external": "3001",
+                "internal": "3001",
+                "desc": "OpenShot desktop gui HTTPS.",
+                "optional": false
+            }
+        ],
+        "security_opt": [
+            {
+                "run_var": "seccomp=unconfined",
+                "compose_var": "seccomp:unconfined",
+                "desc": "For Docker Engine only, many modern gui apps need this to function on older hosts as syscalls are unknown to Docker.",
+                "optional": true
+            }
+        ]
+    }
+}

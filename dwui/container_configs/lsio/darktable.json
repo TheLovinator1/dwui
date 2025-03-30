@@ -1,0 +1,104 @@
+{
+    "name": "darktable",
+    "initial_date": "2021-04-07",
+    "github_url": "https://github.com/linuxserver/docker-darktable",
+    "project_url": "https://www.darktable.org/",
+    "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/darktable-logo.png",
+    "description": "[darktable] is an open source photography workflow application and raw developer. A virtual lighttable and darkroom for photographers. It manages your digital negatives in a database, lets you view them through a zoomable lighttable and enables you to develop raw images and enhance them.",
+    "version": "2025-03-28-ls196",
+    "version_timestamp": "2025-03-28 17:49:13+00:00",
+    "category": "Photos",
+    "stable": true,
+    "deprecated": false,
+    "stars": 22,
+    "monthly_pulls": 2374,
+    "tags": [
+        {
+            "tag": "latest",
+            "desc": "Stable releases"
+        }
+    ],
+    "architectures": [
+        {
+            "arch": "x86_64",
+            "tag": "latest"
+        },
+        {
+            "arch": "arm64",
+            "tag": "arm64v8-latest"
+        }
+    ],
+    "changelog": [
+        {
+            "date": "2024-02-10",
+            "desc": "Update Readme with new env vars and ingest proper PWA icon."
+        },
+        {
+            "date": "2024-01-21",
+            "desc": "Rebase to Arch as Alpine not longer offers aarch64."
+        },
+        {
+            "date": "2023-03-18",
+            "desc": "Rebase to KasmVNC base image."
+        }
+    ],
+    "config": {
+        "application_setup": "https://github.com/linuxserver/docker-darktable?tab=readme-ov-file#application-setup",
+        "env_vars": [
+            {
+                "name": "PUID",
+                "value": "1000",
+                "desc": "User ID",
+                "optional": false
+            },
+            {
+                "name": "PGID",
+                "value": "1000",
+                "desc": "Group ID",
+                "optional": false
+            },
+            {
+                "name": "TZ",
+                "value": "Etc/UTC",
+                "desc": "Timezone",
+                "optional": false
+            },
+            {
+                "name": "TZ",
+                "value": "Europe/London",
+                "desc": "Specify a timezone to use EG Europe/London.",
+                "optional": false
+            }
+        ],
+        "volumes": [
+            {
+                "path": "/config",
+                "host_path": "/path/to/config",
+                "desc": "Users home directory in the container, stores program settings and images",
+                "optional": false
+            }
+        ],
+        "ports": [
+            {
+                "external": "3000",
+                "internal": "3000",
+                "desc": "Darktable desktop gui.",
+                "optional": false
+            },
+            {
+                "external": "3001",
+                "internal": "3001",
+                "desc": "Darktable desktop gui HTTPS.",
+                "optional": false
+            }
+        ],
+        "security_opt": [
+            {
+                "run_var": "seccomp=unconfined",
+                "compose_var": "seccomp:unconfined",
+                "desc": "For Docker Engine only, many modern gui apps need this to function on older hosts as syscalls are unknown to Docker.",
+                "optional": true
+            }
+        ]
+    }
+}

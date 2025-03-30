@@ -1,0 +1,117 @@
+{
+    "name": "kali-linux",
+    "initial_date": "2024-07-18",
+    "github_url": "https://github.com/linuxserver/docker-kali-linux",
+    "project_url": "https://github.com/linuxserver/docker-kali-linux",
+    "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/kali-logo.png",
+    "description": "kali-linux - is an Advanced Penetration Testing Linux distribution used for Penetration Testing, Ethical Hacking and network security assessments. KALI LINUX \u2122 is a trademark of OffSec.",
+    "version": "ff17a2a9-ls34",
+    "version_timestamp": "2025-02-17 11:52:23+00:00",
+    "category": "Remote Desktop,Security",
+    "stable": true,
+    "deprecated": false,
+    "stars": 30,
+    "monthly_pulls": 9742,
+    "tags": [
+        {
+            "tag": "latest",
+            "desc": "Stable releases"
+        }
+    ],
+    "architectures": [
+        {
+            "arch": "x86_64",
+            "tag": "amd64-latest"
+        },
+        {
+            "arch": "arm64",
+            "tag": "arm64v8-latest"
+        }
+    ],
+    "changelog": [
+        {
+            "date": "2025-01-24",
+            "desc": "Fix SVG icons not rendering."
+        },
+        {
+            "date": "2024-07-18",
+            "desc": "Initial release."
+        }
+    ],
+    "config": {
+        "application_setup": "https://github.com/linuxserver/docker-kali-linux?tab=readme-ov-file#application-setup",
+        "env_vars": [
+            {
+                "name": "TZ",
+                "value": "Europe/London",
+                "desc": "Specify a timezone to use EG Europe/London",
+                "optional": false
+            },
+            {
+                "name": "SUBFOLDER",
+                "value": "/",
+                "desc": "Specify a subfolder to use with reverse proxies, IE `/subfolder/`",
+                "optional": true
+            },
+            {
+                "name": "TITLE",
+                "value": "Kali Linux",
+                "desc": "String which will be used as page/tab title in the web browser.",
+                "optional": true
+            }
+        ],
+        "volumes": [
+            {
+                "path": "/config",
+                "host_path": "/path/to/data",
+                "desc": "abc users home directory",
+                "optional": false
+            },
+            {
+                "path": "/var/run/docker.sock",
+                "host_path": "/var/run/docker.sock",
+                "desc": "Docker Socket on the system, if you want to use Docker in the container",
+                "optional": true
+            }
+        ],
+        "ports": [
+            {
+                "external": "3000",
+                "internal": "3000",
+                "desc": "Web Desktop GUI",
+                "optional": false
+            },
+            {
+                "external": "3001",
+                "internal": "3001",
+                "desc": "Web Desktop GUI HTTPS",
+                "optional": false
+            }
+        ],
+        "custom": [
+            {
+                "name": "shm-size",
+                "name_compose": "shm_size",
+                "value": "1gb",
+                "desc": "We set this to 1 gig to prevent modern web browsers from crashing",
+                "optional": true
+            }
+        ],
+        "security_opt": [
+            {
+                "run_var": "seccomp=unconfined",
+                "compose_var": "seccomp:unconfined",
+                "desc": "For Docker Engine only, many modern gui apps need this to function on older hosts as syscalls are unknown to Docker.",
+                "optional": true
+            }
+        ],
+        "devices": [
+            {
+                "path": "/dev/dri",
+                "host_path": "/dev/dri",
+                "desc": "Add this for GL support (Linux hosts only)",
+                "optional": true
+            }
+        ]
+    }
+}

@@ -1,0 +1,102 @@
+{
+    "name": "diskover",
+    "initial_date": "2018-11-01",
+    "github_url": "https://github.com/linuxserver/docker-diskover",
+    "project_url": "https://github.com/diskoverdata/diskover-community",
+    "project_logo": "https://raw.githubusercontent.com/diskoverdata/diskover-community/master/diskover-web/public/images/diskover.png",
+    "description": "diskover is an open source file system indexer that uses Elasticsearch to index and manage data across heterogeneous storage systems.",
+    "version": "v2.3.0-ls192",
+    "version_timestamp": "2025-03-27 11:17:30+00:00",
+    "category": "Storage,Monitoring",
+    "stable": true,
+    "deprecated": false,
+    "stars": 90,
+    "monthly_pulls": 3051,
+    "tags": [
+        {
+            "tag": "latest",
+            "desc": "Stable releases"
+        }
+    ],
+    "architectures": [
+        {
+            "arch": "x86_64",
+            "tag": "amd64-latest"
+        },
+        {
+            "arch": "arm64",
+            "tag": "arm64v8-latest"
+        }
+    ],
+    "changelog": [
+        {
+            "date": "2024-09-06",
+            "desc": "Rebase to Alpine 3.20. Existing users should update their nginx confs to avoid http2 deprecation warnings."
+        },
+        {
+            "date": "2024-03-06",
+            "desc": "Existing users should update: site-confs/default.conf - Cleanup default site conf."
+        },
+        {
+            "date": "2024-03-06",
+            "desc": "Rebase to Alpine 3.19 with php 8.3."
+        }
+    ],
+    "config": {
+        "application_setup": "https://github.com/linuxserver/docker-diskover?tab=readme-ov-file#application-setup",
+        "env_vars": [
+            {
+                "name": "PUID",
+                "value": "1000",
+                "desc": "User ID",
+                "optional": false
+            },
+            {
+                "name": "PGID",
+                "value": "1000",
+                "desc": "Group ID",
+                "optional": false
+            },
+            {
+                "name": "TZ",
+                "value": "Etc/UTC",
+                "desc": "Timezone",
+                "optional": false
+            },
+            {
+                "name": "ES_HOST",
+                "value": "elasticsearch",
+                "desc": "ElasticSearch host (optional)",
+                "optional": false
+            },
+            {
+                "name": "ES_PORT",
+                "value": "9200",
+                "desc": "ElasticSearch port (optional)",
+                "optional": false
+            }
+        ],
+        "volumes": [
+            {
+                "path": "/config",
+                "host_path": "/path/to/diskover/config",
+                "desc": "Persistent config files",
+                "optional": false
+            },
+            {
+                "path": "/data",
+                "host_path": "/path/to/diskover/data",
+                "desc": "Default mount point to crawl",
+                "optional": false
+            }
+        ],
+        "ports": [
+            {
+                "external": "80",
+                "internal": "80",
+                "desc": "diskover Web UI",
+                "optional": false
+            }
+        ]
+    }
+}

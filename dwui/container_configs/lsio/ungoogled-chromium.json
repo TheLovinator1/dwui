@@ -1,0 +1,101 @@
+{
+    "name": "ungoogled-chromium",
+    "initial_date": "2024-07-25",
+    "github_url": "https://github.com/linuxserver/docker-ungoogled-chromium",
+    "project_url": "https://github.com/ungoogled-software/ungoogled-chromium",
+    "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/ungoogled-chromium-logo.png",
+    "description": "[Ungoogled Chromium] is Google Chromium, sans dependency on Google web services.",
+    "version": "134.0.6998.165-1-ls43",
+    "version_timestamp": "2025-03-23 15:24:47+00:00",
+    "category": "Web Browser",
+    "stable": true,
+    "deprecated": false,
+    "stars": 13,
+    "monthly_pulls": 43381,
+    "tags": [
+        {
+            "tag": "latest",
+            "desc": "Stable releases"
+        }
+    ],
+    "architectures": [
+        {
+            "arch": "x86_64",
+            "tag": "latest"
+        }
+    ],
+    "changelog": [
+        {
+            "date": "2024-07-25",
+            "desc": "Initial release."
+        }
+    ],
+    "config": {
+        "application_setup": "https://github.com/linuxserver/docker-ungoogled-chromium?tab=readme-ov-file#application-setup",
+        "env_vars": [
+            {
+                "name": "PUID",
+                "value": "1000",
+                "desc": "User ID",
+                "optional": false
+            },
+            {
+                "name": "PGID",
+                "value": "1000",
+                "desc": "Group ID",
+                "optional": false
+            },
+            {
+                "name": "TZ",
+                "value": "Etc/UTC",
+                "desc": "Timezone",
+                "optional": false
+            },
+            {
+                "name": "CHROME_CLI",
+                "value": "https://www.linuxserver.io/",
+                "desc": "Specify one or multiple Chromium CLI flags, this string will be passed to the application in full.",
+                "optional": true
+            }
+        ],
+        "volumes": [
+            {
+                "path": "/config",
+                "host_path": "/path/to/config",
+                "desc": "Users home directory in the container, stores local files and settings",
+                "optional": false
+            }
+        ],
+        "ports": [
+            {
+                "external": "3000",
+                "internal": "3000",
+                "desc": "Ungoogled Chromium desktop gui.",
+                "optional": false
+            },
+            {
+                "external": "3001",
+                "internal": "3001",
+                "desc": "HTTPS Ungoogled Chromium desktop gui.",
+                "optional": false
+            }
+        ],
+        "custom": [
+            {
+                "name": "shm-size",
+                "name_compose": "shm_size",
+                "value": "1gb",
+                "desc": "This is needed for any modern website to function like youtube.",
+                "optional": false
+            }
+        ],
+        "security_opt": [
+            {
+                "run_var": "seccomp=unconfined",
+                "compose_var": "seccomp:unconfined",
+                "desc": "For Docker Engine only, many modern gui apps need this to function on older hosts as syscalls are unknown to Docker. Ungoogled Chromium runs in no-sandbox test mode without it.",
+                "optional": true
+            }
+        ]
+    }
+}

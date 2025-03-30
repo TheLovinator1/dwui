@@ -1,0 +1,102 @@
+{
+    "name": "deluge",
+    "initial_date": "2015-10-15",
+    "github_url": "https://github.com/linuxserver/docker-deluge",
+    "project_url": "http://deluge-torrent.org/",
+    "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/deluge-logo.png",
+    "description": "deluge is a lightweight, Free Software, cross-platform BitTorrent client.  * Full Encryption * WebUI * Plugin System * Much more...",
+    "version": "2.1.1-r10-ls320",
+    "version_timestamp": "2025-03-24 15:46:11+00:00",
+    "category": "Downloaders",
+    "stable": true,
+    "deprecated": false,
+    "stars": 260,
+    "monthly_pulls": 103880,
+    "tags": [
+        {
+            "tag": "latest",
+            "desc": "Stable Deluge releases"
+        },
+        {
+            "tag": "libtorrentv1",
+            "desc": "Stable Deluge releases using libtorrentv1"
+        }
+    ],
+    "architectures": [
+        {
+            "arch": "x86_64",
+            "tag": "amd64-latest"
+        },
+        {
+            "arch": "arm64",
+            "tag": "arm64v8-latest"
+        }
+    ],
+    "changelog": [
+        {
+            "date": "2025-01-12",
+            "desc": "Rebase libtorrentv1 branch to Alpine 3.21."
+        },
+        {
+            "date": "2024-09-19",
+            "desc": "Prevent race condition related delay during container stop."
+        },
+        {
+            "date": "2024-08-26",
+            "desc": "Add libtorrentv1 tag."
+        }
+    ],
+    "config": {
+        "application_setup": "https://github.com/linuxserver/docker-deluge?tab=readme-ov-file#application-setup",
+        "readonly_supported": true,
+        "nonroot_supported": true,
+        "env_vars": [
+            {
+                "name": "DELUGE_LOGLEVEL",
+                "value": "error",
+                "desc": "set the loglevel output when running Deluge, default is info for deluged and warning for delgued-web",
+                "optional": true
+            }
+        ],
+        "volumes": [
+            {
+                "path": "/config",
+                "host_path": "/path/to/deluge/config",
+                "desc": "deluge configs",
+                "optional": false
+            },
+            {
+                "path": "/downloads",
+                "host_path": "/path/to/downloads",
+                "desc": "torrent download directory",
+                "optional": false
+            }
+        ],
+        "ports": [
+            {
+                "external": "8112",
+                "internal": "8112",
+                "desc": "Port for webui",
+                "optional": false
+            },
+            {
+                "external": "6881",
+                "internal": "6881",
+                "desc": "Inbound torrent traffic (See App Setup)",
+                "optional": false
+            },
+            {
+                "external": "6881",
+                "internal": "6881/udp",
+                "desc": "Inbound torrent traffic (See App Setup)",
+                "optional": false
+            },
+            {
+                "external": "58846",
+                "internal": "58846",
+                "desc": "Default deluged port for thin client connectivity",
+                "optional": true
+            }
+        ]
+    }
+}

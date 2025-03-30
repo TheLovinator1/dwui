@@ -1,0 +1,162 @@
+{
+    "name": "wireguard",
+    "initial_date": "2020-03-31",
+    "github_url": "https://github.com/linuxserver/docker-wireguard",
+    "project_url": "https://www.wireguard.com/",
+    "project_logo": "https://www.wireguard.com/img/wireguard.svg",
+    "description": "[WireGuard\u00ae] is an extremely simple yet fast and modern VPN that utilizes state-of-the-art cryptography. It aims to be faster, simpler, leaner, and more useful than IPsec, while avoiding the massive headache. It intends to be considerably more performant than OpenVPN. WireGuard is designed as a general purpose VPN for running on embedded interfaces and super computers alike, fit for many different circumstances. Initially released for the Linux kernel, it is now cross-platform (Windows, macOS, BSD, iOS, Android) and widely deployable. It is currently under heavy development, but already it might be regarded as the most secure, easiest to use, and simplest VPN solution in the industry.",
+    "version": "1.0.20210914-r4-ls72",
+    "version_timestamp": "2025-03-27 11:28:40+00:00",
+    "category": "Network,VPN",
+    "stable": true,
+    "deprecated": false,
+    "stars": 3168,
+    "monthly_pulls": 205201,
+    "tags": [
+        {
+            "tag": "latest",
+            "desc": "Stable releases"
+        }
+    ],
+    "architectures": [
+        {
+            "arch": "x86_64",
+            "tag": "amd64-latest"
+        },
+        {
+            "arch": "arm64",
+            "tag": "arm64v8-latest"
+        }
+    ],
+    "changelog": [
+        {
+            "date": "2025-01-01",
+            "desc": "Deprecate legacy branch."
+        },
+        {
+            "date": "2024-12-20",
+            "desc": "Rebase to Alpine 3.21."
+        },
+        {
+            "date": "2024-08-13",
+            "desc": "Add `errors` plugin to default Corefile."
+        }
+    ],
+    "config": {
+        "application_setup": "https://github.com/linuxserver/docker-wireguard?tab=readme-ov-file#application-setup",
+        "readonly_supported": true,
+        "env_vars": [
+            {
+                "name": "PUID",
+                "value": "1000",
+                "desc": "User ID",
+                "optional": false
+            },
+            {
+                "name": "PGID",
+                "value": "1000",
+                "desc": "Group ID",
+                "optional": false
+            },
+            {
+                "name": "TZ",
+                "value": "Etc/UTC",
+                "desc": "Timezone",
+                "optional": false
+            },
+            {
+                "name": "SERVERURL",
+                "value": "wireguard.domain.com",
+                "desc": "External IP or domain name for docker host. Used in server mode. If set to `auto`, the container will try to determine and set the external IP automatically",
+                "optional": true
+            },
+            {
+                "name": "SERVERPORT",
+                "value": "51820",
+                "desc": "External port for docker host. Used in server mode.",
+                "optional": true
+            },
+            {
+                "name": "PEERS",
+                "value": "1",
+                "desc": "Number of peers to create confs for. Required for server mode. Can also be a list of names: `myPC,myPhone,myTablet` (alphanumeric only)",
+                "optional": true
+            },
+            {
+                "name": "PEERDNS",
+                "value": "auto",
+                "desc": "DNS server set in peer/client configs (can be set as `8.8.8.8`). Used in server mode. Defaults to `auto`, which uses wireguard docker host's DNS via included CoreDNS forward.",
+                "optional": true
+            },
+            {
+                "name": "INTERNAL_SUBNET",
+                "value": "10.13.13.0",
+                "desc": "Internal subnet for the wireguard and server and peers (only change if it clashes). Used in server mode.",
+                "optional": true
+            },
+            {
+                "name": "ALLOWEDIPS",
+                "value": "0.0.0.0/0",
+                "desc": "The IPs/Ranges that the peers will be able to reach using the VPN connection. If not specified the default value is: '0.0.0.0/0, ::0/0' This will cause ALL traffic to route through the VPN, if you want split tunneling, set this to only the IPs you would like to use the tunnel AND the ip of the server's WG ip, such as 10.13.13.1.",
+                "optional": true
+            },
+            {
+                "name": "PERSISTENTKEEPALIVE_PEERS",
+                "value": "",
+                "desc": "Set to `all` or a list of comma separated peers (ie. `1,4,laptop`) for the wireguard server to send keepalive packets to listed peers every 25 seconds. Useful if server is accessed via domain name and has dynamic IP. Used only in server mode.",
+                "optional": true
+            },
+            {
+                "name": "LOG_CONFS",
+                "value": "true",
+                "desc": "Generated QR codes will be displayed in the docker log. Set to `false` to skip log output.",
+                "optional": true
+            }
+        ],
+        "volumes": [
+            {
+                "path": "/config",
+                "host_path": "/path/to/wireguard/config",
+                "desc": "Contains all relevant configuration files.",
+                "optional": false
+            },
+            {
+                "path": "/lib/modules",
+                "host_path": "/lib/modules",
+                "desc": "Path to host kernel module for situations where it's not already loaded.",
+                "optional": true
+            }
+        ],
+        "ports": [
+            {
+                "external": "51820",
+                "internal": "51820/udp",
+                "desc": "wireguard port",
+                "optional": false
+            }
+        ],
+        "custom": [
+            {
+                "name": "sysctl",
+                "name_compose": "sysctls",
+                "value": [
+                    "net.ipv4.conf.all.src_valid_mark=1"
+                ],
+                "desc": "Required for client mode.",
+                "optional": false
+            }
+        ],
+        "caps": [
+            {
+                "cap_add": "NET_ADMIN",
+                "desc": "Neccessary for Wireguard to create its VPN interface.",
+                "optional": false
+            },
+            {
+                "cap_add": "SYS_MODULE",
+                "desc": "Neccessary for loading Wireguard kernel module if it's not already loaded.",
+                "optional": true
+            }
+        ]
+    }
+}

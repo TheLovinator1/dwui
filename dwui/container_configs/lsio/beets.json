@@ -1,0 +1,102 @@
+{
+    "name": "beets",
+    "initial_date": "2015-11-29",
+    "github_url": "https://github.com/linuxserver/docker-beets",
+    "project_url": "http://beets.io/",
+    "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/beets-icon.png",
+    "description": "beets is a music library manager and not, for the most part, a music player. It does include a simple player plugin and an experimental Web-based player, but it generally leaves actual sound-reproduction to specialized tools.",
+    "version": "2.2.0-ls264",
+    "version_timestamp": "2025-03-28 18:57:54+00:00",
+    "category": "Music",
+    "stable": true,
+    "deprecated": false,
+    "stars": 139,
+    "monthly_pulls": 31861,
+    "tags": [
+        {
+            "tag": "latest",
+            "desc": "Stable Beets Releases"
+        },
+        {
+            "tag": "nightly",
+            "desc": "Built against head of Beets git, generally considered unstable but a likely choice for power users of the application."
+        }
+    ],
+    "architectures": [
+        {
+            "arch": "x86_64",
+            "tag": "amd64-latest"
+        },
+        {
+            "arch": "arm64",
+            "tag": "arm64v8-latest"
+        }
+    ],
+    "changelog": [
+        {
+            "date": "2025-01-27",
+            "desc": "Rebase to Alpine 3.21."
+        },
+        {
+            "date": "2024-10-01",
+            "desc": "Add packages required for Discogs plugin."
+        },
+        {
+            "date": "2024-08-28",
+            "desc": "Rebase to Alpine 3.20, switch from Pillow to Imagemagick."
+        }
+    ],
+    "config": {
+        "application_setup": "https://github.com/linuxserver/docker-beets?tab=readme-ov-file#application-setup",
+        "readonly_supported": true,
+        "nonroot_supported": true,
+        "env_vars": [
+            {
+                "name": "PUID",
+                "value": "1000",
+                "desc": "User ID",
+                "optional": false
+            },
+            {
+                "name": "PGID",
+                "value": "1000",
+                "desc": "Group ID",
+                "optional": false
+            },
+            {
+                "name": "TZ",
+                "value": "Etc/UTC",
+                "desc": "Timezone",
+                "optional": false
+            }
+        ],
+        "volumes": [
+            {
+                "path": "/config",
+                "host_path": "/path/to/beets/config",
+                "desc": "Persistent config files",
+                "optional": false
+            },
+            {
+                "path": "/music",
+                "host_path": "/path/to/music/library",
+                "desc": "Music library",
+                "optional": false
+            },
+            {
+                "path": "/downloads",
+                "host_path": "/path/to/ingest",
+                "desc": "Non processed music",
+                "optional": false
+            }
+        ],
+        "ports": [
+            {
+                "external": "8337",
+                "internal": "8337",
+                "desc": "Application WebUI",
+                "optional": false
+            }
+        ]
+    }
+}

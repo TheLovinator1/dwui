@@ -1,0 +1,111 @@
+{
+    "name": "foldingathome",
+    "initial_date": "2020-03-20",
+    "github_url": "https://github.com/linuxserver/docker-foldingathome",
+    "project_url": "https://foldingathome.org/",
+    "project_logo": "https://foldingathome.org/wp-content/uploads/2016/09/folding-at-home-logo.png",
+    "description": "[Folding@home] is a distributed computing project for simulating protein dynamics, including the process of protein folding and the movements of proteins implicated in a variety of diseases. It brings together citizen scientists who volunteer to run simulations of protein dynamics on their personal computers. Insights from this data are helping scientists to better understand biology, and providing new opportunities for developing therapeutics.",
+    "version": "8.4.9-ls159",
+    "version_timestamp": "2025-03-25 03:34:54+00:00",
+    "category": "Science",
+    "stable": true,
+    "deprecated": false,
+    "stars": 43,
+    "monthly_pulls": 4391,
+    "tags": [
+        {
+            "tag": "latest",
+            "desc": "Stable releases"
+        }
+    ],
+    "architectures": [
+        {
+            "arch": "x86_64",
+            "tag": "latest"
+        },
+        {
+            "arch": "arm64",
+            "tag": "arm64v8-latest"
+        }
+    ],
+    "changelog": [
+        {
+            "date": "2024-08-10",
+            "desc": "Add libexpat1 for Nvidia support."
+        },
+        {
+            "date": "2024-06-25",
+            "desc": "***Breaking Changes*** - Please see the Application Setup section for more details. Restructure image for F@H v8."
+        },
+        {
+            "date": "2024-06-15",
+            "desc": "Rebase to Ubuntu Noble, add optional cli args."
+        }
+    ],
+    "config": {
+        "application_setup": "https://github.com/linuxserver/docker-foldingathome?tab=readme-ov-file#application-setup",
+        "readonly_supported": true,
+        "env_vars": [
+            {
+                "name": "PUID",
+                "value": "1000",
+                "desc": "User ID",
+                "optional": false
+            },
+            {
+                "name": "PGID",
+                "value": "1000",
+                "desc": "Group ID",
+                "optional": false
+            },
+            {
+                "name": "TZ",
+                "value": "Etc/UTC",
+                "desc": "Timezone",
+                "optional": false
+            },
+            {
+                "name": "ACCOUNT_TOKEN",
+                "value": "",
+                "desc": "Register for an account on `https://app.foldingathome.org` and retrieve account token in settings. Required on first start.",
+                "optional": false
+            },
+            {
+                "name": "MACHINE_NAME",
+                "value": "",
+                "desc": "Assign a friendly name to this instance (no spaces). Required on first start.",
+                "optional": false
+            },
+            {
+                "name": "CLI_ARGS",
+                "value": "",
+                "desc": "Optionally pass additional cli arguments to `fah-client` on container start.",
+                "optional": true
+            }
+        ],
+        "volumes": [
+            {
+                "path": "/config",
+                "host_path": "/path/to/foldingathome/data",
+                "desc": "Where Folding@home should store its database and config.",
+                "optional": false
+            }
+        ],
+        "ports": [
+            {
+                "external": "7396",
+                "internal": "7396",
+                "desc": "Folding@home web gui (redirects to [https://app.foldingathome.org](https://app.foldingathome.org)).",
+                "optional": true
+            }
+        ],
+        "devices": [
+            {
+                "path": "/dev/dri",
+                "host_path": "/dev/dri",
+                "desc": "Only needed if you want to use your Intel GPU (vaapi).",
+                "optional": true
+            }
+        ]
+    }
+}

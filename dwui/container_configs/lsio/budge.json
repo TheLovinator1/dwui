@@ -1,0 +1,90 @@
+{
+    "name": "budge",
+    "initial_date": "2022-05-02",
+    "github_url": "https://github.com/linuxserver/docker-budge",
+    "project_url": "https://github.com/linuxserver/budge",
+    "project_logo": "",
+    "description": "budge is an open source 'budgeting with envelopes' personal finance app.",
+    "version": "0.0.9-ls152",
+    "version_timestamp": "2025-03-23 03:04:40+00:00",
+    "category": "Finance",
+    "stable": true,
+    "deprecated": false,
+    "stars": 61,
+    "monthly_pulls": 3660,
+    "tags": [
+        {
+            "tag": "latest",
+            "desc": "Stable releases"
+        }
+    ],
+    "architectures": [
+        {
+            "arch": "x86_64",
+            "tag": "amd64-latest"
+        },
+        {
+            "arch": "arm64",
+            "tag": "arm64v8-latest"
+        }
+    ],
+    "changelog": [
+        {
+            "date": "2024-06-06",
+            "desc": "Rebase to Alpine 3.20. Existing users should update their nginx confs to avoid http2 deprecation warnings."
+        },
+        {
+            "date": "2024-03-06",
+            "desc": "Existing users should update: site-confs/default.conf - Cleanup default site conf."
+        },
+        {
+            "date": "2024-03-06",
+            "desc": "Rebase to Alpine 3.19 with php 8.3."
+        }
+    ],
+    "config": {
+        "application_setup": "https://github.com/linuxserver/docker-budge?tab=readme-ov-file#application-setup",
+        "env_vars": [
+            {
+                "name": "PUID",
+                "value": "1000",
+                "desc": "User ID",
+                "optional": false
+            },
+            {
+                "name": "PGID",
+                "value": "1000",
+                "desc": "Group ID",
+                "optional": false
+            },
+            {
+                "name": "TZ",
+                "value": "Etc/UTC",
+                "desc": "Timezone",
+                "optional": false
+            }
+        ],
+        "volumes": [
+            {
+                "path": "/config",
+                "host_path": "/path/to/budge/config",
+                "desc": "Persistent config files",
+                "optional": false
+            }
+        ],
+        "ports": [
+            {
+                "external": "80",
+                "internal": "80",
+                "desc": "http gui",
+                "optional": false
+            },
+            {
+                "external": "443",
+                "internal": "443",
+                "desc": "https gui",
+                "optional": false
+            }
+        ]
+    }
+}

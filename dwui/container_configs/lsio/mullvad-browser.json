@@ -1,0 +1,116 @@
+{
+    "name": "mullvad-browser",
+    "initial_date": "2023-04-03",
+    "github_url": "https://github.com/linuxserver/docker-mullvad-browser",
+    "project_url": "https://mullvad.net/en/browser",
+    "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/mullvad-browser-logo.png",
+    "description": "The [Mullvad Browser] is a privacy-focused web browser developed in a collaboration between Mullvad VPN and the Tor Project. It\u2019s designed to minimize tracking and fingerprinting. You could say it\u2019s a Tor Browser to use without the Tor Network. Instead, you can use it with a trustworthy VPN.",
+    "version": "14.0.7-ls108",
+    "version_timestamp": "2025-03-23 22:05:30+00:00",
+    "category": "Web Browser,VPN",
+    "stable": true,
+    "deprecated": false,
+    "stars": 24,
+    "monthly_pulls": 4418,
+    "tags": [
+        {
+            "tag": "latest",
+            "desc": "Stable releases"
+        }
+    ],
+    "architectures": [
+        {
+            "arch": "x86_64",
+            "tag": "latest"
+        }
+    ],
+    "changelog": [
+        {
+            "date": "2024-08-28",
+            "desc": "Rebase to noble."
+        },
+        {
+            "date": "2024-02-10",
+            "desc": "Update Readme with new env vars and ingest proper PWA icon."
+        },
+        {
+            "date": "2023-04-03",
+            "desc": "Initial release."
+        }
+    ],
+    "config": {
+        "application_setup": "https://github.com/linuxserver/docker-mullvad-browser?tab=readme-ov-file#application-setup",
+        "env_vars": [
+            {
+                "name": "PUID",
+                "value": "1000",
+                "desc": "User ID",
+                "optional": false
+            },
+            {
+                "name": "PGID",
+                "value": "1000",
+                "desc": "Group ID",
+                "optional": false
+            },
+            {
+                "name": "TZ",
+                "value": "Etc/UTC",
+                "desc": "Timezone",
+                "optional": false
+            },
+            {
+                "name": "LOCAL_NET",
+                "value": "192.168.0.0/16",
+                "desc": "If using a VPN, set this to your local LAN IP range using CIDR notation. Without it you will be unable to access the web interface. If you have multiple ranges or a complex LAN setup you will need to manage this yourself in the wg0.conf, see the App Setup section for details.",
+                "optional": true
+            }
+        ],
+        "volumes": [
+            {
+                "path": "/config",
+                "host_path": "/path/to/mullvad-browser/config",
+                "desc": "Users home directory in the container, stores local files and settings",
+                "optional": false
+            }
+        ],
+        "ports": [
+            {
+                "external": "3000",
+                "internal": "3000",
+                "desc": "Mullvad Browser GUI.",
+                "optional": false
+            },
+            {
+                "external": "3001",
+                "internal": "3001",
+                "desc": "Mullvad Browser GUI HTTPS.",
+                "optional": false
+            }
+        ],
+        "custom": [
+            {
+                "name": "shm-size",
+                "name_compose": "shm_size",
+                "value": "1gb",
+                "desc": "This is needed for any modern website to function like youtube.",
+                "optional": false
+            }
+        ],
+        "security_opt": [
+            {
+                "run_var": "seccomp=unconfined",
+                "compose_var": "seccomp:unconfined",
+                "desc": "For Docker Engine only, many modern gui apps need this to function on older hosts as syscalls are unknown to Docker.",
+                "optional": true
+            }
+        ],
+        "caps": [
+            {
+                "cap_add": "NET_ADMIN",
+                "desc": "Neccessary for Wireguard to create its VPN interface.",
+                "optional": false
+            }
+        ]
+    }
+}

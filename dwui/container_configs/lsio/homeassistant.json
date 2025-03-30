@@ -1,0 +1,73 @@
+{
+    "name": "homeassistant",
+    "initial_date": "2021-01-30",
+    "github_url": "https://github.com/linuxserver/docker-homeassistant",
+    "project_url": "https://www.home-assistant.io/",
+    "project_logo": "https://github.com/home-assistant/home-assistant.io/raw/next/source/images/favicon-192x192-full.png",
+    "description": "[Home Assistant Core] - Open source home automation that puts local control and privacy first. Powered by a worldwide community of tinkerers and DIY enthusiasts. Perfect to run on a Raspberry Pi or a local server",
+    "version": "2025.3.4-ls91",
+    "version_timestamp": "2025-03-26 02:16:51+00:00",
+    "category": "Home Automation",
+    "stable": true,
+    "deprecated": false,
+    "stars": 229,
+    "monthly_pulls": 151811,
+    "tags": [
+        {
+            "tag": "latest",
+            "desc": "Stable releases"
+        }
+    ],
+    "architectures": [
+        {
+            "arch": "x86_64",
+            "tag": "amd64-latest"
+        },
+        {
+            "arch": "arm64",
+            "tag": "arm64v8-latest"
+        }
+    ],
+    "changelog": [
+        {
+            "date": "2025-01-03",
+            "desc": "Rebase to alpine 3.21."
+        },
+        {
+            "date": "2024-12-04",
+            "desc": "Make setcap target dynamic."
+        },
+        {
+            "date": "2024-11-07",
+            "desc": "Add go2rtc binary."
+        }
+    ],
+    "config": {
+        "application_setup": "https://github.com/linuxserver/docker-homeassistant?tab=readme-ov-file#application-setup",
+        "networking": "host",
+        "volumes": [
+            {
+                "path": "/config",
+                "host_path": "/path/to/homeassistant/data",
+                "desc": "Home Assistant config storage path.",
+                "optional": false
+            }
+        ],
+        "ports": [
+            {
+                "external": "8123",
+                "internal": "8123",
+                "desc": "Application WebUI, only use this if you are not using host mode.",
+                "optional": true
+            }
+        ],
+        "devices": [
+            {
+                "path": "/path/to/device",
+                "host_path": "/path/to/device",
+                "desc": "For passing through USB, serial or gpio devices.",
+                "optional": true
+            }
+        ]
+    }
+}

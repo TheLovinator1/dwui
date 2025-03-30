@@ -1,0 +1,98 @@
+{
+    "name": "digikam",
+    "initial_date": "2020-05-20",
+    "github_url": "https://github.com/linuxserver/docker-digikam",
+    "project_url": "https://www.digikam.org/",
+    "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/digikam.png",
+    "description": "[digiKam]: Professional Photo Management with the Power of Open Source",
+    "version": "8.6.0-ls243",
+    "version_timestamp": "2025-03-24 13:02:52+00:00",
+    "category": "Photos",
+    "stable": true,
+    "deprecated": false,
+    "stars": 62,
+    "monthly_pulls": 108669,
+    "tags": [
+        {
+            "tag": "latest",
+            "desc": "Stable releases"
+        }
+    ],
+    "architectures": [
+        {
+            "arch": "x86_64",
+            "tag": "latest"
+        }
+    ],
+    "changelog": [
+        {
+            "date": "2024-11-25",
+            "desc": "Rebase to Debian using official appimage, drop aarch64 support."
+        },
+        {
+            "date": "2024-02-10",
+            "desc": "Update Readme with new env vars and ingest proper PWA icon."
+        },
+        {
+            "date": "2023-09-05",
+            "desc": "Add openexr dependency."
+        }
+    ],
+    "config": {
+        "application_setup": "https://github.com/linuxserver/docker-digikam?tab=readme-ov-file#application-setup",
+        "env_vars": [
+            {
+                "name": "PUID",
+                "value": "1000",
+                "desc": "User ID",
+                "optional": false
+            },
+            {
+                "name": "PGID",
+                "value": "1000",
+                "desc": "Group ID",
+                "optional": false
+            },
+            {
+                "name": "TZ",
+                "value": "Etc/UTC",
+                "desc": "Timezone",
+                "optional": false
+            },
+            {
+                "name": "TZ",
+                "value": "America/New_York",
+                "desc": "Specify a timezone to use EG America/New_York.",
+                "optional": false
+            },
+            {
+                "name": "SUBFOLDER",
+                "value": "/",
+                "desc": "Specify a subfolder to use with reverse proxies, IE `/subfolder/`",
+                "optional": true
+            }
+        ],
+        "volumes": [
+            {
+                "path": "/config",
+                "host_path": "/path/to/config",
+                "desc": "Users home directory in the container, stores database.",
+                "optional": false
+            }
+        ],
+        "ports": [
+            {
+                "external": "3000",
+                "internal": "3000",
+                "desc": "digiKam desktop gui",
+                "optional": true
+            },
+            {
+                "external": "3001",
+                "internal": "3001",
+                "desc": "digiKam desktop gui HTTPS",
+                "optional": true
+            }
+        ]
+    }
+}

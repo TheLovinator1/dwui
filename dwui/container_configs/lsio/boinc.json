@@ -1,0 +1,112 @@
+{
+    "name": "boinc",
+    "initial_date": "2020-03-15",
+    "github_url": "https://github.com/linuxserver/docker-boinc",
+    "project_url": "https://boinc.berkeley.edu/",
+    "project_logo": "https://raw.githubusercontent.com/BOINC/boinc/master/doc/logo/boinc_logo_black.jpg",
+    "description": "[BOINC] is a platform for high-throughput computing on a large scale (thousands or millions of computers). It can be used for volunteer computing (using consumer devices) or grid computing (using organizational resources). It supports virtualized, parallel, and GPU-based applications.",
+    "version": "8.0.4dfsg202502052140ubuntu24.04.1-ls62",
+    "version_timestamp": "2025-03-25 12:05:50+00:00",
+    "category": "Science",
+    "stable": true,
+    "deprecated": false,
+    "stars": 23,
+    "monthly_pulls": 1934,
+    "tags": [
+        {
+            "tag": "latest",
+            "desc": "Stable releases"
+        }
+    ],
+    "architectures": [
+        {
+            "arch": "x86_64",
+            "tag": "latest"
+        },
+        {
+            "arch": "arm64",
+            "tag": "arm64v8-latest"
+        }
+    ],
+    "changelog": [
+        {
+            "date": "2024-08-19",
+            "desc": "Rebase to noble."
+        },
+        {
+            "date": "2024-02-10",
+            "desc": "Update Readme with new env vars and ingest proper PWA icon."
+        },
+        {
+            "date": "2023-04-03",
+            "desc": "Rebase to KasmVNC base image. Deprecate armhf build as the new base does not support it. Add bzip2 and xz-utils."
+        }
+    ],
+    "config": {
+        "application_setup": "https://github.com/linuxserver/docker-boinc?tab=readme-ov-file#application-setup",
+        "env_vars": [
+            {
+                "name": "PUID",
+                "value": "1000",
+                "desc": "User ID",
+                "optional": false
+            },
+            {
+                "name": "PGID",
+                "value": "1000",
+                "desc": "Group ID",
+                "optional": false
+            },
+            {
+                "name": "TZ",
+                "value": "Etc/UTC",
+                "desc": "Timezone",
+                "optional": false
+            },
+            {
+                "name": "PASSWORD",
+                "value": "",
+                "desc": "Optionally set a password for the gui.",
+                "optional": true
+            }
+        ],
+        "volumes": [
+            {
+                "path": "/config",
+                "host_path": "/path/to/boinc/config",
+                "desc": "Where BOINC should store its database and config.",
+                "optional": false
+            }
+        ],
+        "ports": [
+            {
+                "external": "8080",
+                "internal": "8080",
+                "desc": "Boinc desktop gui.",
+                "optional": false
+            },
+            {
+                "external": "8181",
+                "internal": "8181",
+                "desc": "Boinc desktop gui HTTPS.",
+                "optional": false
+            }
+        ],
+        "security_opt": [
+            {
+                "run_var": "seccomp=unconfined",
+                "compose_var": "seccomp:unconfined",
+                "desc": "For Docker Engine only, many modern gui apps need this to function as syscalls are unkown to Docker.",
+                "optional": true
+            }
+        ],
+        "devices": [
+            {
+                "path": "/dev/dri",
+                "host_path": "/dev/dri",
+                "desc": "Only needed if you want to use your Intel GPU (vaapi).",
+                "optional": true
+            }
+        ]
+    }
+}

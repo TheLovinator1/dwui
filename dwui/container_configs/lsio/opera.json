@@ -1,0 +1,115 @@
+{
+    "name": "opera",
+    "initial_date": "2023-04-09",
+    "github_url": "https://github.com/linuxserver/docker-opera",
+    "project_url": "https://www.opera.com/",
+    "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/opera-icon.png",
+    "description": "[Opera] is a multi-platform web browser developed by its namesake company Opera. The browser is based on Chromium, but distinguishes itself from other Chromium-based browsers (Chrome, Edge, etc.) through its user interface and other features.",
+    "version": "117.0.5408.163-ls140",
+    "version_timestamp": "2025-03-27 12:09:10+00:00",
+    "category": "Web Browser",
+    "stable": true,
+    "deprecated": false,
+    "stars": 2,
+    "monthly_pulls": 3043,
+    "tags": [
+        {
+            "tag": "latest",
+            "desc": "Stable releases"
+        }
+    ],
+    "architectures": [
+        {
+            "arch": "x86_64",
+            "tag": "latest"
+        }
+    ],
+    "changelog": [
+        {
+            "date": "2025-03-12",
+            "desc": "Clear singletons one launch to properly support persistance."
+        },
+        {
+            "date": "2024-02-13",
+            "desc": "Remove manual codecs ingestion."
+        },
+        {
+            "date": "2024-02-10",
+            "desc": "Update Readme with new env vars and ingest proper PWA icon."
+        }
+    ],
+    "config": {
+        "application_setup": "https://github.com/linuxserver/docker-opera?tab=readme-ov-file#application-setup",
+        "env_vars": [
+            {
+                "name": "PUID",
+                "value": "1000",
+                "desc": "User ID",
+                "optional": false
+            },
+            {
+                "name": "PGID",
+                "value": "1000",
+                "desc": "Group ID",
+                "optional": false
+            },
+            {
+                "name": "TZ",
+                "value": "Etc/UTC",
+                "desc": "Timezone",
+                "optional": false
+            },
+            {
+                "name": "TZ",
+                "value": "Europe/London",
+                "desc": "Specify a timezone to use EG Europe/London.",
+                "optional": false
+            },
+            {
+                "name": "OPERA_CLI",
+                "value": "https://www.linuxserver.io/",
+                "desc": "Specify one or multiple Chromium CLI flags, this string will be passed to the application in full.",
+                "optional": true
+            }
+        ],
+        "volumes": [
+            {
+                "path": "/config",
+                "host_path": "/path/to/config",
+                "desc": "Users home directory in the container, stores local files and settings",
+                "optional": false
+            }
+        ],
+        "ports": [
+            {
+                "external": "3000",
+                "internal": "3000",
+                "desc": "Opera desktop gui.",
+                "optional": false
+            },
+            {
+                "external": "3001",
+                "internal": "3001",
+                "desc": "HTTPS Opera desktop gui.",
+                "optional": false
+            }
+        ],
+        "custom": [
+            {
+                "name": "shm-size",
+                "name_compose": "shm_size",
+                "value": "1gb",
+                "desc": "This is required for Opera to launch and function.",
+                "optional": false
+            }
+        ],
+        "security_opt": [
+            {
+                "run_var": "seccomp=unconfined",
+                "compose_var": "seccomp:unconfined",
+                "desc": "For Docker Engine only, many modern gui apps need this to function on older hosts as syscalls are unknown to Docker. Opera runs in no-sandbox mode without it.",
+                "optional": true
+            }
+        ]
+    }
+}

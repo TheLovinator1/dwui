@@ -1,0 +1,110 @@
+{
+    "name": "syslog-ng",
+    "initial_date": "2021-05-26",
+    "github_url": "https://github.com/linuxserver/docker-syslog-ng",
+    "project_url": "https://www.syslog-ng.com/products/open-source-log-management/",
+    "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/syslog-ng-logo.png",
+    "description": "[syslog-ng] allows you to flexibly collect, parse, classify, rewrite and correlate logs from across your infrastructure and store or route them to log analysis tools.",
+    "version": "4.8.1-r1-ls152",
+    "version_timestamp": "2025-03-27 19:11:18+00:00",
+    "category": "Monitoring",
+    "stable": true,
+    "deprecated": false,
+    "stars": 67,
+    "monthly_pulls": 50587,
+    "tags": [
+        {
+            "tag": "latest",
+            "desc": "Stable releases"
+        }
+    ],
+    "architectures": [
+        {
+            "arch": "x86_64",
+            "tag": "latest"
+        },
+        {
+            "arch": "arm64",
+            "tag": "arm64v8-latest"
+        }
+    ],
+    "changelog": [
+        {
+            "date": "2024-12-20",
+            "desc": "Rebase to Alpine 3.21."
+        },
+        {
+            "date": "2024-09-24",
+            "desc": "Add opt to log to stdout."
+        },
+        {
+            "date": "2024-05-24",
+            "desc": "Rebase to Alpine 3.20."
+        }
+    ],
+    "config": {
+        "application_setup": "https://github.com/linuxserver/docker-syslog-ng?tab=readme-ov-file#application-setup",
+        "readonly_supported": true,
+        "nonroot_supported": true,
+        "env_vars": [
+            {
+                "name": "PUID",
+                "value": "1000",
+                "desc": "User ID",
+                "optional": false
+            },
+            {
+                "name": "PGID",
+                "value": "1000",
+                "desc": "Group ID",
+                "optional": false
+            },
+            {
+                "name": "TZ",
+                "value": "Etc/UTC",
+                "desc": "Timezone",
+                "optional": false
+            },
+            {
+                "name": "LOG_TO_STDOUT",
+                "value": "",
+                "desc": "If set to `true` container will log to stdout, otherwise will log to `/config/log/`.",
+                "optional": true
+            }
+        ],
+        "volumes": [
+            {
+                "path": "/config",
+                "host_path": "/path/to/syslog-ng/config",
+                "desc": "Stores config and application files",
+                "optional": false
+            },
+            {
+                "path": "/var/log",
+                "host_path": "/path/to/log",
+                "desc": "Stores logs collected by the syslog-ng service",
+                "optional": true
+            }
+        ],
+        "ports": [
+            {
+                "external": "514",
+                "internal": "5514/udp",
+                "desc": "Syslog UDP",
+                "optional": false
+            },
+            {
+                "external": "601",
+                "internal": "6601/tcp",
+                "desc": "Syslog TCP",
+                "optional": false
+            },
+            {
+                "external": "6514",
+                "internal": "6514/tcp",
+                "desc": "Syslog TLS",
+                "optional": false
+            }
+        ]
+    }
+}

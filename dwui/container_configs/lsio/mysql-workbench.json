@@ -1,0 +1,93 @@
+{
+    "name": "mysql-workbench",
+    "initial_date": "2020-03-26",
+    "github_url": "https://github.com/linuxserver/docker-mysql-workbench",
+    "project_url": "https://www.mysql.com/products/workbench/",
+    "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/mysql-workbench-icon.png",
+    "description": "[MySQL Workbench] is a unified visual tool for database architects, developers, and DBAs. MySQL Workbench provides data modeling, SQL development, and comprehensive administration tools for server configuration, user administration, backup, and much more.",
+    "version": "8.0.41-ls263",
+    "version_timestamp": "2025-03-29 07:07:14+00:00",
+    "category": "Databases",
+    "stable": true,
+    "deprecated": false,
+    "stars": 37,
+    "monthly_pulls": 4623,
+    "tags": [
+        {
+            "tag": "latest",
+            "desc": "Stable releases"
+        }
+    ],
+    "architectures": [
+        {
+            "arch": "x86_64",
+            "tag": "latest"
+        }
+    ],
+    "changelog": [
+        {
+            "date": "2024-07-01",
+            "desc": "Rebase to Noble."
+        },
+        {
+            "date": "2024-02-10",
+            "desc": "Update Readme with new env vars and ingest proper PWA icon."
+        },
+        {
+            "date": "2023-04-20",
+            "desc": "Update app to launch fullscreen."
+        }
+    ],
+    "config": {
+        "application_setup": "https://github.com/linuxserver/docker-mysql-workbench?tab=readme-ov-file#application-setup",
+        "env_vars": [
+            {
+                "name": "PUID",
+                "value": "1000",
+                "desc": "User ID",
+                "optional": false
+            },
+            {
+                "name": "PGID",
+                "value": "1000",
+                "desc": "Group ID",
+                "optional": false
+            },
+            {
+                "name": "TZ",
+                "value": "Etc/UTC",
+                "desc": "Timezone",
+                "optional": false
+            }
+        ],
+        "volumes": [
+            {
+                "path": "/config",
+                "host_path": "/path/to/config",
+                "desc": "Users home directory in the container, stores program settings.",
+                "optional": false
+            }
+        ],
+        "ports": [
+            {
+                "external": "3000",
+                "internal": "3000",
+                "desc": "Mysql Workbench desktop gui.",
+                "optional": false
+            },
+            {
+                "external": "3001",
+                "internal": "3001",
+                "desc": "Mysql Workbench desktop gui HTTPS.",
+                "optional": false
+            }
+        ],
+        "caps": [
+            {
+                "cap_add": "IPC_LOCK",
+                "desc": "Required for keyring functionality.",
+                "optional": false
+            }
+        ]
+    }
+}

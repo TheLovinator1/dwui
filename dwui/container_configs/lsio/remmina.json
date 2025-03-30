@@ -1,0 +1,90 @@
+{
+    "name": "remmina",
+    "initial_date": "2020-03-27",
+    "github_url": "https://github.com/linuxserver/docker-remmina",
+    "project_url": "https://remmina.org/",
+    "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/remmina-icon.png",
+    "description": "[Remmina] is a remote desktop client written in GTK, aiming to be useful for system administrators and travellers, who need to work with lots of remote computers in front of either large or tiny screens. Remmina supports multiple network protocols, in an integrated and consistent user interface. Currently RDP, VNC, SPICE, SSH and EXEC are supported.",
+    "version": "1.4.35dfsg-0ubuntu5-ls146",
+    "version_timestamp": "2025-03-26 14:50:13+00:00",
+    "category": "Remote Desktop",
+    "stable": true,
+    "deprecated": false,
+    "stars": 67,
+    "monthly_pulls": 24698,
+    "tags": [
+        {
+            "tag": "latest",
+            "desc": "Stable releases"
+        }
+    ],
+    "architectures": [
+        {
+            "arch": "x86_64",
+            "tag": "latest"
+        },
+        {
+            "arch": "arm64",
+            "tag": "arm64v8-latest"
+        }
+    ],
+    "changelog": [
+        {
+            "date": "2024-08-28",
+            "desc": "Rebase to noble."
+        },
+        {
+            "date": "2024-02-10",
+            "desc": "Update Readme with new env vars and ingest proper PWA icon."
+        },
+        {
+            "date": "2023-03-18",
+            "desc": "Rebase to KasmVNC base image."
+        }
+    ],
+    "config": {
+        "application_setup": "https://github.com/linuxserver/docker-remmina?tab=readme-ov-file#application-setup",
+        "env_vars": [
+            {
+                "name": "PUID",
+                "value": "1000",
+                "desc": "User ID",
+                "optional": false
+            },
+            {
+                "name": "PGID",
+                "value": "1000",
+                "desc": "Group ID",
+                "optional": false
+            },
+            {
+                "name": "TZ",
+                "value": "Etc/UTC",
+                "desc": "Timezone",
+                "optional": false
+            }
+        ],
+        "volumes": [
+            {
+                "path": "/config",
+                "host_path": "/path/to/remmina/config",
+                "desc": "Users home directory in the container, stores program settings.",
+                "optional": false
+            }
+        ],
+        "ports": [
+            {
+                "external": "3000",
+                "internal": "3000",
+                "desc": "Remmina desktop gui.",
+                "optional": false
+            },
+            {
+                "external": "3001",
+                "internal": "3001",
+                "desc": "Remmina desktop gui HTTPS.",
+                "optional": false
+            }
+        ]
+    }
+}

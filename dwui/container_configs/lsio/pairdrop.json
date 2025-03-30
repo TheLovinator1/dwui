@@ -1,0 +1,102 @@
+{
+    "name": "pairdrop",
+    "initial_date": "2023-02-20",
+    "github_url": "https://github.com/linuxserver/docker-pairdrop",
+    "project_url": "https://github.com/schlagmichdoch/PairDrop",
+    "project_logo": "https://raw.githubusercontent.com/schlagmichdoch/PairDrop/master/public/images/android-chrome-512x512.png",
+    "description": "[PairDrop] is a sublime alternative to AirDrop that works on all platforms. Send images, documents or text via peer to peer connection to devices in the same local network/Wi-Fi or to paired devices.",
+    "version": "v1.11.2-ls107",
+    "version_timestamp": "2025-03-29 11:56:42+00:00",
+    "category": "File Sharing",
+    "stable": true,
+    "deprecated": false,
+    "stars": 64,
+    "monthly_pulls": 16639,
+    "tags": [
+        {
+            "tag": "latest",
+            "desc": "Stable releases"
+        }
+    ],
+    "architectures": [
+        {
+            "arch": "x86_64",
+            "tag": "amd64-latest"
+        },
+        {
+            "arch": "arm64",
+            "tag": "arm64v8-latest"
+        }
+    ],
+    "changelog": [
+        {
+            "date": "2024-12-21",
+            "desc": "Rebase to Alpine 3.20."
+        },
+        {
+            "date": "2024-05-31",
+            "desc": "Rebase to Alpine 3.20."
+        },
+        {
+            "date": "2024-01-31",
+            "desc": "Rebase to Alpine 3.19."
+        }
+    ],
+    "config": {
+        "application_setup": "https://github.com/linuxserver/docker-pairdrop?tab=readme-ov-file#application-setup",
+        "readonly_supported": true,
+        "nonroot_supported": true,
+        "env_vars": [
+            {
+                "name": "PUID",
+                "value": "1000",
+                "desc": "User ID",
+                "optional": false
+            },
+            {
+                "name": "PGID",
+                "value": "1000",
+                "desc": "Group ID",
+                "optional": false
+            },
+            {
+                "name": "TZ",
+                "value": "Etc/UTC",
+                "desc": "Timezone",
+                "optional": false
+            },
+            {
+                "name": "RATE_LIMIT",
+                "value": "false",
+                "desc": "Set to `true` to limit clients to 100 requests per 5 min",
+                "optional": true
+            },
+            {
+                "name": "WS_FALLBACK",
+                "value": "false",
+                "desc": "Set to `true` to enable websocket fallback if the peer to peer WebRTC connection is not available to the client (see App Setup notes).",
+                "optional": true
+            },
+            {
+                "name": "RTC_CONFIG",
+                "value": "",
+                "desc": "Path to a json file containing custom STUN/TURN config (see App Setup notes)",
+                "optional": true
+            },
+            {
+                "name": "DEBUG_MODE",
+                "value": "false",
+                "desc": "Set to `true` to debug the http server configuration by logging clients IP addresses used by PairDrop to STDOUT. [See here for more info](https://github.com/schlagmichdoch/PairDrop/blob/master/docs/host-your-own.md#debug-mode). Do not use in production!",
+                "optional": true
+            }
+        ],
+        "ports": [
+            {
+                "external": "3000",
+                "internal": "3000",
+                "desc": "http gui",
+                "optional": false
+            }
+        ]
+    }
+}

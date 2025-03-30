@@ -1,0 +1,98 @@
+{
+    "name": "changedetection.io",
+    "initial_date": "2022-08-07",
+    "github_url": "https://github.com/linuxserver/docker-changedetection.io",
+    "project_url": "https://github.com/dgtlmoon/changedetection.io",
+    "project_logo": "https://github.com/linuxserver/docker-templates/raw/master/linuxserver.io/img/changedetection-icon.png",
+    "description": "changedetection.io provides free, open-source web page monitoring, notification and change detection.",
+    "version": "0.49.9-ls178",
+    "version_timestamp": "2025-03-26 15:56:24+00:00",
+    "category": "Web Tools,Automation",
+    "stable": true,
+    "deprecated": false,
+    "stars": 67,
+    "monthly_pulls": 39008,
+    "tags": [
+        {
+            "tag": "latest",
+            "desc": "Stable releases"
+        }
+    ],
+    "architectures": [
+        {
+            "arch": "x86_64",
+            "tag": "amd64-latest"
+        },
+        {
+            "arch": "arm64",
+            "tag": "arm64v8-latest"
+        }
+    ],
+    "changelog": [
+        {
+            "date": "2024-12-19",
+            "desc": "Rebase to Alpine 3.21."
+        },
+        {
+            "date": "2024-05-31",
+            "desc": "Rebase to Alpine 3.20."
+        },
+        {
+            "date": "2024-03-09",
+            "desc": "Build Playwright from source because Microsoft's build and packaging process is awful."
+        }
+    ],
+    "config": {
+        "application_setup": "https://github.com/linuxserver/docker-changedetection.io?tab=readme-ov-file#application-setup",
+        "readonly_supported": true,
+        "nonroot_supported": true,
+        "env_vars": [
+            {
+                "name": "PUID",
+                "value": "1000",
+                "desc": "User ID",
+                "optional": false
+            },
+            {
+                "name": "PGID",
+                "value": "1000",
+                "desc": "Group ID",
+                "optional": false
+            },
+            {
+                "name": "TZ",
+                "value": "Etc/UTC",
+                "desc": "Timezone",
+                "optional": false
+            },
+            {
+                "name": "BASE_URL",
+                "value": "",
+                "desc": "Specify the full URL (including protocol) when running behind a reverse proxy",
+                "optional": true
+            },
+            {
+                "name": "PLAYWRIGHT_DRIVER_URL",
+                "value": "",
+                "desc": "Specify the full URL to your chrome driver instance. See the [wiki](https://github.com/dgtlmoon/changedetection.io/wiki/Playwright-content-fetcher) for details.",
+                "optional": true
+            }
+        ],
+        "volumes": [
+            {
+                "path": "/config",
+                "host_path": "/path/to/changedetection.io/config",
+                "desc": "Persistent config files",
+                "optional": false
+            }
+        ],
+        "ports": [
+            {
+                "external": "5000",
+                "internal": "5000",
+                "desc": "WebUI",
+                "optional": false
+            }
+        ]
+    }
+}

@@ -1,0 +1,84 @@
+{
+    "name": "pylon",
+    "initial_date": "2019-09-19",
+    "github_url": "https://github.com/linuxserver/docker-pylon",
+    "project_url": "https://github.com/pylonide/pylon",
+    "project_logo": "https://raw.githubusercontent.com/pylonide/pylon/master/doc/screenshot02.png",
+    "description": "pylon is a web based integrated development environment built with Node.js as a backend and with a supercharged JavaScript/HTML5 frontend, licensed under GPL version 3. This project originates from Cloud9 v2 project.",
+    "version": "v2.10.0-ls178",
+    "version_timestamp": "2025-03-18 13:48:44+00:00",
+    "category": "Programming",
+    "stable": true,
+    "deprecated": false,
+    "stars": 8,
+    "monthly_pulls": 647,
+    "tags": [
+        {
+            "tag": "latest",
+            "desc": "Stable releases"
+        }
+    ],
+    "architectures": [
+        {
+            "arch": "x86_64",
+            "tag": "amd64-latest"
+        },
+        {
+            "arch": "arm64",
+            "tag": "arm64v8-latest"
+        }
+    ],
+    "changelog": [
+        {
+            "date": "2024-08-26",
+            "desc": "Rebase to Alpine 3.20"
+        },
+        {
+            "date": "2023-07-12",
+            "desc": "Rebase to Alpine 3.18"
+        },
+        {
+            "date": "2023-07-04",
+            "desc": "Deprecate armhf. As announced [here](https://www.linuxserver.io/blog/a-farewell-to-arm-hf)"
+        }
+    ],
+    "config": {
+        "application_setup": "https://github.com/linuxserver/docker-pylon?tab=readme-ov-file#application-setup",
+        "env_vars": [
+            {
+                "name": "GITURL",
+                "value": "https://github.com/linuxserver/docker-pylon.git",
+                "desc": "Specify a git repo to checkout on first startup",
+                "optional": true
+            },
+            {
+                "name": "PYUSER",
+                "value": "myuser",
+                "desc": "Specify a basic auth user.",
+                "optional": true
+            },
+            {
+                "name": "PYPASS",
+                "value": "mypass",
+                "desc": "Specify a basic auth password.",
+                "optional": true
+            }
+        ],
+        "volumes": [
+            {
+                "path": "/code",
+                "host_path": "/path/to/your/code",
+                "desc": "Optionally if you want the bind mount your own code and have changes survive container upgrades.",
+                "optional": true
+            }
+        ],
+        "ports": [
+            {
+                "external": "3131",
+                "internal": "3131",
+                "desc": "The port for the Pylon web interface",
+                "optional": false
+            }
+        ]
+    }
+}

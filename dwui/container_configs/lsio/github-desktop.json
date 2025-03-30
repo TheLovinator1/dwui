@@ -1,0 +1,114 @@
+{
+    "name": "github-desktop",
+    "initial_date": "2023-04-01",
+    "github_url": "https://github.com/linuxserver/docker-github-desktop",
+    "project_url": "https://desktop.github.com/",
+    "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/github-desktop-icon.png",
+    "description": "[Github Desktop] is an open source Electron-based GitHub app. It is written in TypeScript and uses React.",
+    "version": "release-3.4.13-linux1-ls133",
+    "version_timestamp": "2025-03-22 22:27:04+00:00",
+    "category": "Programming",
+    "stable": true,
+    "deprecated": false,
+    "stars": 23,
+    "monthly_pulls": 1573,
+    "tags": [
+        {
+            "tag": "latest",
+            "desc": "Stable releases"
+        }
+    ],
+    "architectures": [
+        {
+            "arch": "x86_64",
+            "tag": "amd64-latest"
+        },
+        {
+            "arch": "arm64",
+            "tag": "arm64v8-latest"
+        }
+    ],
+    "changelog": [
+        {
+            "date": "2024-02-10",
+            "desc": "Update Readme with new env vars and ingest proper PWA icon."
+        },
+        {
+            "date": "2023-08-03",
+            "desc": "Rebase to Bookworm and multi arch."
+        },
+        {
+            "date": "2023-04-01",
+            "desc": "Initial release."
+        }
+    ],
+    "config": {
+        "application_setup": "https://github.com/linuxserver/docker-github-desktop?tab=readme-ov-file#application-setup",
+        "env_vars": [
+            {
+                "name": "PUID",
+                "value": "1000",
+                "desc": "User ID",
+                "optional": false
+            },
+            {
+                "name": "PGID",
+                "value": "1000",
+                "desc": "Group ID",
+                "optional": false
+            },
+            {
+                "name": "TZ",
+                "value": "Etc/UTC",
+                "desc": "Timezone",
+                "optional": false
+            }
+        ],
+        "volumes": [
+            {
+                "path": "/config",
+                "host_path": "/path/to/github-desktop/config",
+                "desc": "Users home directory in the container, stores local files and settings",
+                "optional": false
+            }
+        ],
+        "ports": [
+            {
+                "external": "3000",
+                "internal": "3000",
+                "desc": "Github Desktop gui.",
+                "optional": false
+            },
+            {
+                "external": "3001",
+                "internal": "3001",
+                "desc": "HTTPS Github Desktop gui.",
+                "optional": false
+            }
+        ],
+        "custom": [
+            {
+                "name": "shm-size",
+                "name_compose": "shm_size",
+                "value": "1gb",
+                "desc": "This is needed for electron applications to function properly.",
+                "optional": false
+            }
+        ],
+        "security_opt": [
+            {
+                "run_var": "seccomp=unconfined",
+                "compose_var": "seccomp:unconfined",
+                "desc": "For Docker Engine only, many modern gui apps need this to function on older hosts as syscalls are unknown to Docker. Github Desktop runs in no-sandbox mode without it.",
+                "optional": true
+            }
+        ],
+        "caps": [
+            {
+                "cap_add": "IPC_LOCK",
+                "desc": "Required for keyring functionality.",
+                "optional": false
+            }
+        ]
+    }
+}

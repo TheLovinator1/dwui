@@ -1,0 +1,116 @@
+{
+    "name": "tvheadend",
+    "initial_date": "2016-09-05",
+    "github_url": "https://github.com/linuxserver/docker-tvheadend",
+    "project_url": "https://www.tvheadend.org/",
+    "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/tvheadend-big.png",
+    "description": "tvheadend works as a proxy server: is a TV streaming server and recorder for Linux, FreeBSD and Android supporting DVB-S, DVB-S2, DVB-C, DVB-T, ATSC, ISDB-T, IPTV, SAT>IP and HDHomeRun as input sources. Tvheadend offers the HTTP (VLC, MPlayer), HTSP (Kodi, Movian) and SAT>IP streaming. Multiple EPG sources are supported (over-the-air DVB and ATSC including OpenTV DVB extensions, XMLTV, PyXML).",
+    "version": "653bd040-ls249",
+    "version_timestamp": "2025-03-29 15:52:59+00:00",
+    "category": "Media Tools",
+    "stable": true,
+    "deprecated": false,
+    "stars": 184,
+    "monthly_pulls": 25097,
+    "tags": [
+        {
+            "tag": "latest",
+            "desc": "Stable releases"
+        }
+    ],
+    "architectures": [
+        {
+            "arch": "x86_64",
+            "tag": "amd64-latest"
+        },
+        {
+            "arch": "arm64",
+            "tag": "arm64v8-latest"
+        }
+    ],
+    "changelog": [
+        {
+            "date": "2024-06-25",
+            "desc": "Rebase to Alpine 3.20."
+        },
+        {
+            "date": "2024-03-20",
+            "desc": "Rebase to Alpine 3.19."
+        },
+        {
+            "date": "2023-10-16",
+            "desc": "Add mesa-va-gallium package for AMD transcoding."
+        }
+    ],
+    "config": {
+        "application_setup": "https://github.com/linuxserver/docker-tvheadend?tab=readme-ov-file#application-setup",
+        "env_vars": [
+            {
+                "name": "PUID",
+                "value": "1000",
+                "desc": "User ID",
+                "optional": false
+            },
+            {
+                "name": "PGID",
+                "value": "1000",
+                "desc": "Group ID",
+                "optional": false
+            },
+            {
+                "name": "TZ",
+                "value": "Etc/UTC",
+                "desc": "Timezone",
+                "optional": false
+            },
+            {
+                "name": "RUN_OPTS",
+                "value": "",
+                "desc": "Optionally specify additional arguments to be passed. See Additional runtime parameters.",
+                "optional": true
+            }
+        ],
+        "volumes": [
+            {
+                "path": "/config",
+                "host_path": "/path/to/tvheadend/data",
+                "desc": "Where TVHeadend show store it's config files.",
+                "optional": false
+            },
+            {
+                "path": "/recordings",
+                "host_path": "/path/to/recordings",
+                "desc": "Where you want the PVR to store recordings.",
+                "optional": false
+            }
+        ],
+        "ports": [
+            {
+                "external": "9981",
+                "internal": "9981",
+                "desc": "WebUI",
+                "optional": false
+            },
+            {
+                "external": "9982",
+                "internal": "9982",
+                "desc": "HTSP server port.",
+                "optional": false
+            }
+        ],
+        "devices": [
+            {
+                "path": "/dev/dri",
+                "host_path": "/dev/dri",
+                "desc": "Only needed if you want to use your AMD/Intel GPU for hardware accelerated video encoding (vaapi).",
+                "optional": true
+            },
+            {
+                "path": "/dev/dvb",
+                "host_path": "/dev/dvb",
+                "desc": "Only needed if you want to pass through a DVB card to the container. If you use IPTV or HDHomeRun you can leave it out.",
+                "optional": true
+            }
+        ]
+    }
+}

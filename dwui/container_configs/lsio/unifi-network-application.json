@@ -1,0 +1,170 @@
+{
+    "name": "unifi-network-application",
+    "initial_date": "2023-09-05",
+    "github_url": "https://github.com/linuxserver/docker-unifi-network-application",
+    "project_url": "https://ui.com/",
+    "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/unifi-banner.png",
+    "description": "The unifi-network-application software is a powerful, enterprise wireless software engine ideal for high-density client deployments requiring low latency and high uptime performance.",
+    "version": "9.0.114-ls84",
+    "version_timestamp": "2025-03-25 17:41:06+00:00",
+    "category": "Network",
+    "stable": true,
+    "deprecated": false,
+    "stars": 852,
+    "monthly_pulls": 224416,
+    "tags": [
+        {
+            "tag": "latest",
+            "desc": "Stable releases"
+        }
+    ],
+    "architectures": [
+        {
+            "arch": "x86_64",
+            "tag": "amd64-latest"
+        },
+        {
+            "arch": "arm64",
+            "tag": "arm64v8-latest"
+        }
+    ],
+    "changelog": [
+        {
+            "date": "2025-02-13",
+            "desc": "Revert JRE to 17."
+        },
+        {
+            "date": "2025-02-12",
+            "desc": "Bump JRE to 21."
+        },
+        {
+            "date": "2024-08-11",
+            "desc": "**Important**: The mongodb init instructions have been updated to enable auth ([RBAC](https://www.mongodb.com/docs/manual/core/authorization/#role-based-access-control)). We have been notified that if RBAC is not enabled, the official mongodb container allows remote access to the db contents over port 27017 without credentials. If you set up the mongodb container with the old instructions we provided, you should not map or expose port 27017. If you would like to enable auth, the easiest way is to create new instances of both unifi and mongodb with the new instructions and restore unifi from a backup."
+        }
+    ],
+    "config": {
+        "application_setup": "https://github.com/linuxserver/docker-unifi-network-application?tab=readme-ov-file#application-setup",
+        "readonly_supported": false,
+        "nonroot_supported": false,
+        "env_vars": [
+            {
+                "name": "MONGO_USER",
+                "value": "unifi",
+                "desc": "Mongodb Username. Only evaluated on first run. **Special characters must be [url encoded](https://en.wikipedia.org/wiki/Percent-encoding)**.",
+                "optional": false
+            },
+            {
+                "name": "MONGO_PASS",
+                "value": "",
+                "desc": "Mongodb Password. Only evaluated on first run. **Special characters must be [url encoded](https://en.wikipedia.org/wiki/Percent-encoding)**.",
+                "optional": false
+            },
+            {
+                "name": "MONGO_HOST",
+                "value": "unifi-db",
+                "desc": "Mongodb Hostname. Only evaluated on first run.",
+                "optional": false
+            },
+            {
+                "name": "MONGO_PORT",
+                "value": "27017",
+                "desc": "Mongodb Port. Only evaluated on first run.",
+                "optional": false
+            },
+            {
+                "name": "MONGO_DBNAME",
+                "value": "unifi",
+                "desc": "Mongodb Database Name (stats DB is automatically suffixed with `_stat`). Only evaluated on first run.",
+                "optional": false
+            },
+            {
+                "name": "MONGO_AUTHSOURCE",
+                "value": "admin",
+                "desc": "Mongodb [authSource](https://www.mongodb.com/docs/manual/reference/connection-string/#mongodb-urioption-urioption.authSource). For Atlas set to `admin`. Only evaluated on first run.",
+                "optional": false
+            },
+            {
+                "name": "MEM_LIMIT",
+                "value": "1024",
+                "desc": "Optionally change the Java memory limit (in Megabytes). Set to `default` to reset to default",
+                "optional": true
+            },
+            {
+                "name": "MEM_STARTUP",
+                "value": "1024",
+                "desc": "Optionally change the Java initial/minimum memory (in Megabytes). Set to `default` to reset to default",
+                "optional": true
+            },
+            {
+                "name": "MONGO_TLS",
+                "value": "",
+                "desc": "Mongodb enable [TLS](https://www.mongodb.com/docs/manual/reference/connection-string/#mongodb-urioption-urioption.tls). Only evaluated on first run.",
+                "optional": true
+            }
+        ],
+        "volumes": [
+            {
+                "path": "/config",
+                "host_path": "/path/to/unifi-network-application/data",
+                "desc": "Persistent config files",
+                "optional": false
+            }
+        ],
+        "ports": [
+            {
+                "external": "8443",
+                "internal": "8443",
+                "desc": "Unifi web admin port",
+                "optional": false
+            },
+            {
+                "external": "3478",
+                "internal": "3478/udp",
+                "desc": "Unifi STUN port",
+                "optional": false
+            },
+            {
+                "external": "10001",
+                "internal": "10001/udp",
+                "desc": "Required for AP discovery",
+                "optional": false
+            },
+            {
+                "external": "8080",
+                "internal": "8080",
+                "desc": "Required for device communication",
+                "optional": false
+            },
+            {
+                "external": "1900",
+                "internal": "1900/udp",
+                "desc": "Required for `Make controller discoverable on L2 network` option",
+                "optional": true
+            },
+            {
+                "external": "8843",
+                "internal": "8843",
+                "desc": "Unifi guest portal HTTPS redirect port",
+                "optional": true
+            },
+            {
+                "external": "8880",
+                "internal": "8880",
+                "desc": "Unifi guest portal HTTP redirect port",
+                "optional": true
+            },
+            {
+                "external": "6789",
+                "internal": "6789",
+                "desc": "For mobile throughput test",
+                "optional": true
+            },
+            {
+                "external": "5514",
+                "internal": "5514/udp",
+                "desc": "Remote syslog port",
+                "optional": true
+            }
+        ]
+    }
+}

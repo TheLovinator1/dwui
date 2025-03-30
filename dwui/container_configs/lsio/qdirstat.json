@@ -1,0 +1,96 @@
+{
+    "name": "qdirstat",
+    "initial_date": "2022-01-11",
+    "github_url": "https://github.com/linuxserver/docker-qdirstat",
+    "project_url": "https://github.com/shundhammer/qdirstat",
+    "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/qdirstat-logo.png",
+    "description": "[QDirStat] Qt-based directory statistics: KDirStat without any KDE -- from the author of the original KDirStat.",
+    "version": "1.9-ls162",
+    "version_timestamp": "2025-03-23 20:48:23+00:00",
+    "category": "Storage",
+    "stable": true,
+    "deprecated": false,
+    "stars": 27,
+    "monthly_pulls": 14253,
+    "tags": [
+        {
+            "tag": "latest",
+            "desc": "Stable releases"
+        }
+    ],
+    "architectures": [
+        {
+            "arch": "x86_64",
+            "tag": "latest"
+        },
+        {
+            "arch": "arm64",
+            "tag": "arm64v8-latest"
+        }
+    ],
+    "changelog": [
+        {
+            "date": "2024-08-28",
+            "desc": "Rebase to noble."
+        },
+        {
+            "date": "2024-02-10",
+            "desc": "Update Readme with new env vars and ingest proper PWA icon."
+        },
+        {
+            "date": "2023-04-03",
+            "desc": "Rebase to KasmVNC base image. Deprecate armhf build as the new base does not support it."
+        }
+    ],
+    "config": {
+        "application_setup": "https://github.com/linuxserver/docker-qdirstat?tab=readme-ov-file#application-setup",
+        "env_vars": [
+            {
+                "name": "PUID",
+                "value": "1000",
+                "desc": "User ID",
+                "optional": false
+            },
+            {
+                "name": "PGID",
+                "value": "1000",
+                "desc": "Group ID",
+                "optional": false
+            },
+            {
+                "name": "TZ",
+                "value": "Etc/UTC",
+                "desc": "Timezone",
+                "optional": false
+            }
+        ],
+        "volumes": [
+            {
+                "path": "/config",
+                "host_path": "/path/to/qdirstat/config",
+                "desc": "Users home directory in the container, stores qdirstat settings and scans.",
+                "optional": false
+            },
+            {
+                "path": "/data",
+                "host_path": "/path/to/data",
+                "desc": "Data you want to analyze disk usage information of.",
+                "optional": false
+            }
+        ],
+        "ports": [
+            {
+                "external": "3000",
+                "internal": "3000",
+                "desc": "QdirStat desktop gui.",
+                "optional": false
+            },
+            {
+                "external": "3001",
+                "internal": "3001",
+                "desc": "QdirStat desktop gui HTTPS.",
+                "optional": false
+            }
+        ]
+    }
+}

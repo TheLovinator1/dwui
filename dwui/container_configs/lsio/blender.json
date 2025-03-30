@@ -1,0 +1,112 @@
+{
+    "name": "blender",
+    "initial_date": "2022-03-12",
+    "github_url": "https://github.com/linuxserver/docker-blender",
+    "project_url": "https://www.blender.org/",
+    "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/blender-logo.png",
+    "description": "[Blender] is a free and open-source 3D computer graphics software toolset used for creating animated films, visual effects, art, 3D printed models, motion graphics, interactive 3D applications, virtual reality, and computer games. **This image does not support GPU rendering out of the box only accelerated workspace experience**",
+    "version": "4.4.0-ls156",
+    "version_timestamp": "2025-03-27 15:18:32+00:00",
+    "category": "3D Modeling",
+    "stable": true,
+    "deprecated": false,
+    "stars": 78,
+    "monthly_pulls": 2598,
+    "tags": [
+        {
+            "tag": "latest",
+            "desc": "Stable releases"
+        }
+    ],
+    "architectures": [
+        {
+            "arch": "x86_64",
+            "tag": "latest"
+        },
+        {
+            "arch": "arm64",
+            "tag": "arm64v8-latest"
+        }
+    ],
+    "changelog": [
+        {
+            "date": "2024-08-19",
+            "desc": "Rebase to noble."
+        },
+        {
+            "date": "2024-02-10",
+            "desc": "Update Readme with new env vars and ingest proper PWA icon."
+        },
+        {
+            "date": "2023-03-18",
+            "desc": "Rebase to KasmVNC base image."
+        }
+    ],
+    "config": {
+        "application_setup": "https://github.com/linuxserver/docker-blender?tab=readme-ov-file#application-setup",
+        "env_vars": [
+            {
+                "name": "PUID",
+                "value": "1000",
+                "desc": "User ID",
+                "optional": false
+            },
+            {
+                "name": "PGID",
+                "value": "1000",
+                "desc": "Group ID",
+                "optional": false
+            },
+            {
+                "name": "TZ",
+                "value": "Etc/UTC",
+                "desc": "Timezone",
+                "optional": false
+            },
+            {
+                "name": "SUBFOLDER",
+                "value": "/",
+                "desc": "Specify a subfolder to use with reverse proxies, IE `/subfolder/`",
+                "optional": true
+            }
+        ],
+        "volumes": [
+            {
+                "path": "/config",
+                "host_path": "/path/to/blender/config",
+                "desc": "Users home directory in the container, stores local files and settings",
+                "optional": false
+            }
+        ],
+        "ports": [
+            {
+                "external": "3000",
+                "internal": "3000",
+                "desc": "Blender desktop gui",
+                "optional": false
+            },
+            {
+                "external": "3001",
+                "internal": "3001",
+                "desc": "Blender desktop gui HTTPS",
+                "optional": false
+            }
+        ],
+        "security_opt": [
+            {
+                "run_var": "seccomp=unconfined",
+                "compose_var": "seccomp:unconfined",
+                "desc": "For Docker Engine only, this may be required depending on your Docker and storage configuration.",
+                "optional": true
+            }
+        ],
+        "devices": [
+            {
+                "path": "/dev/dri",
+                "host_path": "/dev/dri",
+                "desc": "Add this for hardware acceleration (Linux hosts only)",
+                "optional": true
+            }
+        ]
+    }
+}

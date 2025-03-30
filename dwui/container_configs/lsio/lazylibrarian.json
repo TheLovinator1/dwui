@@ -1,0 +1,84 @@
+{
+    "name": "lazylibrarian",
+    "initial_date": "2016-09-28",
+    "github_url": "https://github.com/linuxserver/docker-lazylibrarian",
+    "project_url": "https://lazylibrarian.gitlab.io/",
+    "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/lazylibrarian-icon.png",
+    "description": "lazylibrarian is a program to follow authors and grab metadata for all your digital reading needs. It uses a combination of Goodreads Librarything and optionally GoogleBooks as sources for author info and book info.  This container is based on the DobyTang fork.",
+    "version": "5641aa35-ls135",
+    "version_timestamp": "2025-03-27 09:05:45+00:00",
+    "category": "Books",
+    "stable": true,
+    "deprecated": false,
+    "stars": 92,
+    "monthly_pulls": 56047,
+    "tags": [
+        {
+            "tag": "latest",
+            "desc": "Stable releases"
+        }
+    ],
+    "architectures": [
+        {
+            "arch": "x86_64",
+            "tag": "amd64-latest"
+        },
+        {
+            "arch": "arm64",
+            "tag": "arm64v8-latest"
+        }
+    ],
+    "changelog": [
+        {
+            "date": "2024-08-14",
+            "desc": "Rebase to Ubuntu Noble."
+        },
+        {
+            "date": "2023-10-07",
+            "desc": "Install unrar from [linuxserver repo](https://github.com/linuxserver/docker-unrar). Switch to Python virtual environment. Add Levenshtein."
+        },
+        {
+            "date": "2023-08-10",
+            "desc": "Bump unrar to 6.2.10."
+        }
+    ],
+    "config": {
+        "application_setup": "https://github.com/linuxserver/docker-lazylibrarian?tab=readme-ov-file#application-setup",
+        "env_vars": [
+            {
+                "name": "DOCKER_MODS",
+                "value": "linuxserver/mods:universal-calibre|linuxserver/mods:lazylibrarian-ffmpeg",
+                "desc": "Allows additional functionality to be added, e.g. the Calibredb import program (optional, more info below)",
+                "optional": true
+            }
+        ],
+        "volumes": [
+            {
+                "path": "/config",
+                "host_path": "/path/to/lazylibrarian/data",
+                "desc": "LazyLibrarian config",
+                "optional": false
+            },
+            {
+                "path": "/downloads",
+                "host_path": "/path/to/downloads/",
+                "desc": "Download location",
+                "optional": false
+            },
+            {
+                "path": "/books",
+                "host_path": "/path/to/data/",
+                "desc": "Books location",
+                "optional": true
+            }
+        ],
+        "ports": [
+            {
+                "external": "5299",
+                "internal": "5299",
+                "desc": "The port for the LazyLibrarian webinterface",
+                "optional": false
+            }
+        ]
+    }
+}

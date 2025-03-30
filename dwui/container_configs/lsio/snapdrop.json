@@ -1,0 +1,90 @@
+{
+    "name": "snapdrop",
+    "initial_date": "2020-09-15",
+    "github_url": "https://github.com/linuxserver/docker-snapdrop",
+    "project_url": "https://github.com/snapdrop/snapdrop",
+    "project_logo": "https://raw.githubusercontent.com/snapdrop/snapdrop/master/client/images/logo_transparent_512x512.png",
+    "description": "snapdrop A local file sharing in your browser. Inspired by Apple's Airdrop.",
+    "version": "b8b78cc2-ls173",
+    "version_timestamp": "2025-02-20 01:23:34+00:00",
+    "category": "File Sharing",
+    "stable": true,
+    "deprecated": true,
+    "stars": 74,
+    "monthly_pulls": 350664,
+    "tags": [
+        {
+            "tag": "latest",
+            "desc": "Stable releases"
+        }
+    ],
+    "architectures": [
+        {
+            "arch": "x86_64",
+            "tag": "amd64-latest"
+        },
+        {
+            "arch": "arm64",
+            "tag": "arm64v8-latest"
+        }
+    ],
+    "changelog": [
+        {
+            "date": "2025-02-19",
+            "desc": "Deprecate."
+        },
+        {
+            "date": "2024-05-31",
+            "desc": "Rebase to Alpine 3.20. Existing users should update their nginx confs to avoid http2 deprecation warnings."
+        },
+        {
+            "date": "2024-02-06",
+            "desc": "Existing users should update: site-confs/default.conf - Cleanup default site conf."
+        }
+    ],
+    "config": {
+        "application_setup": "https://github.com/linuxserver/docker-snapdrop?tab=readme-ov-file#application-setup",
+        "env_vars": [
+            {
+                "name": "PUID",
+                "value": "1000",
+                "desc": "User ID",
+                "optional": false
+            },
+            {
+                "name": "PGID",
+                "value": "1000",
+                "desc": "Group ID",
+                "optional": false
+            },
+            {
+                "name": "TZ",
+                "value": "Etc/UTC",
+                "desc": "Timezone",
+                "optional": false
+            }
+        ],
+        "volumes": [
+            {
+                "path": "/config",
+                "host_path": "/path/to/snapdrop/config",
+                "desc": "Persistent config files",
+                "optional": false
+            }
+        ],
+        "ports": [
+            {
+                "external": "80",
+                "internal": "80",
+                "desc": "http gui",
+                "optional": false
+            },
+            {
+                "external": "443",
+                "internal": "443",
+                "desc": "https gui",
+                "optional": false
+            }
+        ]
+    }
+}

@@ -1,0 +1,92 @@
+{
+    "name": "oscam",
+    "initial_date": "2016-09-25",
+    "github_url": "https://github.com/linuxserver/docker-oscam",
+    "project_url": "https://git.streamboard.tv/common/oscam",
+    "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/oscam-logo.png",
+    "description": "oscam is an Open Source Conditional Access Module software used for descrambling DVB transmissions using smart cards. It's both a server and a client.",
+    "version": "11878-ls134",
+    "version_timestamp": "2025-03-25 13:44:26+00:00",
+    "category": "Media Tools",
+    "stable": true,
+    "deprecated": false,
+    "stars": 49,
+    "monthly_pulls": 3223,
+    "tags": [
+        {
+            "tag": "latest",
+            "desc": "Stable releases"
+        }
+    ],
+    "architectures": [
+        {
+            "arch": "x86_64",
+            "tag": "amd64-latest"
+        },
+        {
+            "arch": "arm64",
+            "tag": "arm64v8-latest"
+        }
+    ],
+    "changelog": [
+        {
+            "date": "2024-06-27",
+            "desc": "Rebase to Alpine 3.20."
+        },
+        {
+            "date": "2024-04-19",
+            "desc": "Retrieve Oscam from the new git repo."
+        },
+        {
+            "date": "2024-03-04",
+            "desc": "Rebase to Alpine 3.19. Add libdvbcsa."
+        }
+    ],
+    "config": {
+        "application_setup": "https://github.com/linuxserver/docker-oscam?tab=readme-ov-file#application-setup",
+        "env_vars": [
+            {
+                "name": "PUID",
+                "value": "1000",
+                "desc": "User ID",
+                "optional": false
+            },
+            {
+                "name": "PGID",
+                "value": "1000",
+                "desc": "Group ID",
+                "optional": false
+            },
+            {
+                "name": "TZ",
+                "value": "Etc/UTC",
+                "desc": "Timezone",
+                "optional": false
+            }
+        ],
+        "volumes": [
+            {
+                "path": "/config",
+                "host_path": "/path/to/oscam/data",
+                "desc": "Where oscam should store config files and logs.",
+                "optional": false
+            }
+        ],
+        "ports": [
+            {
+                "external": "8888",
+                "internal": "8888",
+                "desc": "WebUI",
+                "optional": false
+            }
+        ],
+        "devices": [
+            {
+                "path": "/dev/ttyUSB0",
+                "host_path": "/dev/ttyUSB0",
+                "desc": "For passing through smart card readers.",
+                "optional": false
+            }
+        ]
+    }
+}

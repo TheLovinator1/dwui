@@ -1,0 +1,115 @@
+{
+    "name": "bookstack",
+    "initial_date": "2018-07-02",
+    "github_url": "https://github.com/linuxserver/docker-bookstack",
+    "project_url": "https://github.com/BookStackApp/BookStack",
+    "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/bookstack-logo.png",
+    "description": "bookstack is a free and open source Wiki designed for creating beautiful documentation. Featuring a simple, but powerful WYSIWYG editor it allows for teams to create detailed and useful documentation with ease.  Powered by SQL and including a Markdown editor for those who prefer it, BookStack is geared towards making documentation more of a pleasure than a chore.  For more information on BookStack visit their website and check it out: https://www.bookstackapp.com",
+    "version": "v25.02.1-ls198",
+    "version_timestamp": "2025-03-17 18:35:37+00:00",
+    "category": "Content Management",
+    "stable": true,
+    "deprecated": false,
+    "stars": 854,
+    "monthly_pulls": 289814,
+    "tags": [
+        {
+            "tag": "latest",
+            "desc": "Stable releases"
+        }
+    ],
+    "architectures": [
+        {
+            "arch": "x86_64",
+            "tag": "amd64-latest"
+        },
+        {
+            "arch": "arm64",
+            "tag": "arm64v8-latest"
+        }
+    ],
+    "changelog": [
+        {
+            "date": "2025-01-04",
+            "desc": "Add php-opcache."
+        },
+        {
+            "date": "2024-12-17",
+            "desc": "Rebase to Alpine 3.21."
+        },
+        {
+            "date": "2024-10-11",
+            "desc": "Default to environment config over .env file config."
+        }
+    ],
+    "config": {
+        "application_setup": "https://github.com/linuxserver/docker-bookstack?tab=readme-ov-file#application-setup",
+        "readonly_supported": true,
+        "env_vars": [
+            {
+                "name": "APP_URL",
+                "value": "",
+                "desc": "The protocol, IP/URL, and port that your application will be accessed on (ie. `http://192.168.1.1:6875` or `https://bookstack.mydomain.com`",
+                "optional": false
+            },
+            {
+                "name": "APP_KEY",
+                "value": "",
+                "desc": "Session encryption key. You will need to generate this with `docker run -it --rm --entrypoint /bin/bash lscr.io/linuxserver/bookstack:latest appkey`",
+                "optional": false
+            },
+            {
+                "name": "DB_HOST",
+                "value": "",
+                "desc": "The database instance hostname",
+                "optional": false
+            },
+            {
+                "name": "DB_PORT",
+                "value": "3306",
+                "desc": "Database port",
+                "optional": false
+            },
+            {
+                "name": "DB_USERNAME",
+                "value": "",
+                "desc": "Database user",
+                "optional": false
+            },
+            {
+                "name": "DB_PASSWORD",
+                "value": "",
+                "desc": "Database password (minimum 4 characters & non-alphanumeric passwords must be properly escaped.)",
+                "optional": false
+            },
+            {
+                "name": "DB_DATABASE",
+                "value": "",
+                "desc": "Database name",
+                "optional": false
+            },
+            {
+                "name": "QUEUE_CONNECTION",
+                "value": "",
+                "desc": "Set to `database` to enable async actions like sending email or triggering webhooks. See [documentation](https://www.bookstackapp.com/docs/admin/email-webhooks/#async-action-handling).",
+                "optional": true
+            }
+        ],
+        "volumes": [
+            {
+                "path": "/config",
+                "host_path": "/path/to/bookstack/config",
+                "desc": "Persistent config files",
+                "optional": false
+            }
+        ],
+        "ports": [
+            {
+                "external": "6875",
+                "internal": "80",
+                "desc": "http/s web interface.",
+                "optional": false
+            }
+        ]
+    }
+}

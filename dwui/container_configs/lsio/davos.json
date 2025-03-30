@@ -1,0 +1,72 @@
+{
+    "name": "davos",
+    "initial_date": "2016-11-18",
+    "github_url": "https://github.com/linuxserver/docker-davos",
+    "project_url": "https://github.com/linuxserver/davos",
+    "project_logo": "https://raw.githubusercontent.com/linuxserver/davos/master/docs/list.PNG",
+    "description": "davos is an FTP automation tool that periodically scans given host locations for new files. It can be configured for various purposes, including listening for specific files to appear in the host location, ready for it to download and then move, if required. It also supports completion notifications as well as downstream API calls, to further the workflow.",
+    "version": "2.2.2-ls202",
+    "version_timestamp": "2025-03-28 18:59:25+00:00",
+    "category": "FTP",
+    "stable": true,
+    "deprecated": false,
+    "stars": 14,
+    "monthly_pulls": 265,
+    "tags": [
+        {
+            "tag": "latest",
+            "desc": "Stable releases"
+        }
+    ],
+    "architectures": [
+        {
+            "arch": "x86_64",
+            "tag": "amd64-latest"
+        },
+        {
+            "arch": "arm64",
+            "tag": "arm64v8-latest"
+        }
+    ],
+    "changelog": [
+        {
+            "date": "2025-01-27",
+            "desc": "Rebase to Alpine 3.21."
+        },
+        {
+            "date": "2024-06-24",
+            "desc": "Rebase to Alpine 3.20."
+        },
+        {
+            "date": "2024-03-20",
+            "desc": "Rebase to Alpine 3.19."
+        }
+    ],
+    "config": {
+        "application_setup": "https://github.com/linuxserver/docker-davos?tab=readme-ov-file#application-setup",
+        "readonly_supported": true,
+        "nonroot_supported": true,
+        "volumes": [
+            {
+                "path": "/config",
+                "host_path": "/path/to/davos/data",
+                "desc": "davos's config location. This is where it stores its database file and logs.",
+                "optional": false
+            },
+            {
+                "path": "/download",
+                "host_path": "/path/to/downloads/folder",
+                "desc": "davos's file download location",
+                "optional": false
+            }
+        ],
+        "ports": [
+            {
+                "external": "8080",
+                "internal": "8080",
+                "desc": "This is the default port that davos runs under",
+                "optional": false
+            }
+        ]
+    }
+}

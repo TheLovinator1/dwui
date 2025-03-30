@@ -1,0 +1,90 @@
+{
+    "name": "rsnapshot",
+    "initial_date": "2020-08-20",
+    "github_url": "https://github.com/linuxserver/docker-rsnapshot",
+    "project_url": "http://www.rsnapshot.org/",
+    "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/rsnapshot.png",
+    "description": "rsnapshot is a filesystem snapshot utility based on rsync. rsnapshot makes it easy to make periodic snapshots of local machines, and remote machines over ssh. The code makes extensive use of hard links whenever possible, to greatly reduce the disk space required.\"",
+    "version": "1.4.5-r0-ls133",
+    "version_timestamp": "2025-03-27 04:51:58+00:00",
+    "category": "Backup",
+    "stable": true,
+    "deprecated": false,
+    "stars": 36,
+    "monthly_pulls": 4399,
+    "tags": [
+        {
+            "tag": "latest",
+            "desc": "Stable releases"
+        }
+    ],
+    "architectures": [
+        {
+            "arch": "x86_64",
+            "tag": "amd64-latest"
+        },
+        {
+            "arch": "arm64",
+            "tag": "arm64v8-latest"
+        }
+    ],
+    "changelog": [
+        {
+            "date": "2025-02-01",
+            "desc": "Rebase to Alpine 3.21."
+        },
+        {
+            "date": "2024-03-06",
+            "desc": "Rebase to Alpine 3.20."
+        },
+        {
+            "date": "2023-12-23",
+            "desc": "Rebase to Alpine 3.19, add root periodic crontabs for logrotate."
+        }
+    ],
+    "config": {
+        "application_setup": "https://github.com/linuxserver/docker-rsnapshot?tab=readme-ov-file#application-setup",
+        "readonly_supported": false,
+        "nonroot_supported": false,
+        "env_vars": [
+            {
+                "name": "PUID",
+                "value": "1000",
+                "desc": "User ID",
+                "optional": false
+            },
+            {
+                "name": "PGID",
+                "value": "1000",
+                "desc": "Group ID",
+                "optional": false
+            },
+            {
+                "name": "TZ",
+                "value": "Etc/UTC",
+                "desc": "Timezone",
+                "optional": false
+            }
+        ],
+        "volumes": [
+            {
+                "path": "/config",
+                "host_path": "/path/to/rsnapshot/config",
+                "desc": "Persistent config files",
+                "optional": false
+            },
+            {
+                "path": "/.snapshots",
+                "host_path": "/path/to/snapshots",
+                "desc": "Storage location for all snapshots.",
+                "optional": true
+            },
+            {
+                "path": "/data",
+                "host_path": "/path/to/data",
+                "desc": "Storage location for data to be backed up.",
+                "optional": true
+            }
+        ]
+    }
+}

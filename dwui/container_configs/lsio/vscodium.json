@@ -1,0 +1,114 @@
+{
+    "name": "vscodium",
+    "initial_date": "2023-04-02",
+    "github_url": "https://github.com/linuxserver/docker-vscodium",
+    "project_url": "https://vscodium.com/",
+    "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/vscodium-icon.png",
+    "description": "[VSCodium] is a community-driven, freely-licensed binary distribution of Microsoft\u2019s editor VS Code.",
+    "version": "1.98.2.25078-ls167",
+    "version_timestamp": "2025-03-26 04:59:58+00:00",
+    "category": "Programming",
+    "stable": true,
+    "deprecated": false,
+    "stars": 50,
+    "monthly_pulls": 4417,
+    "tags": [
+        {
+            "tag": "latest",
+            "desc": "Stable releases"
+        }
+    ],
+    "architectures": [
+        {
+            "arch": "x86_64",
+            "tag": "latest"
+        },
+        {
+            "arch": "arm64",
+            "tag": "arm64v8-latest"
+        }
+    ],
+    "changelog": [
+        {
+            "date": "2024-02-10",
+            "desc": "Update Readme with new env vars and ingest proper PWA icon."
+        },
+        {
+            "date": "2024-01-06",
+            "desc": "Rebase to Debian Bookworm."
+        },
+        {
+            "date": "2024-01-17",
+            "desc": "Update wrapper scripts to cleanup and launch properly."
+        }
+    ],
+    "config": {
+        "application_setup": "https://github.com/linuxserver/docker-vscodium?tab=readme-ov-file#application-setup",
+        "env_vars": [
+            {
+                "name": "PUID",
+                "value": "1000",
+                "desc": "User ID",
+                "optional": false
+            },
+            {
+                "name": "PGID",
+                "value": "1000",
+                "desc": "Group ID",
+                "optional": false
+            },
+            {
+                "name": "TZ",
+                "value": "Etc/UTC",
+                "desc": "Timezone",
+                "optional": false
+            }
+        ],
+        "volumes": [
+            {
+                "path": "/config",
+                "host_path": "/path/to/vscodium/config",
+                "desc": "Users home directory in the container, stores local files and settings",
+                "optional": false
+            }
+        ],
+        "ports": [
+            {
+                "external": "3000",
+                "internal": "3000",
+                "desc": "VSCodium desktop gui.",
+                "optional": false
+            },
+            {
+                "external": "3001",
+                "internal": "3001",
+                "desc": "HTTPS VSCodium desktop gui.",
+                "optional": false
+            }
+        ],
+        "custom": [
+            {
+                "name": "shm-size",
+                "name_compose": "shm_size",
+                "value": "1gb",
+                "desc": "This is needed for electron applications to function properly.",
+                "optional": false
+            }
+        ],
+        "security_opt": [
+            {
+                "run_var": "seccomp=unconfined",
+                "compose_var": "seccomp:unconfined",
+                "desc": "For Docker Engine only, many modern gui apps need this to function on older hosts as syscalls are unknown to Docker. VSCodium runs in no-sandbox mode without it.",
+                "optional": true
+            }
+        ],
+        "caps": [
+            {
+                "cap_add": "IPC_LOCK",
+                "desc": "Required for keyring functionality.",
+                "optional": false
+            }
+        ]
+    }
+}

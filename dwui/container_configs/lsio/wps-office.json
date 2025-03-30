@@ -1,0 +1,113 @@
+{
+    "name": "wps-office",
+    "initial_date": "2023-04-21",
+    "github_url": "https://github.com/linuxserver/docker-wps-office",
+    "project_url": "https://www.wps.com/",
+    "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/wps-office-icon.png",
+    "description": "[WPS Office] is a lightweight, feature-rich comprehensive office suite with high compatibility. As a handy and professional office software, WPS Office allows you to edit files in Writer, Presentation, Spreadsheet, and PDF to improve your work efficiency.",
+    "version": "11.1.0.11723-ls103",
+    "version_timestamp": "2025-03-24 11:22:09+00:00",
+    "category": "Documents",
+    "stable": true,
+    "deprecated": false,
+    "stars": 121,
+    "monthly_pulls": 13627,
+    "tags": [
+        {
+            "tag": "latest",
+            "desc": "Standard English release"
+        },
+        {
+            "tag": "chinese",
+            "desc": "Simplified Chinese version"
+        }
+    ],
+    "architectures": [
+        {
+            "arch": "x86_64",
+            "tag": "latest"
+        }
+    ],
+    "changelog": [
+        {
+            "date": "2024-02-10",
+            "desc": "Update Readme with new env vars and ingest proper PWA icon."
+        },
+        {
+            "date": "2024-01-06",
+            "desc": "Rebase to Debian Bookworm."
+        },
+        {
+            "date": "2024-01-17",
+            "desc": "Update Chromium wrapper."
+        }
+    ],
+    "config": {
+        "application_setup": "https://github.com/linuxserver/docker-wps-office?tab=readme-ov-file#application-setup",
+        "env_vars": [
+            {
+                "name": "PUID",
+                "value": "1000",
+                "desc": "User ID",
+                "optional": false
+            },
+            {
+                "name": "PGID",
+                "value": "1000",
+                "desc": "Group ID",
+                "optional": false
+            },
+            {
+                "name": "TZ",
+                "value": "Etc/UTC",
+                "desc": "Timezone",
+                "optional": false
+            },
+            {
+                "name": "TZ",
+                "value": "Europe/London",
+                "desc": "Specify a timezone to use EG Europe/London.",
+                "optional": false
+            }
+        ],
+        "volumes": [
+            {
+                "path": "/config",
+                "host_path": "/path/to/config",
+                "desc": "Users home directory in the container, stores program settings and documents",
+                "optional": false
+            }
+        ],
+        "ports": [
+            {
+                "external": "3000",
+                "internal": "3000",
+                "desc": "WPS Office desktop gui.",
+                "optional": false
+            },
+            {
+                "external": "3001",
+                "internal": "3001",
+                "desc": "WPS Office desktop gui HTTPS.",
+                "optional": false
+            }
+        ],
+        "custom": [
+            {
+                "name": "shm-size",
+                "name_compose": "shm_size",
+                "value": "1gb",
+                "desc": "This is needed for electron applications to function properly.",
+                "optional": false
+            }
+        ],
+        "security_opt": [
+            {
+                "run_var": "seccomp=unconfined",
+                "compose_var": "seccomp:unconfined",
+                "desc": "For Docker Engine only, many modern gui apps need this to function on older hosts as syscalls are unknown to Docker.",
+                "optional": true
+            }
+        ]
+    }
+}

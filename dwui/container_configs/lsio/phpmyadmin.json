@@ -1,0 +1,98 @@
+{
+    "name": "phpmyadmin",
+    "initial_date": "2021-06-14",
+    "github_url": "https://github.com/linuxserver/docker-phpmyadmin",
+    "project_url": "https://github.com/phpmyadmin/phpmyadmin/",
+    "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/phpmyadmin-logo.png",
+    "description": "phpmyadmin is a free software tool written in PHP, intended to handle the administration of MySQL over the Web. phpMyAdmin supports a wide range of operations on MySQL and MariaDB.",
+    "version": "5.2.2-ls188",
+    "version_timestamp": "2025-03-28 21:41:54+00:00",
+    "category": "Databases",
+    "stable": true,
+    "deprecated": false,
+    "stars": 25,
+    "monthly_pulls": 32814,
+    "tags": [
+        {
+            "tag": "latest",
+            "desc": "Stable releases"
+        }
+    ],
+    "architectures": [
+        {
+            "arch": "x86_64",
+            "tag": "amd64-latest"
+        },
+        {
+            "arch": "arm64",
+            "tag": "arm64v8-latest"
+        }
+    ],
+    "changelog": [
+        {
+            "date": "2024-12-19",
+            "desc": "Rebase to Alpine 3.21."
+        },
+        {
+            "date": "2024-05-27",
+            "desc": "Existing users should update their nginx confs to avoid http2 deprecation warnings."
+        },
+        {
+            "date": "2024-05-24",
+            "desc": "Rebase to Alpine 3.20."
+        }
+    ],
+    "config": {
+        "application_setup": "https://github.com/linuxserver/docker-phpmyadmin?tab=readme-ov-file#application-setup",
+        "readonly_supported": true,
+        "nonroot_supported": true,
+        "env_vars": [
+            {
+                "name": "PUID",
+                "value": "1000",
+                "desc": "User ID",
+                "optional": false
+            },
+            {
+                "name": "PGID",
+                "value": "1000",
+                "desc": "Group ID",
+                "optional": false
+            },
+            {
+                "name": "TZ",
+                "value": "Etc/UTC",
+                "desc": "Timezone",
+                "optional": false
+            },
+            {
+                "name": "PMA_ARBITRARY",
+                "value": "1",
+                "desc": "Set to `1` to allow you to connect to any server. Setting to `0` will only allow you to connect to specified hosts (See Application Setup)",
+                "optional": true
+            },
+            {
+                "name": "PMA_ABSOLUTE_URI",
+                "value": "https://phpmyadmin.example.com",
+                "desc": "Set the URL you will use to access the web frontend",
+                "optional": true
+            }
+        ],
+        "volumes": [
+            {
+                "path": "/config",
+                "host_path": "/path/to/phpmyadmin/config",
+                "desc": "Persistent config files",
+                "optional": false
+            }
+        ],
+        "ports": [
+            {
+                "external": "80",
+                "internal": "80",
+                "desc": "Port for web frontend",
+                "optional": false
+            }
+        ]
+    }
+}

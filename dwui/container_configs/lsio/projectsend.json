@@ -1,0 +1,90 @@
+{
+    "name": "projectsend",
+    "initial_date": "2017-06-13",
+    "github_url": "https://github.com/linuxserver/docker-projectsend",
+    "project_url": "http://www.projectsend.org",
+    "project_logo": "http://www.projectsend.org/wp-content/themes/projectsend/img/screenshots.png",
+    "description": "projectsend is a self-hosted application that lets you upload files and assign them to specific clients that you create yourself. Secure, private and easy. No more depending on external services or e-mail to send those files.",
+    "version": "r1720-ls228",
+    "version_timestamp": "2025-03-17 21:34:06+00:00",
+    "category": "File Sharing",
+    "stable": true,
+    "deprecated": false,
+    "stars": 82,
+    "monthly_pulls": 24476,
+    "tags": [
+        {
+            "tag": "latest",
+            "desc": "Stable releases"
+        }
+    ],
+    "architectures": [
+        {
+            "arch": "x86_64",
+            "tag": "amd64-latest"
+        },
+        {
+            "arch": "arm64",
+            "tag": "arm64v8-latest"
+        }
+    ],
+    "changelog": [
+        {
+            "date": "2024-12-21",
+            "desc": "Rebase to Alpine 3.21, move php .ini file to /config/php."
+        },
+        {
+            "date": "2024-06-06",
+            "desc": "Rebase to Alpine 3.20."
+        },
+        {
+            "date": "2023-12-23",
+            "desc": "Rebase to Alpine 3.19 with php 8.3."
+        }
+    ],
+    "config": {
+        "application_setup": "https://github.com/linuxserver/docker-projectsend?tab=readme-ov-file#application-setup",
+        "env_vars": [
+            {
+                "name": "PUID",
+                "value": "1000",
+                "desc": "User ID",
+                "optional": false
+            },
+            {
+                "name": "PGID",
+                "value": "1000",
+                "desc": "Group ID",
+                "optional": false
+            },
+            {
+                "name": "TZ",
+                "value": "Etc/UTC",
+                "desc": "Timezone",
+                "optional": false
+            }
+        ],
+        "volumes": [
+            {
+                "path": "/config",
+                "host_path": "/path/to/projectsend/config",
+                "desc": "Persistent config files",
+                "optional": false
+            },
+            {
+                "path": "/data",
+                "host_path": "/path/to/data",
+                "desc": "Where to store files to share.",
+                "optional": false
+            }
+        ],
+        "ports": [
+            {
+                "external": "80",
+                "internal": "80",
+                "desc": "WebUI",
+                "optional": false
+            }
+        ]
+    }
+}

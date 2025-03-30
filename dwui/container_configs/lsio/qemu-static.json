@@ -1,0 +1,26 @@
+{
+    "name": "qemu-static",
+    "github_url": "https://github.com/linuxserver/docker-qemu-static",
+    "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/qemu-logo.png",
+    "description": "Run multiple architectures of Docker containers on an x86_64 or aarch64 host using QEMU static.",
+    "version": "9.2.2ds-1bpo121-ls13",
+    "version_timestamp": "2025-03-17 21:35:09+00:00",
+    "category": "Docker",
+    "stable": true,
+    "deprecated": false,
+    "stars": 6,
+    "monthly_pulls": 465,
+    "tags": [
+        {
+            "tag": "latest",
+            "desc": "Stable releases"
+        }
+    ],
+    "architectures": [
+        {
+            "arch": "x86_64",
+            "tag": "amd64-latest"
+        }
+    ],
+    "config": {}
+}

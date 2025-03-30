@@ -1,0 +1,209 @@
+{
+    "name": "fail2ban",
+    "initial_date": "2022-08-09",
+    "github_url": "https://github.com/linuxserver/docker-fail2ban",
+    "project_url": "http://www.fail2ban.org/",
+    "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/fail2ban-logo.png",
+    "description": "fail2ban is a daemon to ban hosts that cause multiple authentication errors.",
+    "version": "1.1.0-r0-ls6",
+    "version_timestamp": "2025-03-21 07:38:02+00:00",
+    "category": "Network,Security",
+    "stable": true,
+    "deprecated": false,
+    "stars": 66,
+    "monthly_pulls": 15078,
+    "tags": [
+        {
+            "tag": "latest",
+            "desc": "Stable releases"
+        }
+    ],
+    "architectures": [
+        {
+            "arch": "x86_64",
+            "tag": "amd64-latest"
+        },
+        {
+            "arch": "arm64",
+            "tag": "arm64v8-latest"
+        }
+    ],
+    "changelog": [
+        {
+            "date": "2024-10-12",
+            "desc": "Rebase to Alpine 3.20."
+        },
+        {
+            "date": "2024-03-05",
+            "desc": "Rebase to Alpine 3.19."
+        },
+        {
+            "date": "2023-06-01",
+            "desc": "Add optional VERBOSITY environment variable, allowing users to set the container log verbosity."
+        }
+    ],
+    "config": {
+        "application_setup": "https://github.com/linuxserver/docker-fail2ban?tab=readme-ov-file#application-setup",
+        "networking": "host",
+        "env_vars": [
+            {
+                "name": "PUID",
+                "value": "1000",
+                "desc": "User ID",
+                "optional": false
+            },
+            {
+                "name": "PGID",
+                "value": "1000",
+                "desc": "Group ID",
+                "optional": false
+            },
+            {
+                "name": "TZ",
+                "value": "Etc/UTC",
+                "desc": "Timezone",
+                "optional": false
+            },
+            {
+                "name": "TZ",
+                "value": "Europe/London",
+                "desc": "Specify a timezone to use EG Europe/London.",
+                "optional": false
+            },
+            {
+                "name": "VERBOSITY",
+                "value": "-vv",
+                "desc": "Set the container log verbosity. Valid options are -v, -vv, -vvv, -vvvv, or leaving the value blank or not setting the variable.",
+                "optional": true
+            }
+        ],
+        "volumes": [
+            {
+                "path": "/config",
+                "host_path": "/path/to/fail2ban/config",
+                "desc": "Persistent config files",
+                "optional": false
+            },
+            {
+                "path": "/var/log:ro",
+                "host_path": "/var/log",
+                "desc": "Host logs. Mounted as Read Only.",
+                "optional": false
+            },
+            {
+                "path": "/remotelogs/airsonic:ro",
+                "host_path": "/path/to/airsonic/log",
+                "desc": "Optional path to airsonic log folder. Mounted as Read Only.",
+                "optional": true
+            },
+            {
+                "path": "/remotelogs/apache2:ro",
+                "host_path": "/path/to/apache2/log",
+                "desc": "Optional path to apache2 log folder. Mounted as Read Only.",
+                "optional": true
+            },
+            {
+                "path": "/remotelogs/authelia:ro",
+                "host_path": "/path/to/authelia/log",
+                "desc": "Optional path to authelia log folder. Mounted as Read Only.",
+                "optional": true
+            },
+            {
+                "path": "/remotelogs/emby:ro",
+                "host_path": "/path/to/emby/log",
+                "desc": "Optional path to emby log folder. Mounted as Read Only.",
+                "optional": true
+            },
+            {
+                "path": "/remotelogs/filebrowser:ro",
+                "host_path": "/path/to/filebrowser/log",
+                "desc": "Optional path to filebrowser log folder. Mounted as Read Only.",
+                "optional": true
+            },
+            {
+                "path": "/remotelogs/homeassistant:ro",
+                "host_path": "/path/to/homeassistant/log",
+                "desc": "Optional path to homeassistant log folder. Mounted as Read Only.",
+                "optional": true
+            },
+            {
+                "path": "/remotelogs/lighttpd:ro",
+                "host_path": "/path/to/lighttpd/log",
+                "desc": "Optional path to lighttpd log folder. Mounted as Read Only.",
+                "optional": true
+            },
+            {
+                "path": "/remotelogs/nextcloud:ro",
+                "host_path": "/path/to/nextcloud/log",
+                "desc": "Optional path to nextcloud log folder. Mounted as Read Only.",
+                "optional": true
+            },
+            {
+                "path": "/remotelogs/nginx:ro",
+                "host_path": "/path/to/nginx/log",
+                "desc": "Optional path to nginx log folder. Mounted as Read Only.",
+                "optional": true
+            },
+            {
+                "path": "/remotelogs/nzbget:ro",
+                "host_path": "/path/to/nzbget/log",
+                "desc": "Optional path to nzbget log folder. Mounted as Read Only.",
+                "optional": true
+            },
+            {
+                "path": "/remotelogs/overseerr:ro",
+                "host_path": "/path/to/overseerr/log",
+                "desc": "Optional path to overseerr log folder. Mounted as Read Only.",
+                "optional": true
+            },
+            {
+                "path": "/remotelogs/prowlarr:ro",
+                "host_path": "/path/to/prowlarr/log",
+                "desc": "Optional path to prowlarr log folder. Mounted as Read Only.",
+                "optional": true
+            },
+            {
+                "path": "/remotelogs/radarr:ro",
+                "host_path": "/path/to/radarr/log",
+                "desc": "Optional path to radarr log folder. Mounted as Read Only.",
+                "optional": true
+            },
+            {
+                "path": "/remotelogs/sabnzbd:ro",
+                "host_path": "/path/to/sabnzbd/log",
+                "desc": "Optional path to sabnzbd log folder. Mounted as Read Only.",
+                "optional": true
+            },
+            {
+                "path": "/remotelogs/sonarr:ro",
+                "host_path": "/path/to/sonarr/log",
+                "desc": "Optional path to sonarr log folder. Mounted as Read Only.",
+                "optional": true
+            },
+            {
+                "path": "/remotelogs/unificontroller:ro",
+                "host_path": "/path/to/unificontroller/log",
+                "desc": "Optional path to unificontroller log folder. Mounted as Read Only.",
+                "optional": true
+            },
+            {
+                "path": "/remotelogs/vaultwarden:ro",
+                "host_path": "/path/to/vaultwarden/log",
+                "desc": "Optional path to vaultwarden log folder. Mounted as Read Only.",
+                "optional": true
+            }
+        ],
+        "caps": [
+            {
+                "cap_add": "NET_ADMIN",
+                "desc": "Required for fail2ban to be able to modify iptables rules.",
+                "optional": false
+            },
+            {
+                "cap_add": "NET_RAW",
+                "desc": "Required for fail2ban to be able to bind to any interface & use RAW sockets.",
+                "optional": false
+            }
+        ]
+    }
+}

@@ -1,0 +1,118 @@
+{
+    "name": "duplicati",
+    "initial_date": "2017-04-24",
+    "github_url": "https://github.com/linuxserver/docker-duplicati",
+    "project_url": "https://www.duplicati.com/",
+    "project_logo": "https://github.com/linuxserver/docker-templates/raw/master/linuxserver.io/img/duplicati-icon.png",
+    "description": "duplicati is a backup client that securely stores encrypted, incremental, compressed backups on local storage, cloud storage services and remote file servers. It works with standard protocols like FTP, SSH, WebDAV as well as popular services like Microsoft OneDrive, Amazon S3, Google Drive, box.com, Mega, B2, and many others.",
+    "version": "v2.1.0.5_stable_2025-03-04-ls240",
+    "version_timestamp": "2025-03-22 04:07:48+00:00",
+    "category": "Backup",
+    "stable": true,
+    "deprecated": false,
+    "stars": 365,
+    "monthly_pulls": 160515,
+    "tags": [
+        {
+            "tag": "latest",
+            "desc": "Stable releases of Duplicati"
+        },
+        {
+            "tag": "development",
+            "desc": "Beta releases of Duplicati"
+        }
+    ],
+    "architectures": [
+        {
+            "arch": "x86_64",
+            "tag": "amd64-latest"
+        },
+        {
+            "arch": "arm64",
+            "tag": "arm64v8-latest"
+        }
+    ],
+    "changelog": [
+        {
+            "date": "2025-01-31",
+            "desc": "Make `latest` stable releases, move beta releases to `development`."
+        },
+        {
+            "date": "2025-01-28",
+            "desc": "Add xz-utils."
+        },
+        {
+            "date": "2024-12-03",
+            "desc": "Add mscorefonts for captcha support."
+        }
+    ],
+    "config": {
+        "application_setup": "https://github.com/linuxserver/docker-duplicati?tab=readme-ov-file#application-setup",
+        "env_vars": [
+            {
+                "name": "PUID",
+                "value": "1000",
+                "desc": "User ID",
+                "optional": false
+            },
+            {
+                "name": "PGID",
+                "value": "1000",
+                "desc": "Group ID",
+                "optional": false
+            },
+            {
+                "name": "TZ",
+                "value": "Etc/UTC",
+                "desc": "Timezone",
+                "optional": false
+            },
+            {
+                "name": "SETTINGS_ENCRYPTION_KEY",
+                "value": "",
+                "desc": "Encryption key for settings database. Minimum 8 characters, alphanumeric.",
+                "optional": false
+            },
+            {
+                "name": "CLI_ARGS",
+                "value": "",
+                "desc": "Optionally specify any [CLI variables](https://duplicati.readthedocs.io/en/latest/07-other-command-line-utilities/) you want to launch the app with",
+                "optional": true
+            },
+            {
+                "name": "DUPLICATI__WEBSERVICE_PASSWORD",
+                "value": "",
+                "desc": "Password for the webui. If left unset will default to `changeme` and can be changed from the webui settings.",
+                "optional": true
+            }
+        ],
+        "volumes": [
+            {
+                "path": "/config",
+                "host_path": "/path/to/duplicati/config",
+                "desc": "Contains all relevant configuration files.",
+                "optional": false
+            },
+            {
+                "path": "/backups",
+                "host_path": "/path/to/backups",
+                "desc": "Path to store local backups.",
+                "optional": false
+            },
+            {
+                "path": "/source",
+                "host_path": "/path/to/source",
+                "desc": "Path to source for files to backup.",
+                "optional": false
+            }
+        ],
+        "ports": [
+            {
+                "external": "8200",
+                "internal": "8200",
+                "desc": "http gui",
+                "optional": false
+            }
+        ]
+    }
+}

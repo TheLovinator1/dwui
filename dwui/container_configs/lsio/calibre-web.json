@@ -1,0 +1,112 @@
+{
+    "name": "calibre-web",
+    "initial_date": "2017-07-17",
+    "github_url": "https://github.com/linuxserver/docker-calibre-web",
+    "project_url": "https://github.com/janeczku/calibre-web",
+    "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/calibre-web-icon.png",
+    "description": "calibre-web is a web app providing a clean interface for browsing, reading and downloading eBooks using an existing Calibre database.   It is also possible to integrate google drive and edit metadata and your calibre library through the app itself.  This software is a fork of library and licensed under the GPL v3 License.",
+    "version": "0.6.24-ls321",
+    "version_timestamp": "2025-03-23 02:26:32+00:00",
+    "category": "Books",
+    "stable": true,
+    "deprecated": false,
+    "stars": 1160,
+    "monthly_pulls": 470676,
+    "tags": [
+        {
+            "tag": "latest",
+            "desc": "Releases of Calibre-Web"
+        },
+        {
+            "tag": "nightly",
+            "desc": "Commits to the master branch of Calibre-Web"
+        }
+    ],
+    "architectures": [
+        {
+            "arch": "x86_64",
+            "tag": "amd64-latest"
+        },
+        {
+            "arch": "arm64",
+            "tag": "arm64v8-latest"
+        }
+    ],
+    "changelog": [
+        {
+            "date": "2025-01-07",
+            "desc": "Set kepubify path by default."
+        },
+        {
+            "date": "2024-12-05",
+            "desc": "Rebase to noble."
+        },
+        {
+            "date": "2024-08-26",
+            "desc": "Add new dep, xdg-utils."
+        }
+    ],
+    "config": {
+        "application_setup": "https://github.com/linuxserver/docker-calibre-web?tab=readme-ov-file#application-setup",
+        "env_vars": [
+            {
+                "name": "PUID",
+                "value": "1000",
+                "desc": "User ID",
+                "optional": false
+            },
+            {
+                "name": "PGID",
+                "value": "1000",
+                "desc": "Group ID",
+                "optional": false
+            },
+            {
+                "name": "TZ",
+                "value": "Etc/UTC",
+                "desc": "Timezone",
+                "optional": false
+            },
+            {
+                "name": "TZ",
+                "value": "Europe/London",
+                "desc": "Specify a timezone to use EG Europe/London.",
+                "optional": false
+            },
+            {
+                "name": "DOCKER_MODS",
+                "value": "linuxserver/mods:universal-calibre",
+                "desc": "#optional & **x86-64 only** Adds the ability to perform ebook conversion",
+                "optional": true
+            },
+            {
+                "name": "OAUTHLIB_RELAX_TOKEN_SCOPE",
+                "value": "1",
+                "desc": "Optionally set this to allow Google OAUTH to work",
+                "optional": true
+            }
+        ],
+        "volumes": [
+            {
+                "path": "/config",
+                "host_path": "/path/to/calibre-web/data",
+                "desc": "Where calibre-web stores the internal database and config.",
+                "optional": false
+            },
+            {
+                "path": "/books",
+                "host_path": "/path/to/calibre/library",
+                "desc": "Where your preexisting calibre database is located.",
+                "optional": false
+            }
+        ],
+        "ports": [
+            {
+                "external": "8083",
+                "internal": "8083",
+                "desc": "WebUI",
+                "optional": false
+            }
+        ]
+    }
+}

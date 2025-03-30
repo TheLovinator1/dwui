@@ -1,0 +1,26 @@
+{
+    "name": "modmanager",
+    "github_url": "https://github.com/linuxserver/docker-modmanager",
+    "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/linuxserver-ls-logo.png",
+    "description": "Modmanager is a centralised tool for downloading and updating docker mods for all your other Linuxserver containers.",
+    "version": "5f101a75-ls13",
+    "version_timestamp": "2025-03-23 09:26:31+00:00",
+    "category": "Docker",
+    "stable": true,
+    "deprecated": false,
+    "stars": 9,
+    "monthly_pulls": 6875,
+    "tags": [
+        {
+            "tag": "latest",
+            "desc": "Stable releases"
+        }
+    ],
+    "architectures": [
+        {
+            "arch": "x86_64",
+            "tag": "amd64-latest"
+        }
+    ],
+    "config": {}
+}

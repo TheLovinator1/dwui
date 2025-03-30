@@ -1,0 +1,97 @@
+{
+    "name": "habridge",
+    "initial_date": "2018-04-08",
+    "github_url": "https://github.com/linuxserver/docker-habridge",
+    "project_url": "https://github.com/bwssytems/ha-bridge/",
+    "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/habridge-logo.png",
+    "description": "habridge emulates Philips Hue API to other home automation gateways such as an Amazon Echo/Dot Gen 1 (gen 2 has issues discovering ha-bridge) or other systems that support Philips Hue. The Bridge handles basic commands such as \"On\", \"Off\" and \"brightness\" commands of the hue protocol. This bridge can control most devices that have a distinct API.",
+    "version": "v5.4.1-ls198",
+    "version_timestamp": "2025-03-21 22:28:05+00:00",
+    "category": "Home Automation",
+    "stable": true,
+    "deprecated": false,
+    "stars": 17,
+    "monthly_pulls": 634,
+    "tags": [
+        {
+            "tag": "latest",
+            "desc": "Stable releases"
+        }
+    ],
+    "architectures": [
+        {
+            "arch": "x86_64",
+            "tag": "amd64-latest"
+        },
+        {
+            "arch": "arm64",
+            "tag": "arm64v8-latest"
+        }
+    ],
+    "changelog": [
+        {
+            "date": "2024-06-27",
+            "desc": "Rebase to Alpine 3.20."
+        },
+        {
+            "date": "2024-04-10",
+            "desc": "Revert JRE to 8 due to incomplete upstream support."
+        },
+        {
+            "date": "2024-03-20",
+            "desc": "Rebase to Alpine 3.19, bump JRE to 17."
+        }
+    ],
+    "config": {
+        "application_setup": "https://github.com/linuxserver/docker-habridge?tab=readme-ov-file#application-setup",
+        "readonly_supported": true,
+        "env_vars": [
+            {
+                "name": "PUID",
+                "value": "1000",
+                "desc": "User ID",
+                "optional": false
+            },
+            {
+                "name": "PGID",
+                "value": "1000",
+                "desc": "Group ID",
+                "optional": false
+            },
+            {
+                "name": "TZ",
+                "value": "Etc/UTC",
+                "desc": "Timezone",
+                "optional": false
+            },
+            {
+                "name": "SEC_KEY",
+                "value": "",
+                "desc": "Key used to secure communication.",
+                "optional": false
+            }
+        ],
+        "volumes": [
+            {
+                "path": "/config",
+                "host_path": "/path/to/habridge/config",
+                "desc": "Where HABridge stores config files and data.",
+                "optional": false
+            }
+        ],
+        "ports": [
+            {
+                "external": "8080",
+                "internal": "8080",
+                "desc": "WebUI",
+                "optional": false
+            },
+            {
+                "external": "50000",
+                "internal": "50000",
+                "desc": "HABridge communication port.",
+                "optional": false
+            }
+        ]
+    }
+}

@@ -1,0 +1,120 @@
+{
+    "name": "qbittorrent",
+    "initial_date": "2018-02-12",
+    "github_url": "https://github.com/linuxserver/docker-qbittorrent",
+    "project_url": "https://www.qbittorrent.org/",
+    "project_logo": "https://github.com/linuxserver/docker-templates/raw/master/linuxserver.io/img/qbittorrent-icon.png",
+    "description": "The qbittorrent project aims to provide an open-source software alternative to \u00b5Torrent. qBittorrent is based on the Qt toolkit and libtorrent-rasterbar library.",
+    "version": "5.0.4-r0-ls386",
+    "version_timestamp": "2025-03-23 07:00:35+00:00",
+    "category": "Downloaders",
+    "stable": true,
+    "deprecated": false,
+    "stars": 1200,
+    "monthly_pulls": 855869,
+    "tags": [
+        {
+            "tag": "latest",
+            "desc": "Stable qbittorrent releases"
+        },
+        {
+            "tag": "libtorrentv1",
+            "desc": "Static qbittorrent builds using libtorrent v1"
+        }
+    ],
+    "architectures": [
+        {
+            "arch": "x86_64",
+            "tag": "amd64-latest"
+        },
+        {
+            "arch": "arm64",
+            "tag": "arm64v8-latest"
+        }
+    ],
+    "changelog": [
+        {
+            "date": "2024-07-17",
+            "desc": "Restore qbittorrent-cli as it now supports openssl 3."
+        },
+        {
+            "date": "2024-05-25",
+            "desc": "Remove qbittorrent-cli as it still requires openssl 1.1 which is EOL."
+        },
+        {
+            "date": "2024-02-14",
+            "desc": "Only set/override torrenting port if the optional env var is set."
+        }
+    ],
+    "config": {
+        "application_setup": "https://github.com/linuxserver/docker-qbittorrent?tab=readme-ov-file#application-setup",
+        "readonly_supported": true,
+        "nonroot_supported": true,
+        "env_vars": [
+            {
+                "name": "PUID",
+                "value": "1000",
+                "desc": "User ID",
+                "optional": false
+            },
+            {
+                "name": "PGID",
+                "value": "1000",
+                "desc": "Group ID",
+                "optional": false
+            },
+            {
+                "name": "TZ",
+                "value": "Etc/UTC",
+                "desc": "Timezone",
+                "optional": false
+            },
+            {
+                "name": "WEBUI_PORT",
+                "value": "8080",
+                "desc": "for changing the port of the web UI, see below for explanation",
+                "optional": false
+            },
+            {
+                "name": "TORRENTING_PORT",
+                "value": "6881",
+                "desc": "for changing the port of tcp/udp connection, see below for explanation",
+                "optional": false
+            }
+        ],
+        "volumes": [
+            {
+                "path": "/config",
+                "host_path": "/path/to/qbittorrent/appdata",
+                "desc": "Contains all relevant configuration files.",
+                "optional": false
+            },
+            {
+                "path": "/downloads",
+                "host_path": "/path/to/downloads",
+                "desc": "Location of downloads on disk.",
+                "optional": true
+            }
+        ],
+        "ports": [
+            {
+                "external": "8080",
+                "internal": "8080",
+                "desc": "WebUI",
+                "optional": false
+            },
+            {
+                "external": "6881",
+                "internal": "6881",
+                "desc": "tcp connection port",
+                "optional": false
+            },
+            {
+                "external": "6881",
+                "internal": "6881/udp",
+                "desc": "udp connection port",
+                "optional": false
+            }
+        ]
+    }
+}

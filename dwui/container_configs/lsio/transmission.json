@@ -1,0 +1,146 @@
+{
+    "name": "transmission",
+    "initial_date": "2015-11-16",
+    "github_url": "https://github.com/linuxserver/docker-transmission",
+    "project_url": "https://www.transmissionbt.com/",
+    "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/transmission.png",
+    "description": "transmission is designed for easy, powerful use. Transmission has the features you want from a BitTorrent client: encryption, a web interface, peer exchange, magnet links, DHT, \u00b5TP, UPnP and NAT-PMP port forwarding, webseed support, watch directories, tracker editing, global and per-torrent speed limits, and more.",
+    "version": "4.0.6-r3-ls287",
+    "version_timestamp": "2025-03-18 10:44:48+00:00",
+    "category": "Downloaders",
+    "stable": true,
+    "deprecated": false,
+    "stars": 643,
+    "monthly_pulls": 191571,
+    "tags": [
+        {
+            "tag": "latest",
+            "desc": "Stable releases"
+        }
+    ],
+    "architectures": [
+        {
+            "arch": "x86_64",
+            "tag": "amd64-latest"
+        },
+        {
+            "arch": "arm64",
+            "tag": "arm64v8-latest"
+        }
+    ],
+    "changelog": [
+        {
+            "date": "2024-11-29",
+            "desc": "Fix PEERPORT setting."
+        },
+        {
+            "date": "2023-10-07",
+            "desc": "Install unrar from [linuxserver repo](https://github.com/linuxserver/docker-unrar)."
+        },
+        {
+            "date": "2023-08-10",
+            "desc": "Bump unrar to 6.2.10."
+        }
+    ],
+    "config": {
+        "application_setup": "https://github.com/linuxserver/docker-transmission?tab=readme-ov-file#application-setup",
+        "readonly_supported": true,
+        "nonroot_supported": true,
+        "env_vars": [
+            {
+                "name": "PUID",
+                "value": "1000",
+                "desc": "User ID",
+                "optional": false
+            },
+            {
+                "name": "PGID",
+                "value": "1000",
+                "desc": "Group ID",
+                "optional": false
+            },
+            {
+                "name": "TZ",
+                "value": "Etc/UTC",
+                "desc": "Timezone",
+                "optional": false
+            },
+            {
+                "name": "TRANSMISSION_WEB_HOME",
+                "value": "",
+                "desc": "Specify the path to an alternative UI folder.",
+                "optional": true
+            },
+            {
+                "name": "USER",
+                "value": "",
+                "desc": "Specify an optional username for the interface",
+                "optional": true
+            },
+            {
+                "name": "PASS",
+                "value": "",
+                "desc": "Specify an optional password for the interface",
+                "optional": true
+            },
+            {
+                "name": "WHITELIST",
+                "value": "",
+                "desc": "Specify an optional list of comma separated ip whitelist. Fills rpc-whitelist setting.",
+                "optional": true
+            },
+            {
+                "name": "PEERPORT",
+                "value": "",
+                "desc": "Specify an optional port for torrent TCP/UDP connections. Fills peer-port setting.",
+                "optional": true
+            },
+            {
+                "name": "HOST_WHITELIST",
+                "value": "",
+                "desc": "Specify an optional list of comma separated dns name whitelist. Fills rpc-host-whitelist setting.",
+                "optional": true
+            }
+        ],
+        "volumes": [
+            {
+                "path": "/config",
+                "host_path": "/path/to/transmission/data",
+                "desc": "Where transmission should store config files and logs.",
+                "optional": false
+            },
+            {
+                "path": "/downloads",
+                "host_path": "/path/to/downloads",
+                "desc": "Local path for downloads.",
+                "optional": true
+            },
+            {
+                "path": "/watch",
+                "host_path": "/path/to/watch/folder",
+                "desc": "Watch folder for torrent files.",
+                "optional": true
+            }
+        ],
+        "ports": [
+            {
+                "external": "9091",
+                "internal": "9091",
+                "desc": "WebUI",
+                "optional": false
+            },
+            {
+                "external": "51413",
+                "internal": "51413",
+                "desc": "Torrent Port TCP",
+                "optional": false
+            },
+            {
+                "external": "51413",
+                "internal": "51413/udp",
+                "desc": "Torrent Port UDP",
+                "optional": false
+            }
+        ]
+    }
+}

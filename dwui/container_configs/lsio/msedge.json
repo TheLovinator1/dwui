@@ -1,0 +1,111 @@
+{
+    "name": "msedge",
+    "initial_date": "2024-04-25",
+    "github_url": "https://github.com/linuxserver/docker-msedge",
+    "project_url": "https://www.microsoft.com/edge",
+    "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/edge-logo.png",
+    "description": "[Microsoft Edge] is a cross-platform web browser developed by Microsoft and based on Chromium.",
+    "version": "134.0.3124.95-1-ls69",
+    "version_timestamp": "2025-03-27 19:55:37+00:00",
+    "category": "Web Browser",
+    "stable": true,
+    "deprecated": false,
+    "stars": 25,
+    "monthly_pulls": 4462,
+    "tags": [
+        {
+            "tag": "latest",
+            "desc": "Stable releases"
+        }
+    ],
+    "architectures": [
+        {
+            "arch": "x86_64",
+            "tag": "latest"
+        }
+    ],
+    "changelog": [
+        {
+            "date": "2025-02-04",
+            "desc": "Clean up Singletons if container is shut down while windows are open."
+        },
+        {
+            "date": "2024-04-25",
+            "desc": "Initial release."
+        }
+    ],
+    "config": {
+        "application_setup": "https://github.com/linuxserver/docker-msedge?tab=readme-ov-file#application-setup",
+        "env_vars": [
+            {
+                "name": "PUID",
+                "value": "1000",
+                "desc": "User ID",
+                "optional": false
+            },
+            {
+                "name": "PGID",
+                "value": "1000",
+                "desc": "Group ID",
+                "optional": false
+            },
+            {
+                "name": "TZ",
+                "value": "Etc/UTC",
+                "desc": "Timezone",
+                "optional": false
+            },
+            {
+                "name": "TZ",
+                "value": "Europe/London",
+                "desc": "Specify a timezone to use EG Europe/London.",
+                "optional": false
+            },
+            {
+                "name": "EDGE_CLI",
+                "value": "https://www.linuxserver.io/",
+                "desc": "Specify one or multiple Chromium CLI flags, this string will be passed to the application in full.",
+                "optional": true
+            }
+        ],
+        "volumes": [
+            {
+                "path": "/config",
+                "host_path": "/path/to/config",
+                "desc": "Users home directory in the container, stores local files and settings",
+                "optional": false
+            }
+        ],
+        "ports": [
+            {
+                "external": "3000",
+                "internal": "3000",
+                "desc": "Edge desktop gui.",
+                "optional": false
+            },
+            {
+                "external": "3001",
+                "internal": "3001",
+                "desc": "HTTPS Edge desktop gui.",
+                "optional": false
+            }
+        ],
+        "custom": [
+            {
+                "name": "shm-size",
+                "name_compose": "shm_size",
+                "value": "1gb",
+                "desc": "This is required for Edge to launch and function.",
+                "optional": false
+            }
+        ],
+        "security_opt": [
+            {
+                "run_var": "seccomp=unconfined",
+                "compose_var": "seccomp:unconfined",
+                "desc": "For Docker Engine only, many modern gui apps need this to function on older hosts as syscalls are unknown to Docker. Edge runs in no-sandbox mode without it.",
+                "optional": true
+            }
+        ]
+    }
+}

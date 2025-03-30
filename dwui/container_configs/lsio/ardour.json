@@ -1,0 +1,94 @@
+{
+    "name": "ardour",
+    "initial_date": "2024-04-10",
+    "github_url": "https://github.com/linuxserver/docker-ardour",
+    "project_url": "https://ardour.org/",
+    "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/ardour-logo.png",
+    "description": "[Ardour] is an open source, collaborative effort of a worldwide team including musicians, programmers, and professional recording engineers.",
+    "version": "2025-03-28-ls80",
+    "version_timestamp": "2025-03-28 18:14:07+00:00",
+    "category": "Audio Processing",
+    "stable": true,
+    "deprecated": false,
+    "stars": 7,
+    "monthly_pulls": 653,
+    "tags": [
+        {
+            "tag": "latest",
+            "desc": "Stable releases"
+        }
+    ],
+    "architectures": [
+        {
+            "arch": "x86_64",
+            "tag": "latest"
+        },
+        {
+            "arch": "arm64",
+            "tag": "arm64v8-latest"
+        }
+    ],
+    "changelog": [
+        {
+            "date": "2024-04-10",
+            "desc": "Initial release."
+        }
+    ],
+    "config": {
+        "application_setup": "https://github.com/linuxserver/docker-ardour?tab=readme-ov-file#application-setup",
+        "env_vars": [
+            {
+                "name": "PUID",
+                "value": "1000",
+                "desc": "User ID",
+                "optional": false
+            },
+            {
+                "name": "PGID",
+                "value": "1000",
+                "desc": "Group ID",
+                "optional": false
+            },
+            {
+                "name": "TZ",
+                "value": "Etc/UTC",
+                "desc": "Timezone",
+                "optional": false
+            },
+            {
+                "name": "TZ",
+                "value": "America/New_York",
+                "desc": "Specify a timezone to use EG America/New_York.",
+                "optional": false
+            },
+            {
+                "name": "SUBFOLDER",
+                "value": "/",
+                "desc": "Specify a subfolder to use with reverse proxies, IE `/subfolder/`",
+                "optional": true
+            }
+        ],
+        "volumes": [
+            {
+                "path": "/config",
+                "host_path": "/path/to/config",
+                "desc": "Users home directory in the container, stores data and application config files.",
+                "optional": false
+            }
+        ],
+        "ports": [
+            {
+                "external": "3000",
+                "internal": "3000",
+                "desc": "Ardour desktop gui",
+                "optional": true
+            },
+            {
+                "external": "3001",
+                "internal": "3001",
+                "desc": "Ardour desktop gui HTTPS",
+                "optional": true
+            }
+        ]
+    }
+}

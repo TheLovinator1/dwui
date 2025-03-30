@@ -1,0 +1,138 @@
+{
+    "name": "librespeed",
+    "initial_date": "2020-01-09",
+    "github_url": "https://github.com/linuxserver/docker-librespeed",
+    "project_url": "https://github.com/librespeed/speedtest",
+    "project_logo": "https://raw.githubusercontent.com/librespeed/speedtest/master/.logo/logo3.png",
+    "description": "librespeed is a very lightweight Speedtest implemented in Javascript, using XMLHttpRequest and Web Workers.  No Flash, No Java, No Websocket, No Bullshit.",
+    "version": "5.4.1-ls228",
+    "version_timestamp": "2025-03-23 10:29:13+00:00",
+    "category": "Monitoring",
+    "stable": true,
+    "deprecated": false,
+    "stars": 82,
+    "monthly_pulls": 27845,
+    "tags": [
+        {
+            "tag": "latest",
+            "desc": "Stable releases"
+        }
+    ],
+    "architectures": [
+        {
+            "arch": "x86_64",
+            "tag": "amd64-latest"
+        },
+        {
+            "arch": "arm64",
+            "tag": "arm64v8-latest"
+        }
+    ],
+    "changelog": [
+        {
+            "date": "2024-06-27",
+            "desc": "Rebase to Alpine 3.20. Existing users should update their nginx confs to avoid http2 deprecation warnings."
+        },
+        {
+            "date": "2023-12-23",
+            "desc": "Rebase to Alpine 3.19 with php 8.3."
+        },
+        {
+            "date": "2023-12-06",
+            "desc": "Replace php mysqli with php pdo_pgsql."
+        }
+    ],
+    "config": {
+        "application_setup": "https://github.com/linuxserver/docker-librespeed?tab=readme-ov-file#application-setup",
+        "env_vars": [
+            {
+                "name": "PUID",
+                "value": "1000",
+                "desc": "User ID",
+                "optional": false
+            },
+            {
+                "name": "PGID",
+                "value": "1000",
+                "desc": "Group ID",
+                "optional": false
+            },
+            {
+                "name": "TZ",
+                "value": "Etc/UTC",
+                "desc": "Timezone",
+                "optional": false
+            },
+            {
+                "name": "PASSWORD",
+                "value": "PASSWORD",
+                "desc": "Set the password for the results database.",
+                "optional": false
+            },
+            {
+                "name": "CUSTOM_RESULTS",
+                "value": "false",
+                "desc": "(optional) set to `true` to enable custom results page in `/config/www/results/index.php`.",
+                "optional": true
+            },
+            {
+                "name": "DB_TYPE",
+                "value": "sqlite",
+                "desc": "Defaults to `sqlite`, can also be set to `mysql` or `postgresql`.",
+                "optional": true
+            },
+            {
+                "name": "DB_NAME",
+                "value": "DB_NAME",
+                "desc": "Database name. Required for mysql and pgsql.",
+                "optional": true
+            },
+            {
+                "name": "DB_HOSTNAME",
+                "value": "DB_HOSTNAME",
+                "desc": "Database address. Required for mysql and pgsql.",
+                "optional": true
+            },
+            {
+                "name": "DB_USERNAME",
+                "value": "DB_USERNAME",
+                "desc": "Database username. Required for mysql and pgsql.",
+                "optional": true
+            },
+            {
+                "name": "DB_PASSWORD",
+                "value": "DB_PASSWORD",
+                "desc": "Database password. Required for mysql and pgsql.",
+                "optional": true
+            },
+            {
+                "name": "DB_PORT",
+                "value": "DB_PORT",
+                "desc": "Database port. Required for mysql.",
+                "optional": true
+            },
+            {
+                "name": "IPINFO_APIKEY",
+                "value": "ACCESS_TOKEN",
+                "desc": "Access token from ipinfo.io. Required for detailed IP information.",
+                "optional": true
+            }
+        ],
+        "volumes": [
+            {
+                "path": "/config",
+                "host_path": "/path/to/librespeed/config",
+                "desc": "Persistent config files",
+                "optional": false
+            }
+        ],
+        "ports": [
+            {
+                "external": "80",
+                "internal": "80",
+                "desc": "web gui",
+                "optional": false
+            }
+        ]
+    }
+}

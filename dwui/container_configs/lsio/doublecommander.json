@@ -1,0 +1,102 @@
+{
+    "name": "doublecommander",
+    "initial_date": "2020-03-25",
+    "github_url": "https://github.com/linuxserver/docker-doublecommander",
+    "project_url": "https://doublecmd.sourceforge.io/",
+    "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/doublecommander-icon.png",
+    "description": "[Double Commander] is a free cross platform open source file manager with two panels side by side. It is inspired by Total Commander and features some new ideas.",
+    "version": "08e913bf-ls246",
+    "version_timestamp": "2025-03-26 20:06:37+00:00",
+    "category": "Administration,Storage",
+    "stable": true,
+    "deprecated": false,
+    "stars": 36,
+    "monthly_pulls": 19713,
+    "tags": [
+        {
+            "tag": "latest",
+            "desc": "Stable releases"
+        }
+    ],
+    "architectures": [
+        {
+            "arch": "x86_64",
+            "tag": "latest"
+        },
+        {
+            "arch": "arm64",
+            "tag": "arm64v8-latest"
+        }
+    ],
+    "changelog": [
+        {
+            "date": "2024-07-05",
+            "desc": "Add rar, 7zip, ace, and arj archive support."
+        },
+        {
+            "date": "2024-02-10",
+            "desc": "Update Readme with new env vars and ingest proper PWA icon, rebase to bookworm."
+        },
+        {
+            "date": "2023-07-05",
+            "desc": "Deprecate armhf. As announced [here](https://www.linuxserver.io/blog/a-farewell-to-arm-hf)"
+        }
+    ],
+    "config": {
+        "application_setup": "https://github.com/linuxserver/docker-doublecommander?tab=readme-ov-file#application-setup",
+        "env_vars": [
+            {
+                "name": "PUID",
+                "value": "1000",
+                "desc": "User ID",
+                "optional": false
+            },
+            {
+                "name": "PGID",
+                "value": "1000",
+                "desc": "Group ID",
+                "optional": false
+            },
+            {
+                "name": "TZ",
+                "value": "Etc/UTC",
+                "desc": "Timezone",
+                "optional": false
+            },
+            {
+                "name": "TZ",
+                "value": "Europe/London",
+                "desc": "Specify a timezone to use EG Europe/London.",
+                "optional": false
+            }
+        ],
+        "volumes": [
+            {
+                "path": "/config",
+                "host_path": "/path/to/config",
+                "desc": "Users home directory in the container, stores program settings.",
+                "optional": false
+            },
+            {
+                "path": "/data",
+                "host_path": "/path/to/data",
+                "desc": "Host data directories, mount as many as needed.",
+                "optional": false
+            }
+        ],
+        "ports": [
+            {
+                "external": "3000",
+                "internal": "3000",
+                "desc": "Double Commander desktop gui.",
+                "optional": false
+            },
+            {
+                "external": "3001",
+                "internal": "3001",
+                "desc": "Double Commander desktop gui HTTPS.",
+                "optional": false
+            }
+        ]
+    }
+}

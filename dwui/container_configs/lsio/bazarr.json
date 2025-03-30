@@ -1,0 +1,82 @@
+{
+    "name": "bazarr",
+    "initial_date": "2018-09-11",
+    "github_url": "https://github.com/linuxserver/docker-bazarr",
+    "project_url": "https://www.bazarr.media/",
+    "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/bazarr.png",
+    "description": "bazarr is a companion application to Sonarr and Radarr. It can manage and download subtitles based on your requirements. You define your preferences by TV show or movie and Bazarr takes care of everything for you.",
+    "version": "v1.5.1-ls297",
+    "version_timestamp": "2025-03-25 21:38:55+00:00",
+    "category": "Media Management",
+    "stable": true,
+    "deprecated": false,
+    "stars": 267,
+    "monthly_pulls": 855024,
+    "tags": [
+        {
+            "tag": "latest",
+            "desc": "Stable releases from Bazarr"
+        },
+        {
+            "tag": "development",
+            "desc": "Pre-releases from Bazarr"
+        }
+    ],
+    "architectures": [
+        {
+            "arch": "x86_64",
+            "tag": "amd64-latest"
+        },
+        {
+            "arch": "arm64",
+            "tag": "arm64v8-latest"
+        }
+    ],
+    "changelog": [
+        {
+            "date": "2024-12-24",
+            "desc": "Rebase to Alpine 3.21."
+        },
+        {
+            "date": "2024-06-24",
+            "desc": "Rebase to Alpine 3.20."
+        },
+        {
+            "date": "2023-12-23",
+            "desc": "Rebase to Alpine 3.19."
+        }
+    ],
+    "config": {
+        "application_setup": "https://github.com/linuxserver/docker-bazarr?tab=readme-ov-file#application-setup",
+        "readonly_supported": true,
+        "nonroot_supported": true,
+        "volumes": [
+            {
+                "path": "/config",
+                "host_path": "/path/to/bazarr/config",
+                "desc": "Persistent config files",
+                "optional": false
+            },
+            {
+                "path": "/movies",
+                "host_path": "/path/to/movies",
+                "desc": "Location of your movies",
+                "optional": true
+            },
+            {
+                "path": "/tv",
+                "host_path": "/path/to/tv",
+                "desc": "Location of your TV Shows",
+                "optional": true
+            }
+        ],
+        "ports": [
+            {
+                "external": "6767",
+                "internal": "6767",
+                "desc": "Allows HTTP access to the internal webserver.",
+                "optional": false
+            }
+        ]
+    }
+}

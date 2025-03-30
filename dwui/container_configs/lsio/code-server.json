@@ -1,0 +1,120 @@
+{
+    "name": "code-server",
+    "initial_date": "2019-06-24",
+    "github_url": "https://github.com/linuxserver/docker-code-server",
+    "project_url": "https://coder.com",
+    "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/code-server-banner.png",
+    "description": "code-server is VS Code running on a remote server, accessible through the browser. - Code on your Chromebook, tablet, and laptop with a consistent dev environment. - If you have a Windows or Mac workstation, more easily develop for Linux. - Take advantage of large cloud servers to speed up tests, compilations, downloads, and more. - Preserve battery life when you're on the go. - All intensive computation runs on your server. - You're no longer running excess instances of Chrome.",
+    "version": "4.98.2-ls261",
+    "version_timestamp": "2025-03-22 20:35:50+00:00",
+    "category": "Programming",
+    "stable": true,
+    "deprecated": false,
+    "stars": 1757,
+    "monthly_pulls": 1291353,
+    "tags": [
+        {
+            "tag": "latest",
+            "desc": "Stable releases"
+        }
+    ],
+    "architectures": [
+        {
+            "arch": "x86_64",
+            "tag": "amd64-latest"
+        },
+        {
+            "arch": "arm64",
+            "tag": "arm64v8-latest"
+        }
+    ],
+    "changelog": [
+        {
+            "date": "2024-10-13",
+            "desc": "Only chown config folder when change to ownership or new install is detected."
+        },
+        {
+            "date": "2024-10-09",
+            "desc": "Manage permissions in /config/.ssh according to file type"
+        },
+        {
+            "date": "2024-08-19",
+            "desc": "Rebase to Ubuntu Noble."
+        }
+    ],
+    "config": {
+        "application_setup": "https://github.com/linuxserver/docker-code-server?tab=readme-ov-file#application-setup",
+        "env_vars": [
+            {
+                "name": "PUID",
+                "value": "1000",
+                "desc": "User ID",
+                "optional": false
+            },
+            {
+                "name": "PGID",
+                "value": "1000",
+                "desc": "Group ID",
+                "optional": false
+            },
+            {
+                "name": "TZ",
+                "value": "Etc/UTC",
+                "desc": "Timezone",
+                "optional": false
+            },
+            {
+                "name": "PASSWORD",
+                "value": "password",
+                "desc": "Optional web gui password, if `PASSWORD` or `HASHED_PASSWORD` is not provided, there will be no auth.",
+                "optional": true
+            },
+            {
+                "name": "HASHED_PASSWORD",
+                "value": "",
+                "desc": "Optional web gui password, overrides `PASSWORD`, instructions on how to create it is below.",
+                "optional": true
+            },
+            {
+                "name": "SUDO_PASSWORD",
+                "value": "password",
+                "desc": "If this optional variable is set, user will have sudo access in the code-server terminal with the specified password.",
+                "optional": true
+            },
+            {
+                "name": "SUDO_PASSWORD_HASH",
+                "value": "",
+                "desc": "Optionally set sudo password via hash (takes priority over `SUDO_PASSWORD` var). Format is `$type$salt$hashed`.",
+                "optional": true
+            },
+            {
+                "name": "PROXY_DOMAIN",
+                "value": "code-server.my.domain",
+                "desc": "If this optional variable is set, this domain will be proxied for subdomain proxying. See [Documentation](https://github.com/coder/code-server/blob/main/docs/guide.md#using-a-subdomain)",
+                "optional": true
+            },
+            {
+                "name": "DEFAULT_WORKSPACE",
+                "value": "/config/workspace",
+                "desc": "If this optional variable is set, code-server will open this directory by default",
+                "optional": true
+            }
+        ],
+        "volumes": [
+            {
+                "path": "/config",
+                "host_path": "/path/to/code-server/config",
+                "desc": "Contains all relevant configuration files.",
+                "optional": false
+            }
+        ],
+        "ports": [
+            {
+                "external": "8443",
+                "internal": "8443",
+                "desc": "web gui",
+                "optional": false
+            }
+        ]
+    }
+}

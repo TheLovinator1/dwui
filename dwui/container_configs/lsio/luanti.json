@@ -1,0 +1,82 @@
+{
+    "name": "luanti",
+    "initial_date": "2025-01-30",
+    "github_url": "https://github.com/linuxserver/docker-luanti",
+    "project_url": "https://www.luanti.org/",
+    "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/minetest-icon.png",
+    "description": "luanti (formerly Minetest) is an open source voxel game-creation platform with easy modding and game creation",
+    "version": "5.11.0-ls8",
+    "version_timestamp": "2025-03-23 22:06:45+00:00",
+    "category": "Games",
+    "stable": true,
+    "deprecated": false,
+    "stars": 6,
+    "monthly_pulls": 573,
+    "tags": [
+        {
+            "tag": "latest",
+            "desc": "Stable releases"
+        }
+    ],
+    "architectures": [
+        {
+            "arch": "x86_64",
+            "tag": "amd64-latest"
+        },
+        {
+            "arch": "arm64",
+            "tag": "arm64v8-latest"
+        }
+    ],
+    "changelog": [
+        {
+            "date": "2025-01-30",
+            "desc": "Initial Release."
+        }
+    ],
+    "config": {
+        "application_setup": "https://github.com/linuxserver/docker-luanti?tab=readme-ov-file#application-setup",
+        "env_vars": [
+            {
+                "name": "PUID",
+                "value": "1000",
+                "desc": "User ID",
+                "optional": false
+            },
+            {
+                "name": "PGID",
+                "value": "1000",
+                "desc": "Group ID",
+                "optional": false
+            },
+            {
+                "name": "TZ",
+                "value": "Etc/UTC",
+                "desc": "Timezone",
+                "optional": false
+            },
+            {
+                "name": "CLI_ARGS",
+                "value": "--gameid devtest",
+                "desc": "Optionally specify any [CLI variables](https://wiki.luanti.net/Command_line) you want to launch the app with",
+                "optional": true
+            }
+        ],
+        "volumes": [
+            {
+                "path": "/config/.minetest",
+                "host_path": "/path/to/luanti/data",
+                "desc": "Where luanti stores config files and maps etc.",
+                "optional": false
+            }
+        ],
+        "ports": [
+            {
+                "external": "30000",
+                "internal": "30000/udp",
+                "desc": "Port Luanti listens on (UDP).",
+                "optional": false
+            }
+        ]
+    }
+}

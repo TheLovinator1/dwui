@@ -1,0 +1,94 @@
+{
+    "name": "your_spotify",
+    "initial_date": "2023-01-23",
+    "github_url": "https://github.com/linuxserver/docker-your_spotify",
+    "project_url": "https://github.com/Yooooomi/your_spotify",
+    "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/your_spotify-logo.png",
+    "description": "your_spotify is a self-hosted application that tracks what you listen and offers you a dashboard to explore statistics about it! It's composed of a web server which polls the Spotify API every now and then and a web application on which you can explore your statistics.",
+    "version": "1.12.0-ls112",
+    "version_timestamp": "2025-03-19 19:24:41+00:00",
+    "category": "Music",
+    "stable": true,
+    "deprecated": false,
+    "stars": 28,
+    "monthly_pulls": 19424,
+    "tags": [
+        {
+            "tag": "latest",
+            "desc": "Stable releases"
+        }
+    ],
+    "architectures": [
+        {
+            "arch": "x86_64",
+            "tag": "amd64-latest"
+        },
+        {
+            "arch": "arm64",
+            "tag": "arm64v8-latest"
+        }
+    ],
+    "changelog": [
+        {
+            "date": "2024-12-20",
+            "desc": "Rebase to Alpine 3.21."
+        },
+        {
+            "date": "2024-05-27",
+            "desc": "Existing users should update their nginx confs to avoid http2 deprecation warnings."
+        },
+        {
+            "date": "2024-05-24",
+            "desc": "Rebase to Alpine 3.20."
+        }
+    ],
+    "config": {
+        "application_setup": "https://github.com/linuxserver/docker-your_spotify?tab=readme-ov-file#application-setup",
+        "env_vars": [
+            {
+                "name": "APP_URL",
+                "value": "http://localhost",
+                "desc": "The protocol and hostname where the app will be accessed.",
+                "optional": false
+            },
+            {
+                "name": "SPOTIFY_PUBLIC",
+                "value": "",
+                "desc": "Your Spotify application client ID.",
+                "optional": false
+            },
+            {
+                "name": "SPOTIFY_SECRET",
+                "value": "",
+                "desc": "Your Spotify application secret.",
+                "optional": false
+            },
+            {
+                "name": "CORS",
+                "value": "http://localhost:80,https://localhost:443",
+                "desc": "Allowed CORS sources, set to `all` to allow any source.",
+                "optional": false
+            },
+            {
+                "name": "MONGO_ENDPOINT",
+                "value": "mongodb://mongo:27017/your_spotify",
+                "desc": "Set mongodb endpoint address/port.",
+                "optional": false
+            }
+        ],
+        "ports": [
+            {
+                "external": "80",
+                "internal": "80",
+                "desc": "your_spotify HTTP webui",
+                "optional": false
+            },
+            {
+                "external": "443",
+                "internal": "443",
+                "desc": "your_spotify HTTPS webui",
+                "optional": false
+            }
+        ]
+    }
+}

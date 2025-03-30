@@ -1,0 +1,96 @@
+{
+    "name": "dokuwiki",
+    "initial_date": "2019-05-28",
+    "github_url": "https://github.com/linuxserver/docker-dokuwiki",
+    "project_url": "https://www.dokuwiki.org/dokuwiki/",
+    "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/dokuwiki-icon.png",
+    "description": "dokuwiki is a simple to use and highly versatile Open Source wiki software that doesn't require a database. It is loved by users for its clean and readable syntax. The ease of maintenance, backup and integration makes it an administrator's favorite. Built in access controls and authentication connectors make DokuWiki especially useful in the enterprise context and the large number of plugins contributed by its vibrant community allow for a broad range of use cases beyond a traditional wiki.",
+    "version": "2024-02-06b-ls261",
+    "version_timestamp": "2025-03-21 15:51:30+00:00",
+    "category": "Content Management",
+    "stable": true,
+    "deprecated": false,
+    "stars": 119,
+    "monthly_pulls": 12940,
+    "tags": [
+        {
+            "tag": "latest",
+            "desc": "Stable releases"
+        }
+    ],
+    "architectures": [
+        {
+            "arch": "x86_64",
+            "tag": "amd64-latest"
+        },
+        {
+            "arch": "arm64",
+            "tag": "arm64v8-latest"
+        }
+    ],
+    "changelog": [
+        {
+            "date": "2024-05-31",
+            "desc": "Rebase to Alpine 3.20. Existing users should update their nginx confs to avoid http2 deprecation warnings."
+        },
+        {
+            "date": "2024-01-23",
+            "desc": "Rebase to Alpine 3.19 with php 8.3."
+        },
+        {
+            "date": "2023-12-25",
+            "desc": "Existing users should update: site-confs/default.conf - Cleanup default site conf."
+        }
+    ],
+    "config": {
+        "application_setup": "https://github.com/linuxserver/docker-dokuwiki?tab=readme-ov-file#application-setup",
+        "env_vars": [
+            {
+                "name": "PUID",
+                "value": "1000",
+                "desc": "User ID",
+                "optional": false
+            },
+            {
+                "name": "PGID",
+                "value": "1000",
+                "desc": "Group ID",
+                "optional": false
+            },
+            {
+                "name": "TZ",
+                "value": "Etc/UTC",
+                "desc": "Timezone",
+                "optional": false
+            },
+            {
+                "name": "APP_URL",
+                "value": "/dokuwiki",
+                "desc": "Specify an APP_URL to append to your root location, helpful for subfolder reverse proxy setups.  Does not take effect until after first restart following setup.",
+                "optional": true
+            }
+        ],
+        "volumes": [
+            {
+                "path": "/config",
+                "host_path": "/path/to/dokuwiki/config",
+                "desc": "Persistent config files",
+                "optional": false
+            }
+        ],
+        "ports": [
+            {
+                "external": "80",
+                "internal": "80",
+                "desc": "Application HTTP Port",
+                "optional": false
+            },
+            {
+                "external": "443",
+                "internal": "443",
+                "desc": "#optional Application HTTPS Port",
+                "optional": true
+            }
+        ]
+    }
+}

@@ -1,0 +1,106 @@
+{
+    "name": "manyfold",
+    "initial_date": "2024-07-23",
+    "github_url": "https://github.com/linuxserver/docker-manyfold",
+    "project_url": "https://github.com/manyfold3d/manyfold/",
+    "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/manyfold-logo.png",
+    "description": "manyfold  is an open source, self-hosted web application for managing a collection of 3D models, particularly focused on 3D printing.",
+    "version": "v0.105.0-ls69",
+    "version_timestamp": "2025-03-24 11:09:04+00:00",
+    "category": "3D Printing",
+    "stable": true,
+    "deprecated": false,
+    "stars": 3,
+    "monthly_pulls": 2852,
+    "tags": [
+        {
+            "tag": "latest",
+            "desc": "Stable releases"
+        }
+    ],
+    "architectures": [
+        {
+            "arch": "x86_64",
+            "tag": "amd64-latest"
+        },
+        {
+            "arch": "arm64",
+            "tag": "arm64v8-latest"
+        }
+    ],
+    "changelog": [
+        {
+            "date": "2025-01-12",
+            "desc": "Rebase to Alpine 3.21."
+        },
+        {
+            "date": "2024-07-23",
+            "desc": "Initial Release."
+        }
+    ],
+    "config": {
+        "application_setup": "https://github.com/linuxserver/docker-manyfold?tab=readme-ov-file#application-setup",
+        "readonly_supported": false,
+        "nonroot_supported": false,
+        "env_vars": [
+            {
+                "name": "PUID",
+                "value": "1000",
+                "desc": "User ID",
+                "optional": false
+            },
+            {
+                "name": "PGID",
+                "value": "1000",
+                "desc": "Group ID",
+                "optional": false
+            },
+            {
+                "name": "TZ",
+                "value": "Etc/UTC",
+                "desc": "Timezone",
+                "optional": false
+            },
+            {
+                "name": "DATABASE_URL",
+                "value": "",
+                "desc": "Database connection URL. For sqlite use `sqlite3:/config/manyfold.sqlite3`. For postgres or mariadb use `<scheme>://<username>:<password>@<hostname>:<port>/<db name>` where `<scheme>` is `postgresql` or `mysql2`. Special characters in username/password must be [URL encoded](https://en.wikipedia.org/wiki/Percent-encoding).",
+                "optional": false
+            },
+            {
+                "name": "REDIS_URL",
+                "value": "",
+                "desc": "Redis/Valkey database URL in `redis://<hostname>:<port>/<db number>` format.",
+                "optional": false
+            },
+            {
+                "name": "SECRET_KEY_BASE",
+                "value": "",
+                "desc": "Browser session secret. Changing it will terminate all active browser sessions.",
+                "optional": false
+            }
+        ],
+        "volumes": [
+            {
+                "path": "/config",
+                "host_path": "/path/to/manyfold/config",
+                "desc": "Persistent storage for application configuration data.",
+                "optional": false
+            },
+            {
+                "path": "/libraries",
+                "host_path": "/path/to/libraries",
+                "desc": "Location of your 3D model libraries.",
+                "optional": true
+            }
+        ],
+        "ports": [
+            {
+                "external": "3214",
+                "internal": "3214",
+                "desc": "Port for web frontend",
+                "optional": false
+            }
+        ]
+    }
+}

@@ -1,0 +1,119 @@
+{
+    "name": "syncthing",
+    "initial_date": "2015-09-24",
+    "github_url": "https://github.com/linuxserver/docker-syncthing",
+    "project_url": "https://syncthing.net",
+    "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/syncthing-banner.png",
+    "description": "syncthing replaces proprietary sync and cloud services with something open, trustworthy and decentralized. Your data is your data alone and you deserve to choose where it is stored, if it is shared with some third party and how it's transmitted over the Internet.",
+    "version": "v1.29.3-ls178",
+    "version_timestamp": "2025-03-29 02:18:04+00:00",
+    "category": "Backup",
+    "stable": true,
+    "deprecated": false,
+    "stars": 318,
+    "monthly_pulls": 163919,
+    "tags": [
+        {
+            "tag": "latest",
+            "desc": "Stable releases"
+        }
+    ],
+    "architectures": [
+        {
+            "arch": "x86_64",
+            "tag": "amd64-latest"
+        },
+        {
+            "arch": "arm64",
+            "tag": "arm64v8-latest"
+        }
+    ],
+    "changelog": [
+        {
+            "date": "2024-03-12",
+            "desc": "Rebase to Alpine 3.21."
+        },
+        {
+            "date": "2024-06-06",
+            "desc": "Rebase to Alpine 3.20."
+        },
+        {
+            "date": "2024-03-05",
+            "desc": "Rebase to Alpine 3.19."
+        }
+    ],
+    "config": {
+        "application_setup": "https://github.com/linuxserver/docker-syncthing?tab=readme-ov-file#application-setup",
+        "hostname": {
+            "hostname": "syncthing",
+            "desc": "Optionally the hostname can be defined.",
+            "optional": true
+        },
+        "env_vars": [
+            {
+                "name": "PUID",
+                "value": "1000",
+                "desc": "User ID",
+                "optional": false
+            },
+            {
+                "name": "PGID",
+                "value": "1000",
+                "desc": "Group ID",
+                "optional": false
+            },
+            {
+                "name": "TZ",
+                "value": "Etc/UTC",
+                "desc": "Timezone",
+                "optional": false
+            }
+        ],
+        "volumes": [
+            {
+                "path": "/config",
+                "host_path": "/path/to/syncthing/config",
+                "desc": "Configuration files.",
+                "optional": false
+            },
+            {
+                "path": "/data1",
+                "host_path": "/path/to/data1",
+                "desc": "Data1",
+                "optional": false
+            },
+            {
+                "path": "/data2",
+                "host_path": "/path/to/data2",
+                "desc": "Data2",
+                "optional": false
+            }
+        ],
+        "ports": [
+            {
+                "external": "8384",
+                "internal": "8384",
+                "desc": "Application WebUI",
+                "optional": false
+            },
+            {
+                "external": "22000",
+                "internal": "22000/tcp",
+                "desc": "Listening port (TCP)",
+                "optional": false
+            },
+            {
+                "external": "22000",
+                "internal": "22000/udp",
+                "desc": "Listening port (UDP)",
+                "optional": false
+            },
+            {
+                "external": "21027",
+                "internal": "21027/udp",
+                "desc": "Protocol discovery",
+                "optional": false
+            }
+        ]
+    }
+}

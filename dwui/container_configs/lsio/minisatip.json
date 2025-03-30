@@ -1,0 +1,110 @@
+{
+    "name": "minisatip",
+    "initial_date": "2016-08-15",
+    "github_url": "https://github.com/linuxserver/docker-minisatip",
+    "project_url": "https://github.com/catalinii/minisatip",
+    "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/minisatip-icon.png",
+    "description": "minisatip is a multi-threaded satip server version 1.2 that runs under Linux and it was tested with DVB-S, DVB-S2, DVB-T, DVB-T2, DVB-C, DVB-C2, ATSC and ISDB-T cards.",
+    "version": "v1.3.47-ls534",
+    "version_timestamp": "2025-03-25 09:29:52+00:00",
+    "category": "Media Tools",
+    "stable": true,
+    "deprecated": false,
+    "stars": 15,
+    "monthly_pulls": 248,
+    "tags": [
+        {
+            "tag": "latest",
+            "desc": "Stable releases"
+        }
+    ],
+    "architectures": [
+        {
+            "arch": "x86_64",
+            "tag": "amd64-latest"
+        },
+        {
+            "arch": "arm64",
+            "tag": "arm64v8-latest"
+        }
+    ],
+    "changelog": [
+        {
+            "date": "2024-06-30",
+            "desc": "Rebase to Alpine 3.20."
+        },
+        {
+            "date": "2023-12-08",
+            "desc": "Rebase to Alpine 3.19, switch to building from releases rather than commits."
+        },
+        {
+            "date": "2023-07-26",
+            "desc": "Build with DDCI=1 for Digital Devices CI support."
+        }
+    ],
+    "config": {
+        "application_setup": "https://github.com/linuxserver/docker-minisatip?tab=readme-ov-file#application-setup",
+        "env_vars": [
+            {
+                "name": "PUID",
+                "value": "1000",
+                "desc": "User ID",
+                "optional": false
+            },
+            {
+                "name": "PGID",
+                "value": "1000",
+                "desc": "Group ID",
+                "optional": false
+            },
+            {
+                "name": "TZ",
+                "value": "Etc/UTC",
+                "desc": "Timezone",
+                "optional": false
+            },
+            {
+                "name": "RUN_OPTS",
+                "value": "",
+                "desc": "Specify specific run params for minisatip",
+                "optional": false
+            }
+        ],
+        "volumes": [
+            {
+                "path": "/config",
+                "host_path": "/path/to/minisatip/config",
+                "desc": "Configuration files and minisatip data",
+                "optional": false
+            }
+        ],
+        "ports": [
+            {
+                "external": "8875",
+                "internal": "8875",
+                "desc": "Status Page WebUI",
+                "optional": false
+            },
+            {
+                "external": "554",
+                "internal": "554",
+                "desc": "RTSP Port",
+                "optional": false
+            },
+            {
+                "external": "1900",
+                "internal": "1900/udp",
+                "desc": "App Discovery",
+                "optional": false
+            }
+        ],
+        "devices": [
+            {
+                "path": "/dev/dvb",
+                "host_path": "/dev/dvb",
+                "desc": "For passing through Tv-cards",
+                "optional": false
+            }
+        ]
+    }
+}

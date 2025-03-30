@@ -23,8 +23,6 @@ class DockerClient:
             docker.DockerClient: The Docker client.""
         """
         self.client: docker.DockerClient = docker.from_env()
-        logger.info("Docker client created.")
-        logger.debug("Docker client: %s", self.client)
         return self.client
 
     def __exit__(self, exc_type: object, exc_value: BaseException | None, traceback: types.TracebackType | None) -> None:
@@ -38,9 +36,5 @@ class DockerClient:
         if exc_value:
             msg = "An error occurred while using the Docker client."
             logger.error(msg, exc_info=(type(exc_value), exc_value, traceback) if exc_value else None)
-
-        logger.info("Closing Docker client.")
-        if hasattr(self, "client") and isinstance(self.client, docker.DockerClient):
-            logger.debug("Docker client: %s", self.client)
 
         self.client.close()

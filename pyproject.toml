@@ -30,7 +30,11 @@ dependencies = [
 ]
 
 [dependency-groups]
-dev = ["django-debug-toolbar>=5.0.1", "pytest-django>=4.10.0"]
+dev = [
+    "django-debug-toolbar>=5.0.1",
+    "pytest-django>=4.10.0",
+    "pytest-mock>=3.14.0",
+]
 
 [tool.ruff]
 preview = true

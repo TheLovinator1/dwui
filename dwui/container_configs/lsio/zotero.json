@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-zotero",
     "project_url": "https://www.zotero.org/",
     "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/zotero-icon.png",
-    "description": "[Zotero] is a free, easy-to-use tool to help you collect, organize, annotate, cite, and share research.",
+    "description": "Free, easy-to-use tool to help you collect, organize, annotate, cite, and share research.",
     "version": "7.0.15-ls70",
     "version_timestamp": "2025-03-28 07:11:33+00:00",
     "category": "Documents",

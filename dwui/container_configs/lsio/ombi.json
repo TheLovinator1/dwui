@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-ombi",
     "project_url": "https://ombi.io",
     "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/ombi.png",
-    "description": "ombi allows you to host your own Plex Request and user management system. If you are sharing your Plex server with other users, allow them to request new content using an easy to manage interface! Manage all your requests for Movies and TV with ease, leave notes for the user and get notification when a user requests something. Allow your users to post issues against their requests so you know there is a problem with the audio etc. Even automatically send them weekly newsletters of new content that has been added to your Plex server!",
+    "description": "The seamless way for your Plex and Emby users to request new content. Ombi integrates with your media server and automatically manages user requests.",
     "version": "v4.47.1-ls216",
     "version_timestamp": "2025-03-22 22:44:26+00:00",
     "category": "Media Requesters",

@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-doublecommander",
     "project_url": "https://doublecmd.sourceforge.io/",
     "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/doublecommander-icon.png",
-    "description": "[Double Commander] is a free cross platform open source file manager with two panels side by side. It is inspired by Total Commander and features some new ideas.",
+    "description": "File manager with two panels side by side. It is inspired by Total Commander and features some new ideas.",
     "version": "08e913bf-ls246",
     "version_timestamp": "2025-03-26 20:06:37+00:00",
     "category": "Administration,Storage",

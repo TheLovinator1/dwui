@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-vscodium",
     "project_url": "https://vscodium.com/",
     "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/vscodium-icon.png",
-    "description": "[VSCodium] is a community-driven, freely-licensed binary distribution of Microsoft\u2019s editor VS Code.",
+    "description": "Community-driven, freely-licensed binary distribution of Microsoft\u2019s editor VS Code.",
     "version": "1.98.2.25078-ls167",
     "version_timestamp": "2025-03-26 04:59:58+00:00",
     "category": "Programming",

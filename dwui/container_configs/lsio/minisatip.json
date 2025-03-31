@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-minisatip",
     "project_url": "https://github.com/catalinii/minisatip",
     "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/minisatip-icon.png",
-    "description": "minisatip is a multi-threaded satip server version 1.2 that runs under Linux and it was tested with DVB-S, DVB-S2, DVB-T, DVB-T2, DVB-C, DVB-C2, ATSC and ISDB-T cards.",
+    "description": "SAT>IP server for linux using local DVB-S2, DVB-C, DVB-T or ATSC cards.",
     "version": "v1.3.47-ls534",
     "version_timestamp": "2025-03-25 09:29:52+00:00",
     "category": "Media Tools",

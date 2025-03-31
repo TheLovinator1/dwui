@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-kali-linux",
     "project_url": "https://github.com/linuxserver/docker-kali-linux",
     "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/kali-logo.png",
-    "description": "kali-linux - is an Advanced Penetration Testing Linux distribution used for Penetration Testing, Ethical Hacking and network security assessments. KALI LINUX \u2122 is a trademark of OffSec.",
+    "description": "Web accessible Kali Linux with a KDE interface.",
     "version": "ff17a2a9-ls34",
     "version_timestamp": "2025-02-17 11:52:23+00:00",
     "category": "Remote Desktop,Security",

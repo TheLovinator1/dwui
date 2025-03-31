@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-mariadb",
     "project_url": "https://mariadb.org/",
     "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/mariadb-git.png",
-    "description": "mariadb is one of the most popular database servers. Made by the original developers of MySQL.",
+    "description": "Fork of MySQL.",
     "version": "11.4.5-r0-ls178",
     "version_timestamp": "2025-03-25 07:50:33+00:00",
     "category": "Databases",

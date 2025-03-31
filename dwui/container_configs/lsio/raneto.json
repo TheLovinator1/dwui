@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-raneto",
     "project_url": "http://raneto.com/",
     "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/raneto-logo.png",
-    "description": "raneto - is an open source Knowledgebase platform that uses static Markdown files to power your Knowledgebase.",
+    "description": "Markdown powered knowledgebase",
     "version": "0.17.8-ls171",
     "version_timestamp": "2025-03-22 21:59:32+00:00",
     "category": "Content Management",

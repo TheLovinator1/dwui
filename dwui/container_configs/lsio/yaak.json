@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-yaak",
     "project_url": "https://yaak.app/",
     "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/yaak-logo.png",
-    "description": "yaak is a desktop API client for organizing and executing REST, GraphQL, and gRPC requests. It's built using [Tauri](https://tauri.app/), [Rust](https://www.rust-lang.org/), and [ReactJS](https://react.dev/).",
+    "description": "Desktop API client for organizing and executing REST, GraphQL, and gRPC requests. It's built using [Tauri](https://tauri.app/), [Rust](https://www.rust-lang.org/), and [ReactJS](https://react.dev/).",
     "version": "v2025.1.2-ls43",
     "version_timestamp": "2025-03-25 05:02:12+00:00",
     "category": "Programming",

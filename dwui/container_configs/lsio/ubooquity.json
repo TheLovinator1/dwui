@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-ubooquity",
     "project_url": "https://vaemendis.net/ubooquity/",
     "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/ubooquity-banner.png",
-    "description": "ubooquity is a free, lightweight and easy-to-use home server for your comics and ebooks. Use it to access your files from anywhere, with a tablet, an e-reader, a phone or a computer.",
+    "description": "Free, lightweight and easy-to-use home server for your comics and ebooks. Use it to access your files from anywhere, with a tablet, an e-reader, a phone or a computer.",
     "version": "2.1.5-ls54",
     "version_timestamp": "2025-02-18 22:41:15+00:00",
     "category": "Books",

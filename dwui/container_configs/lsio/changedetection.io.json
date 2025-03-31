@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-changedetection.io",
     "project_url": "https://github.com/dgtlmoon/changedetection.io",
     "project_logo": "https://github.com/linuxserver/docker-templates/raw/master/linuxserver.io/img/changedetection-icon.png",
-    "description": "changedetection.io provides free, open-source web page monitoring, notification and change detection.",
+    "description": "Detect website content changes and perform meaningful actions - trigger notifications via Discord, Email, Slack, Telegram, API calls and many more.",
     "version": "0.49.9-ls178",
     "version_timestamp": "2025-03-26 15:56:24+00:00",
     "category": "Web Tools,Automation",

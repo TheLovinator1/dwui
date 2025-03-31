@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-librewolf",
     "project_url": "https://librewolf.net/",
     "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/librewolf-logo.png",
-    "description": "[LibreWolf] is a custom and independent version of Firefox, with the primary goals of privacy, security and user freedom. LibreWolf also aims to remove all the telemetry, data collection and annoyances, as well as disabling anti-freedom features like DRM.",
+    "description": "A custom version of Firefox, focused on privacy, security and freedom.",
     "version": "136.0.4-1-ls50",
     "version_timestamp": "2025-03-27 23:14:55+00:00",
     "category": "Web Browser",

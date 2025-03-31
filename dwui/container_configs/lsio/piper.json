@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-piper",
     "project_url": "https://github.com/rhasspy/piper/",
     "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/piper-logo.png",
-    "description": "piper is a fast, local neural text to speech system that sounds great and is optimized for the Raspberry Pi 4. This container provides a Wyoming protocol server for Piper.",
+    "description": "Local neural text to speech system that sounds great and is optimized for the Raspberry Pi 4. This container provides a Wyoming protocol server for Piper.",
     "version": "1.4.0-ls55",
     "version_timestamp": "2025-03-24 09:04:51+00:00",
     "category": "Machine Learning",

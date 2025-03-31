@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-opera",
     "project_url": "https://www.opera.com/",
     "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/opera-icon.png",
-    "description": "[Opera] is a multi-platform web browser developed by its namesake company Opera. The browser is based on Chromium, but distinguishes itself from other Chromium-based browsers (Chrome, Edge, etc.) through its user interface and other features.",
+    "description": "Web browser based on Chromium.",
     "version": "117.0.5408.163-ls140",
     "version_timestamp": "2025-03-27 12:09:10+00:00",
     "category": "Web Browser",

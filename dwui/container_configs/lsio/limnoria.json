@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-limnoria",
     "project_url": "https://github.com/ProgVal/limnoria",
     "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/limnoria-icon.png",
-    "description": "limnoria A robust, full-featured, and user/programmer-friendly Python IRC bot, with many existing plugins. Successor of the well-known Supybot.",
+    "description": "A robust, full-featured, and user/programmer-friendly Python IRC bot, with many existing plugins.",
     "version": "2024.12.20-ls206",
     "version_timestamp": "2025-03-28 18:58:12+00:00",
     "category": "IRC",

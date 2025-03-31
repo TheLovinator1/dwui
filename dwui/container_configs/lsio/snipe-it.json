@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-snipe-it",
     "project_url": "https://github.com/snipe/snipe-it",
     "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/snipe-it-logo.png",
-    "description": "snipe-it makes asset management easy. It was built by people solving real-world IT and asset management problems, and a solid UX has always been a top priority. Straightforward design and bulk actions mean getting things done faster.",
+    "description": "IT asset/license management system.",
     "version": "v8.0.4-ls321",
     "version_timestamp": "2025-03-17 20:43:30+00:00",
     "category": "Administration",

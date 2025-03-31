@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-transmission",
     "project_url": "https://www.transmissionbt.com/",
     "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/transmission.png",
-    "description": "transmission is designed for easy, powerful use. Transmission has the features you want from a BitTorrent client: encryption, a web interface, peer exchange, magnet links, DHT, \u00b5TP, UPnP and NAT-PMP port forwarding, webseed support, watch directories, tracker editing, global and per-torrent speed limits, and more.",
+    "description": "BitTorrent client: encryption, a web interface, peer exchange, magnet links, DHT, \u00b5TP, UPnP and NAT-PMP port forwarding, webseed support, watch directories, tracker editing, global and per-torrent speed limits, and more.",
     "version": "4.0.6-r3-ls287",
     "version_timestamp": "2025-03-18 10:44:48+00:00",
     "category": "Downloaders",

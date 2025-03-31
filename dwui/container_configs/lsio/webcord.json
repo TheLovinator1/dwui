@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-webcord",
     "project_url": "https://github.com/SpacingBat3/WebCord",
     "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/webcord-icon.png",
-    "description": "[WebCord] can be summarized as a pack of security and privacy hardenings, Discord features reimplementations, Electron / Chromium / Discord bugs workarounds, stylesheets, internal pages and wrapped https://discord.com page, designed to conform with ToS as much as it is possible (or hide the changes that might violate it from Discord's eyes).",
+    "description": "A Discord client implemented directly without Discord API.",
     "version": "v4.10.4-ls120",
     "version_timestamp": "2025-03-27 04:15:06+00:00",
     "category": "Chat",

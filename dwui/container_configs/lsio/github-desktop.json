@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-github-desktop",
     "project_url": "https://desktop.github.com/",
     "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/github-desktop-icon.png",
-    "description": "[Github Desktop] is an open source Electron-based GitHub app. It is written in TypeScript and uses React.",
+    "description": "GUI Git client that simplifies your development workflow. Attribute commits with collaborators easily. Quickly add co-authors to your commit.",
     "version": "release-3.4.13-linux1-ls133",
     "version_timestamp": "2025-03-22 22:27:04+00:00",
     "category": "Programming",

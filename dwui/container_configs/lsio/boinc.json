@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-boinc",
     "project_url": "https://boinc.berkeley.edu/",
     "project_logo": "https://raw.githubusercontent.com/BOINC/boinc/master/doc/logo/boinc_logo_black.jpg",
-    "description": "[BOINC] is a platform for high-throughput computing on a large scale (thousands or millions of computers). It can be used for volunteer computing (using consumer devices) or grid computing (using organizational resources). It supports virtualized, parallel, and GPU-based applications.",
+    "description": "Software for volunteer computing and grid computing.",
     "version": "8.0.4dfsg202502052140ubuntu24.04.1-ls62",
     "version_timestamp": "2025-03-25 12:05:50+00:00",
     "category": "Science",

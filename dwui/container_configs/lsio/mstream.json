@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-mstream",
     "project_url": "https://mstream.io/",
     "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/mstream-icon.png",
-    "description": "mstream is a personal music streaming server. You can use mStream to stream your music from your home computer to any device, anywhere.  There are mobile apps available for both Android and iPhone.",
+    "description": "Personal music streaming server. You can use mStream to stream your music from your home computer to any device, anywhere.  There are mobile apps available for both Android and iPhone.",
     "version": "v5.13.1-ls200",
     "version_timestamp": "2025-02-26 06:44:32+00:00",
     "category": "Media Servers,Music",

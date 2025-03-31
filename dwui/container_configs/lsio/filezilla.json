@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-filezilla",
     "project_url": "https://filezilla-project.org/",
     "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/filezilla-logo.png",
-    "description": "[FIleZilla] Client is a fast and reliable cross-platform FTP, FTPS and SFTP client with lots of useful features and an intuitive graphical user interface.",
+    "description": "FTP, FTPS and SFTP client with lots of useful features and an intuitive graphical user interface.",
     "version": "3.68.1-r0-ls186",
     "version_timestamp": "2025-03-24 19:33:29+00:00",
     "category": "FTP",

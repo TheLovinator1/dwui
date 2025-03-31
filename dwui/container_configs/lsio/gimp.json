@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-gimp",
     "project_url": "https://www.gimp.org/",
     "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/gimp-logo.png",
-    "description": "[GIMP] is a free and open-source raster graphics editor used for image manipulation (retouching) and image editing, free-form drawing, transcoding between different image file formats, and more specialized tasks. It is extensible by means of plugins, and scriptable.",
+    "description": "Image manipulation program commonly used for photo retouching, image editing, free-hand drawing, and converting between different image file formats.",
     "version": "2.10.38-r3-ls69",
     "version_timestamp": "2025-03-25 05:51:58+00:00",
     "category": "Image Editor",

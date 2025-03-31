@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-resilio-sync",
     "project_url": "https://www.resilio.com/individuals/",
     "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/resilio-sync-logo.png",
-    "description": "resilio-sync (formerly BitTorrent Sync) uses the BitTorrent protocol to sync files and folders between all of your devices. There are both free and paid versions, this container supports both. There is an official sync image but we created this one as it supports user mapping to simplify permissions for volumes.",
+    "description": "Personal file sync and share powered by P2P.",
     "version": "3.0.3.1065-1-ls207",
     "version_timestamp": "2025-03-24 23:40:51+00:00",
     "category": "Backup",

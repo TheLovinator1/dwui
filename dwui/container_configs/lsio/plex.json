@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-plex",
     "project_url": "https://plex.tv",
     "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/plex-logo.png",
-    "description": "plex organizes video, music and photos from personal media libraries and streams them to smart TVs, streaming boxes and mobile devices. This container is packaged as a standalone Plex Media Server. Straightforward design and bulk actions mean getting things done faster.",
+    "description": "Stream movies, television shows, and music from your computer to your TV, tablet, or phone.",
     "version": "1.41.5.9522-a96edc606-ls260",
     "version_timestamp": "2025-03-24 09:35:47+00:00",
     "category": "Media Servers,Music,Audiobooks",

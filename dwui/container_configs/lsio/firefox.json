@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-firefox",
     "project_url": "https://www.mozilla.org/en-US/firefox/",
     "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/firefox-logo.png",
-    "description": "[Firefox] Browser, also known as Mozilla Firefox or simply Firefox, is a free and open-source web browser developed by the Mozilla Foundation and its subsidiary, the Mozilla Corporation. Firefox uses the Gecko layout engine to render web pages, which implements current and anticipated web standards.",
+    "description": "Web browser developed by the Mozilla Foundation and its subsidiary, the Mozilla Corporation.",
     "version": "136.0.4build1-0ubuntu0.24.04.1mt1-ls228",
     "version_timestamp": "2025-03-28 16:59:04+00:00",
     "category": "Web Browser",

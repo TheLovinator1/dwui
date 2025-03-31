@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-emby",
     "project_url": "https://emby.media/",
     "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/emby-logo.png",
-    "description": "emby organizes video, music, live TV, and photos from personal media libraries and streams them to smart TVs, streaming boxes and mobile devices. This container is packaged as a standalone emby Media Server.",
+    "description": "Media server designed to organize, play, and stream audio and video to a variety of devices.",
     "version": "4.8.11.0-ls237",
     "version_timestamp": "2025-03-20 21:35:17+00:00",
     "category": "Media Servers,Music,Audiobooks",

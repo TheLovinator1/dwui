@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-inkscape",
     "project_url": "https://inkscape.org/",
     "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/inkscape-logo.png",
-    "description": "[Inkscape] is professional quality vector graphics software which runs on Linux, Mac OS X and Windows desktop computers.",
+    "description": "Vector graphics editor. It is used for both artistic and technical illustrations such as cartoons, clip art, logos, typography, diagrams, and flowcharts. It uses vector graphics to allow for sharp printouts and renderings at unlimited resolution and is not bound to a fixed number of pixels like raster graphics.",
     "version": "1.4-r0-ls23",
     "version_timestamp": "2025-03-27 00:24:48+00:00",
     "category": "3D Modeling",

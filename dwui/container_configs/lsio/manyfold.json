@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-manyfold",
     "project_url": "https://github.com/manyfold3d/manyfold/",
     "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/manyfold-logo.png",
-    "description": "manyfold  is an open source, self-hosted web application for managing a collection of 3D models, particularly focused on 3D printing.",
+    "description": "Digital asset manager for 3D print files.",
     "version": "v0.105.0-ls69",
     "version_timestamp": "2025-03-24 11:09:04+00:00",
     "category": "3D Printing",

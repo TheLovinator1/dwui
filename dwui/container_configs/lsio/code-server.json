@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-code-server",
     "project_url": "https://coder.com",
     "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/code-server-banner.png",
-    "description": "code-server is VS Code running on a remote server, accessible through the browser. - Code on your Chromebook, tablet, and laptop with a consistent dev environment. - If you have a Windows or Mac workstation, more easily develop for Linux. - Take advantage of large cloud servers to speed up tests, compilations, downloads, and more. - Preserve battery life when you're on the go. - All intensive computation runs on your server. - You're no longer running excess instances of Chrome.",
+    "description": "VS Code in the browser.",
     "version": "4.98.2-ls261",
     "version_timestamp": "2025-03-22 20:35:50+00:00",
     "category": "Programming",

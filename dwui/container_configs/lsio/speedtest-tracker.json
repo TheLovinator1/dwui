@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-speedtest-tracker",
     "project_url": "https://github.com/alexjustesen/speedtest-tracker",
     "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/speedtest-tracker-logo.png",
-    "description": "speedtest-tracker is a self-hosted internet performance tracking application that runs speedtest checks against Ookla's Speedtest service.",
+    "description": "Internet performance tracking application that runs speedtest checks against Ookla's Speedtest service.",
     "version": "v1.3.0-ls84",
     "version_timestamp": "2025-03-19 02:30:30+00:00",
     "category": "Monitoring",

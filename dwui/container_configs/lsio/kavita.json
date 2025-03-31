@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-kavita",
     "project_url": "https://github.com/Kareadita/Kavita",
     "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/kavita-logo.png",
-    "description": "kavita is a fast, feature rich, cross platform reading server. Built with a focus for being a full solution for all your reading needs. Setup your own server and share your reading collection with your friends and family!",
+    "description": "Fast, feature rich reading server for manga, comics and books. Built with a focus for being a full solution for all your reading needs.",
     "version": "v0.8.5.11-ls70",
     "version_timestamp": "2025-03-25 09:05:15+00:00",
     "category": "Books",

@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-audacity",
     "project_url": "https://www.audacityteam.org/",
     "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/audacity-logo.png",
-    "description": "[Audacity] is an easy-to-use, multi-track audio editor and recorder. Developed by a group of volunteers as open source.",
+    "description": "Easy-to-use, multi-track audio editor and recorder.",
     "version": "3.7.3-ls197",
     "version_timestamp": "2025-03-25 05:05:04+00:00",
     "category": "Audio Processing",

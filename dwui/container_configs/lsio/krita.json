@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-krita",
     "project_url": "https://krita.org/en/",
     "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/krita-logo.png",
-    "description": "[Krita] is a professional FREE and open source painting program. It is made by artists that want to see affordable art tools for everyone.",
+    "description": "Painting program. Raster graphics editor designed primarily for digital art and 2D animation.",
     "version": "5.2.6-r2-ls68",
     "version_timestamp": "2025-03-28 08:13:57+00:00",
     "category": "Image Editor",

@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-pwndrop",
     "project_url": "https://github.com/kgretzky/pwndrop",
     "project_logo": "https://raw.githubusercontent.com/kgretzky/pwndrop/master/media/pwndrop-logo-512.png",
-    "description": "pwndrop is a self-deployable file hosting service for sending out red teaming payloads or securely sharing your private files over HTTP and WebDAV.",
+    "description": "File hosting service for securely sharing your private files over HTTP and WebDAV.",
     "version": "1.0.1-ls134",
     "version_timestamp": "2025-02-17 16:54:52+00:00",
     "category": "File Sharing,Security",

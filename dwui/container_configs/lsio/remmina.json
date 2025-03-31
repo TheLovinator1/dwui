@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-remmina",
     "project_url": "https://remmina.org/",
     "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/remmina-icon.png",
-    "description": "[Remmina] is a remote desktop client written in GTK, aiming to be useful for system administrators and travellers, who need to work with lots of remote computers in front of either large or tiny screens. Remmina supports multiple network protocols, in an integrated and consistent user interface. Currently RDP, VNC, SPICE, SSH and EXEC are supported.",
+    "description": "Remote access screen and file sharing to your desktop.",
     "version": "1.4.35dfsg-0ubuntu5-ls146",
     "version_timestamp": "2025-03-26 14:50:13+00:00",
     "category": "Remote Desktop",

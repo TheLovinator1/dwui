@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-openvscode-server",
     "project_url": "https://github.com/gitpod-io/openvscode-server",
     "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/openvscode-server-logo.png",
-    "description": "openvscode-server provides a version of VS Code that runs a server on a remote machine and allows access through a modern web browser.",
+    "description": "Run upstream VS Code on a remote machine with access through a modern web browser from any device, anywhere.",
     "version": "1.98.0-ls164",
     "version_timestamp": "2025-03-29 06:57:49+00:00",
     "category": "Programming",

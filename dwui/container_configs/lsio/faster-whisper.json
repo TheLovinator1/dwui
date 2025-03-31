@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-faster-whisper",
     "project_url": "https://github.com/SYSTRAN/faster-whisper",
     "project_logo": "",
-    "description": "faster-whisper is a reimplementation of OpenAI's Whisper model using CTranslate2, which is a fast inference engine for Transformer models. This container provides a Wyoming protocol server for faster-whisper.",
+    "description": "Reimplementation of OpenAI's Whisper model using CTranslate2, which is a fast inference engine for Transformer models. This container provides a Wyoming protocol server for faster-whisper.",
     "version": "v2.4.0-ls75",
     "version_timestamp": "2025-03-23 06:47:39+00:00",
     "category": "Machine Learning",

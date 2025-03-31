@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-syncthing",
     "project_url": "https://syncthing.net",
     "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/syncthing-banner.png",
-    "description": "syncthing replaces proprietary sync and cloud services with something open, trustworthy and decentralized. Your data is your data alone and you deserve to choose where it is stored, if it is shared with some third party and how it's transmitted over the Internet.",
+    "description": "Continuous file synchronization program. It synchronizes files between two or more computers in real time, safely protected from prying eyes.",
     "version": "v1.29.3-ls178",
     "version_timestamp": "2025-03-29 02:18:04+00:00",
     "category": "Backup",

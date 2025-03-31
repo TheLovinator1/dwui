@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-sickchill",
     "project_url": "https://github.com/SickChill/SickChill",
     "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/sickchill-banner.png",
-    "description": "sickchill is an Automatic Video Library Manager for TV Shows. It watches for new episodes of your favorite shows, and when they are posted it does its magic.",
+    "description": "Automatic Video Library Manager for TV Shows. It watches for new episodes of your favorite shows, and when they are posted it does its magic.",
     "version": "2024.3.1-ls243",
     "version_timestamp": "2025-03-27 06:42:30+00:00",
     "category": "Media Management",

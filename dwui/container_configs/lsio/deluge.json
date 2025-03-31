@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-deluge",
     "project_url": "http://deluge-torrent.org/",
     "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/deluge-logo.png",
-    "description": "deluge is a lightweight, Free Software, cross-platform BitTorrent client.  * Full Encryption * WebUI * Plugin System * Much more...",
+    "description": "Lightweight BitTorrent client with a web interface",
     "version": "2.1.1-r10-ls320",
     "version_timestamp": "2025-03-24 15:46:11+00:00",
     "category": "Downloaders",

@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-sqlitebrowser",
     "project_url": "https://sqlitebrowser.org/",
     "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/sqlitebrowser-banner.png",
-    "description": "[DB Browser for SQLite] is a high quality, visual, open source tool to create, design, and edit database files compatible with SQLite.",
+    "description": "High quality, visual, open source tool to create, design, and edit database files compatible with SQLite.",
     "version": "3.13.1-r0-ls144",
     "version_timestamp": "2025-03-29 02:59:57+00:00",
     "category": "Databases",

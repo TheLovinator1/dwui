@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-grav",
     "project_url": "https://github.com/getgrav/grav/",
     "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/grav-logo.png",
-    "description": "grav is a Fast, Simple, and Flexible, file-based Web-platform.",
+    "description": "Fast, simple, and flexible, file-based CMS.",
     "version": "1.7.48-ls207",
     "version_timestamp": "2025-03-22 13:52:07+00:00",
     "category": "Content Management",

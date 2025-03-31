@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-planka",
     "project_url": "https://github.com/plankanban/planka/",
     "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/planka-logo.png",
-    "description": "planka is an elegant open source project tracking tool.",
+    "description": "Realtime kanban board for workgroups.",
     "version": "v1.25.1-ls23",
     "version_timestamp": "2025-03-27 15:57:11+00:00",
     "category": "Content Management,Business",

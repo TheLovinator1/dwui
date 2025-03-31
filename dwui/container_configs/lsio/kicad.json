@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-kicad",
     "project_url": "https://www.kicad.org/",
     "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/kicad-logo.png",
-    "description": "[KiCad] - A Cross Platform and Open Source Electronics Design Automation Suite.",
+    "description": "Software suite for electronic design automation (EDA). It facilitates the design and simulation of electronic hardware for PCB manufacturing.",
     "version": "8.0.7-r0-ls68",
     "version_timestamp": "2025-03-25 11:28:39+00:00",
     "category": "3D Modeling",

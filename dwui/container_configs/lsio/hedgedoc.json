@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-hedgedoc",
     "project_url": "https://hedgedoc.org/",
     "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/hedgedoc-banner.png",
-    "description": "[HedgeDoc] gives you access to all your files wherever you are.  HedgeDoc is a real-time, multi-platform collaborative markdown note editor.  This means that you can write notes with other people on your desktop, tablet or even on the phone.  You can sign-in via multiple auth providers like Facebook, Twitter, GitHub and many more on the homepage.",
+    "description": "Collaborative markdown note editor. You can use it to easily collaborate on notes, graphs and even presentations in real-time. All you need to do is to share your note-link to your co-workers and they're ready to go.",
     "version": "1.10.2-ls159",
     "version_timestamp": "2025-03-17 16:41:44+00:00",
     "category": "Content Management",

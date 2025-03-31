@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-homeassistant",
     "project_url": "https://www.home-assistant.io/",
     "project_logo": "https://github.com/home-assistant/home-assistant.io/raw/next/source/images/favicon-192x192-full.png",
-    "description": "[Home Assistant Core] - Open source home automation that puts local control and privacy first. Powered by a worldwide community of tinkerers and DIY enthusiasts. Perfect to run on a Raspberry Pi or a local server",
+    "description": "Used for home automation. It serves as an integration platform and smart home hub, allowing users to control smart home devices.",
     "version": "2025.3.4-ls91",
     "version_timestamp": "2025-03-26 02:16:51+00:00",
     "category": "Home Automation",

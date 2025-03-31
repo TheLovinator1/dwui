@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-lychee",
     "project_url": "https://lycheeorg.github.io/",
     "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/lychee-icon.png",
-    "description": "lychee is a free photo-management tool, which runs on your server or web-space. Installing is a matter of seconds. Upload, manage and share photos like from a native application. Lychee comes with everything you need and all your photos are stored securely.\"",
+    "description": "A great looking and easy-to-use photo-management-system to manage and share photos.",
     "version": "v6.4.1-ls283",
     "version_timestamp": "2025-03-28 10:46:34+00:00",
     "category": "Photos",

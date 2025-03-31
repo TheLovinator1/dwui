@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-wikijs",
     "project_url": "https://github.com/Requarks/wiki",
     "project_logo": "https://static.requarks.io/logo/wikijs-full.svg",
-    "description": "wikijs A modern, lightweight and powerful wiki app built on NodeJS.",
+    "description": "A modern, lightweight and powerful wiki app built on NodeJS.",
     "version": "v2.5.307-ls178",
     "version_timestamp": "2025-03-24 02:26:12+00:00",
     "category": "Content Management",

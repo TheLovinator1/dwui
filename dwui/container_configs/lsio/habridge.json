@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-habridge",
     "project_url": "https://github.com/bwssytems/ha-bridge/",
     "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/habridge-logo.png",
-    "description": "habridge emulates Philips Hue API to other home automation gateways such as an Amazon Echo/Dot Gen 1 (gen 2 has issues discovering ha-bridge) or other systems that support Philips Hue. The Bridge handles basic commands such as \"On\", \"Off\" and \"brightness\" commands of the hue protocol. This bridge can control most devices that have a distinct API.",
+    "description": "Home automation bridge that emulates a Philips Hue light system and can control other systems such as a Vera, Harmony Hub, Nest, MiLight bulbs or any other system that has an http/https/tcp/udp interface.",
     "version": "v5.4.1-ls198",
     "version_timestamp": "2025-03-21 22:28:05+00:00",
     "category": "Home Automation",

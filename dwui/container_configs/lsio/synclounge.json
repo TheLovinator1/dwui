@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-synclounge",
     "project_url": "https://github.com/samcm/synclounge",
     "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/synclounge-banner.png",
-    "description": "synclounge is a third party tool that allows you to watch Plex in sync with your friends/family, wherever you are.",
+    "description": "Watch Plex in sync with your friends/family, wherever you are.",
     "version": "5.2.35-ls111",
     "version_timestamp": "2025-03-25 14:43:56+00:00",
     "category": "Media Tools",

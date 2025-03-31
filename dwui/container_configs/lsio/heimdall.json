@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-heimdall",
     "project_url": "https://heimdall.site",
     "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/heimdall-banner.png",
-    "description": "heimdall is a way to organise all those links to your most used web sites and web applications in a simple way.  Simplicity is the key to Heimdall.  Why not use it as your browser start page? It even has the ability to include a search bar using either Google, Bing or DuckDuckGo.",
+    "description": "Dashboard for all your web applications.",
     "version": "v2.6.3-ls304",
     "version_timestamp": "2025-03-21 18:48:30+00:00",
     "category": "Dashboard",

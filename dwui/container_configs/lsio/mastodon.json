@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-mastodon",
     "project_url": "https://github.com/mastodon/mastodon/",
     "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/mastodon-banner.png",
-    "description": "mastodon is a free, open-source social network server based on ActivityPub where users can follow friends and discover new ones..",
+    "description": "Social network server based on ActivityPub where users can follow friends and discover new ones.",
     "version": "v4.3.6-ls135",
     "version_timestamp": "2025-03-27 11:03:00+00:00",
     "category": "Social",
@@ -23,7 +23,7 @@
         },
         {
             "tag": "glitch",
-            "desc": "[glitch-soc](https://github.com/glitch-soc/mastodon) fork releases."
+            "desc": "https://github.com/glitch-soc/mastodon fork releases."
         }
     ],
     "architectures": [

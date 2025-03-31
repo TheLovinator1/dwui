@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-lidarr",
     "project_url": "https://github.com/lidarr/Lidarr",
     "project_logo": "https://github.com/lidarr/Lidarr/raw/develop/Logo/400.png",
-    "description": "lidarr is a music collection manager for Usenet and BitTorrent users. It can monitor multiple RSS feeds for new tracks from your favorite artists and will grab, sort and rename them. It can also be configured to automatically upgrade the quality of files already downloaded when a better quality format becomes available.",
+    "description": "Looks and smells like Sonarr but made for music.",
     "version": "2.10.3.4602-ls35",
     "version_timestamp": "2025-03-23 11:39:39+00:00",
     "category": "Media Management,Music",

@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-beets",
     "project_url": "http://beets.io/",
     "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/beets-icon.png",
-    "description": "beets is a music library manager and not, for the most part, a music player. It does include a simple player plugin and an experimental Web-based player, but it generally leaves actual sound-reproduction to specialized tools.",
+    "description": "Media library manager and MusicBrainz tagger for obsessive music geeks.",
     "version": "2.2.0-ls264",
     "version_timestamp": "2025-03-28 18:57:54+00:00",
     "category": "Music",

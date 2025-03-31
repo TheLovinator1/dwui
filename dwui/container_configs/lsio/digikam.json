@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-digikam",
     "project_url": "https://www.digikam.org/",
     "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/digikam.png",
-    "description": "[digiKam]: Professional Photo Management with the Power of Open Source",
+    "description": "Easily import photos and videos from your camera, smartphone, or other devices. Organize your collections using albums, tags, and labels.",
     "version": "8.6.0-ls243",
     "version_timestamp": "2025-03-24 13:02:52+00:00",
     "category": "Photos",

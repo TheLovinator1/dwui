@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-piwigo",
     "project_url": "http://piwigo.org/",
     "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/piwigo-banner.png",
-    "description": "piwigo is a photo gallery software for the web that comes with powerful features to publish and manage your collection of pictures.",
+    "description": "Photo gallery software designed for organizing, managing, and sharing images on the web.",
     "version": "15.5.0-ls299",
     "version_timestamp": "2025-03-22 15:35:18+00:00",
     "category": "Photos",

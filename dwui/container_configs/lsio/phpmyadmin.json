@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-phpmyadmin",
     "project_url": "https://github.com/phpmyadmin/phpmyadmin/",
     "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/phpmyadmin-logo.png",
-    "description": "phpmyadmin is a free software tool written in PHP, intended to handle the administration of MySQL over the Web. phpMyAdmin supports a wide range of operations on MySQL and MariaDB.",
+    "description": "Web interface for MySQL and MariaDB.",
     "version": "5.2.2-ls188",
     "version_timestamp": "2025-03-28 21:41:54+00:00",
     "category": "Databases",

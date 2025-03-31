@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-chromium",
     "project_url": "https://www.chromium.org/chromium-projects/",
     "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/chromium-logo.png",
-    "description": "[Chromium] is an open-source browser project that aims to build a safer, faster, and more stable way for all users to experience the web.",
+    "description": "Chromium is an open-source browser project that aims to build a safer, faster, and more stable way for all users to experience the web.",
     "version": "88ff4499-ls115",
     "version_timestamp": "2025-03-26 09:44:21+00:00",
     "category": "Web Browser",

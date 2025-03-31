@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-webtop",
     "project_url": "https://github.com/linuxserver/docker-webtop",
     "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/webtop-logo.png",
-    "description": "webtop - Alpine, Ubuntu, Fedora, and Arch based containers containing full desktop environments in officially supported flavors accessible via any modern web browser.",
+    "description": "Alpine, Ubuntu, Fedora, and Arch based containers containing full desktop environments in officially supported flavors accessible via any modern web browser.",
     "version": "5389b05b-ls212",
     "version_timestamp": "2025-03-25 04:13:45+00:00",
     "category": "Remote Desktop",

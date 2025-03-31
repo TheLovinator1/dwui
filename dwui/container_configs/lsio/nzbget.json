@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-nzbget",
     "project_url": "http://nzbget.com/",
     "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/nzbget-banner.png",
-    "description": "nzbget is a usenet downloader, written in C++ and designed with performance in mind to achieve maximum download speed by using very little system resources.",
+    "description": "Usenet software designed for downloading binary content from Usenet newsgroups",
     "version": "v24.8-ls189",
     "version_timestamp": "2025-03-28 15:49:22+00:00",
     "category": "Downloaders",

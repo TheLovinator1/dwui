@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-airsonic-advanced",
     "project_url": "https://github.com/kagemomiji/airsonic-advanced",
     "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/airsonic-banner.png",
-    "description": "airsonic-advanced is a free, web-based media streamer, providing ubiquitious access to your music. Use it to share your music with friends, or to listen to your own music while at work. You can stream to multiple players simultaneously, for instance to one player in your kitchen and another in your living room.",
+    "description": "Web-based media streamer, providing ubiquitous access to your music. Use it to share your music with friends, or to listen to your own music while at work. You can stream to multiple players simultaneously, for instance to one player in your kitchen and another in your living room.",
     "version": "11.1.4-ls146",
     "version_timestamp": "2025-03-29 09:25:07+00:00",
     "category": "Media Servers,Music",

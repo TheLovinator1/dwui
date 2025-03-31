@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-snapdrop",
     "project_url": "https://github.com/snapdrop/snapdrop",
     "project_logo": "https://raw.githubusercontent.com/snapdrop/snapdrop/master/client/images/logo_transparent_512x512.png",
-    "description": "snapdrop A local file sharing in your browser. Inspired by Apple's Airdrop.",
+    "description": "Local file sharing in your browser. Inspired by Apple's Airdrop.",
     "version": "b8b78cc2-ls173",
     "version_timestamp": "2025-02-20 01:23:34+00:00",
     "category": "File Sharing",

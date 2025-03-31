@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-lollypop",
     "project_url": "https://wiki.gnome.org/Apps/Lollypop",
     "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/lollypop-icon.png",
-    "description": "[Lollypop] is a lightweight modern music player designed to work excellently on the GNOME desktop environment.",
+    "description": "Lightweight modern music player designed to work excellently on the GNOME desktop environment.",
     "version": "1.4.40-r0-ls1",
     "version_timestamp": "2025-03-28 14:42:58+00:00",
     "category": "Music",

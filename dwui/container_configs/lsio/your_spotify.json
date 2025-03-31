@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-your_spotify",
     "project_url": "https://github.com/Yooooomi/your_spotify",
     "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/your_spotify-logo.png",
-    "description": "your_spotify is a self-hosted application that tracks what you listen and offers you a dashboard to explore statistics about it! It's composed of a web server which polls the Spotify API every now and then and a web application on which you can explore your statistics.",
+    "description": "Application that tracks what you listen and offers you a dashboard to explore statistics about it! It's composed of a web server which polls the Spotify API every now and then and a web application on which you can explore your statistics.",
     "version": "1.12.0-ls112",
     "version_timestamp": "2025-03-19 19:24:41+00:00",
     "category": "Music",

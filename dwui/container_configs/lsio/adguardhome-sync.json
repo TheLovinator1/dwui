@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-adguardhome-sync",
     "project_url": "https://github.com/bakito/adguardhome-sync/",
     "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/adguardhomesync-icon.png",
-    "description": "adguardhome-sync is a tool to synchronize AdGuardHome config to replica instances.",
+    "description": "A tool to synchronize AdGuardHome config to replica instances.",
     "version": "v0.7.2-ls133",
     "version_timestamp": "2025-03-26 06:48:18+00:00",
     "category": "Network,DNS",

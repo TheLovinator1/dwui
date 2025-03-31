@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-webgrabplus",
     "project_url": "https://www.webgrabplus.com",
     "project_logo": "https://www.webgrabplus.com/sites/default/themes/WgTheme/images/slideshows/EPG_fading.jpg",
-    "description": "webgrabplus is a multi-site incremental xmltv epg grabber. It collects tv-program guide data from selected tvguide sites for your favourite channels.",
+    "description": "Multi-site incremental xmltv epg grabber. It collects tv-program guide data from selected tvguide sites for your favourite channels.",
     "version": "5.3.1-ls261",
     "version_timestamp": "2025-03-27 08:49:40+00:00",
     "category": "Media Tools",

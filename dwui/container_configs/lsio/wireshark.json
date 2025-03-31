@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-wireshark",
     "project_url": "https://www.wireshark.org/",
     "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/wireshark-icon.png",
-    "description": "[Wireshark] is the world\u2019s foremost and widely-used network protocol analyzer. It lets you see what\u2019s happening on your network at a microscopic level and is the de facto (and often de jure) standard across many commercial and non-profit enterprises, government agencies, and educational institutions. Wireshark development thrives thanks to the volunteer contributions of networking experts around the globe and is the continuation of a project started by Gerald Combs in 1998.",
+    "description": "World\u2019s foremost and widely-used network protocol analyzer. It lets you see what\u2019s happening on your network at a microscopic level and is the de facto (and often de jure) standard across many commercial and non-profit enterprises, government agencies, and educational institutions. Wireshark development thrives thanks to the volunteer contributions of networking experts around the globe and is the continuation of a project started by Gerald Combs in 1998.",
     "version": "4.4.2-r0-ls247",
     "version_timestamp": "2025-03-24 15:46:54+00:00",
     "category": "Network",

@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-series-troxide",
     "project_url": "https://github.com/MaarifaMaarifa/series-troxide",
     "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/series-troxide-logo.png",
-    "description": "[Series Troxide] a Simple and Modern Series Tracker",
+    "description": "Simple and modern series tracker",
     "version": "v0.5.1-ls63",
     "version_timestamp": "2025-02-03 06:34:46+00:00",
     "category": "Media Management",

@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-kasm",
     "project_url": "https://www.kasmweb.com/?utm_campaign=LinuxServer&utm_source=listing",
     "project_logo": "https://kasm-ci.s3.amazonaws.com/kasm_wide.png",
-    "description": "kasm Workspaces is a docker container streaming platform for delivering browser-based access to desktops, applications, and web services. Kasm uses devops-enabled Containerized Desktop Infrastructure (CDI) to create on-demand, disposable, docker containers that are accessible via web browser. Example use-cases include Remote Browser Isolation (RBI), Data Loss Prevention (DLP), Desktop as a Service (DaaS), Secure Remote Access Services (RAS), and Open Source Intelligence (OSINT) collections.  The rendering of the graphical-based containers is powered by the open-source project [KasmVNC](https://www.kasmweb.com/kasmvnc.html?utm_campaign=LinuxServer&utm_source=kasmvnc).",
+    "description": "Stream your workspace directly to your web browser on any device and from any location.",
     "version": "1.16.1-ls67",
     "version_timestamp": "2025-03-25 21:59:03+00:00",
     "category": "Remote Desktop,Business",

@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-flexget",
     "project_url": "http://flexget.com/",
     "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/flexget-banner.png",
-    "description": "flexget is a multipurpose automation tool for all of your media.",
+    "description": "Multipurpose automation tool for content like torrents, nzbs, podcasts, comics, series, movies, etc.",
     "version": "v3.15.30-ls210",
     "version_timestamp": "2025-03-24 16:05:30+00:00",
     "category": "Downloaders",

@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-shotcut",
     "project_url": "https://www.shotcut.org/",
     "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/shotcut-logo.png",
-    "description": "shotcut is a free, open source, cross-platform video editor.",
+    "description": "Video editor. Major features include support for a wide range of formats; no import required meaning native timeline editing; Blackmagic Design support for input and preview monitoring; and resolution support to 4k.",
     "version": "v25.01.25-ls66",
     "version_timestamp": "2025-03-26 03:25:14+00:00",
     "category": "Video Editor",

@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-calligra",
     "project_url": "https://calligra.org/",
     "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/calligra-logo.png",
-    "description": "[Calligra] is an office and graphic art suite by KDE. It is available for desktop PCs, tablet computers, and smartphones. It contains applications for word processing, spreadsheets, presentation, vector graphics, and editing databases.",
+    "description": "Office and graphic art suite by KDE. Contains applications for word processing, spreadsheets, presentation, vector graphics, and editing databases.",
     "version": "3.2.1-ls66",
     "version_timestamp": "2025-03-27 10:13:21+00:00",
     "category": "Documents",

@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-overseerr",
     "project_url": "https://overseerr.dev/",
     "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/overseerr.png",
-    "description": "overseerr is a request management and media discovery tool built to work with your existing Plex ecosystem.",
+    "description": "Request management and media discovery tool built to with Sonarr and Radarr.",
     "version": "v1.34.0-ls136",
     "version_timestamp": "2025-03-26 09:56:42+00:00",
     "category": "Media Requesters",

@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-rawtherapee",
     "project_url": "https://rawtherapee.com/",
     "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/rawtherapee-logo.png",
-    "description": "[RawTherapee] is a free, cross-platform raw image processing program!",
+    "description": "Raw image processing program",
     "version": "5.11-ls27",
     "version_timestamp": "2025-03-23 03:33:11+00:00",
     "category": "Image Editor",

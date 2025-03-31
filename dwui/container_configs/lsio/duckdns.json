@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-duckdns",
     "project_url": "https://duckdns.org/",
     "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/duckdns.png",
-    "description": "duckdns is a free service which will point a DNS (sub domains of duckdns.org) to an IP of your choice. The service is completely free, and doesn't require reactivation or forum posts to maintain its existence.",
+    "description": "Free service which will point a DNS (sub domains of duckdns.org) to an IP of your choice.",
     "version": "f204fa5d-ls49",
     "version_timestamp": "2025-03-24 04:04:25+00:00",
     "category": "Network,DNS",

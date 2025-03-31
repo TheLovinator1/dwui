@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-pairdrop",
     "project_url": "https://github.com/schlagmichdoch/PairDrop",
     "project_logo": "https://raw.githubusercontent.com/schlagmichdoch/PairDrop/master/public/images/android-chrome-512x512.png",
-    "description": "[PairDrop] is a sublime alternative to AirDrop that works on all platforms. Send images, documents or text via peer to peer connection to devices in the same local network/Wi-Fi or to paired devices.",
+    "description": "Local file sharing in your web browser. Inspired by Apple's AirDrop. Fork of Snapdrop.",
     "version": "v1.11.2-ls107",
     "version_timestamp": "2025-03-29 11:56:42+00:00",
     "category": "File Sharing",

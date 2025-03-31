@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-readarr",
     "project_url": "https://github.com/Readarr/Readarr",
     "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/readarr-logo.png",
-    "description": "readarr - Book Manager and Automation (Sonarr for Ebooks)",
+    "description": "Ebook and audiobook collection manager for Usenet and BitTorrent. Think Sonarr for ebooks",
     "version": "latest",
     "version_timestamp": "2025-03-28 09:25:18+00:00",
     "category": "Books",

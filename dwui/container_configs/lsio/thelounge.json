@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-thelounge",
     "project_url": "https://thelounge.github.io/",
     "project_logo": "https://raw.githubusercontent.com/thelounge/thelounge/master/client/img/logo-vertical-transparent-bg.svg?sanitize=true",
-    "description": "thelounge (a fork of shoutIRC) is a web IRC client that you host on your own server.",
+    "description": "Modern web IRC client. Push notifications, link previews, file uploads, and more.",
     "version": "v4.4.3-ls197",
     "version_timestamp": "2025-03-04 03:28:01+00:00",
     "category": "IRC,Chat",

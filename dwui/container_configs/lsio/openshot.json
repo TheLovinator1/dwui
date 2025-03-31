@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-openshot",
     "project_url": "https://openshot.org/",
     "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/openshot-logo.png",
-    "description": "[OpenShot] Video Editor is an award-winning free and open-source video editor for Linux, Mac, and Windows, and is dedicated to delivering high quality video editing and animation solutions to the world.",
+    "description": "Video editor that allows you to trim, slice, animate and add effects to your videos.",
     "version": "v3.3.0-ls13",
     "version_timestamp": "2025-03-28 23:03:19+00:00",
     "category": "Video Editor",

@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-sickgear",
     "project_url": "https://github.com/sickgear/sickgear",
     "project_logo": "https://raw.githubusercontent.com/wiki/SickGear/SickGear.Wiki/images/SickGearLogo.png",
-    "description": "[SickGear] provides management of TV shows and/or Anime, it detects new episodes, links downloader apps, and more..  For more information on SickGear visit their website and check it out: https://github.com/SickGear/SickGear",
+    "description": "Management of TV shows and/or Anime, it detects new episodes, links downloader apps, and more..",
     "version": "release_3.33.7-ls260",
     "version_timestamp": "2025-03-27 03:14:44+00:00",
     "category": "Media Management",

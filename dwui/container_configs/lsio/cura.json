@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-cura",
     "project_url": "https://ultimaker.com/software/ultimaker-cura/",
     "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/cura-logo.png",
-    "description": "[UltiMaker Cura] is free, easy-to-use 3D printing software trusted by millions of users. Fine-tune your 3D model with 400+ settings for the best slicing and printing results.",
+    "description": "Easy-to-use 3D printing software trusted by millions of users. Fine-tune your 3D model with 400+ settings for the best slicing and printing results.",
     "version": "5.10.0-ls72",
     "version_timestamp": "2025-03-25 13:38:36+00:00",
     "category": "3D Printing",

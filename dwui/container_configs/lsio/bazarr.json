@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-bazarr",
     "project_url": "https://www.bazarr.media/",
     "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/bazarr.png",
-    "description": "bazarr is a companion application to Sonarr and Radarr. It can manage and download subtitles based on your requirements. You define your preferences by TV show or movie and Bazarr takes care of everything for you.",
+    "description": "Companion application to Sonarr and Radarr that manages and downloads subtitles based on your requirements.",
     "version": "v1.5.1-ls297",
     "version_timestamp": "2025-03-25 21:38:55+00:00",
     "category": "Media Management",

@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-pydio-cells",
     "project_url": "https://pydio.com/",
     "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/pydio-cells-icon.png",
-    "description": "pydio-cells is the nextgen file sharing platform for organizations. It is a full rewrite of the Pydio project using the Go language following a micro-service architecture.",
+    "description": "Document sharing, collaboration and management platform.",
     "version": "v4.4.11-ls168",
     "version_timestamp": "2025-03-20 03:49:11+00:00",
     "category": "File Sharing",

@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-doplarr",
     "project_url": "https://github.com/kiranshila/Doplarr",
     "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/doplarr-logo_title.png",
-    "description": "doplarr is an *arr request bot for Discord.\"",
+    "description": "Discord request bot for *arrs.",
     "version": "v3.6.3-ls111",
     "version_timestamp": "2025-03-23 08:59:32+00:00",
     "category": "Media Requesters",

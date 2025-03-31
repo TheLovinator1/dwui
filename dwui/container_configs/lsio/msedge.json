@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-msedge",
     "project_url": "https://www.microsoft.com/edge",
     "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/edge-logo.png",
-    "description": "[Microsoft Edge] is a cross-platform web browser developed by Microsoft and based on Chromium.",
+    "description": "Cross-platform web browser developed by Microsoft and based on Chromium.",
     "version": "134.0.3124.95-1-ls69",
     "version_timestamp": "2025-03-27 19:55:37+00:00",
     "category": "Web Browser",

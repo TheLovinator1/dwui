@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-kdenlive",
     "project_url": "https://kdenlive.org/",
     "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/kdenlive-logo.png",
-    "description": "[Kdenlive] is a powerful free and open source cross-platform video editing program made by the KDE community. Feature rich and production ready.",
+    "description": "Video editing software that allows you to create and edit videos with a wide range of features.",
     "version": "423.08.5-0ubuntu4-ls138",
     "version_timestamp": "2025-03-24 17:20:06+00:00",
     "category": "Video Editor",

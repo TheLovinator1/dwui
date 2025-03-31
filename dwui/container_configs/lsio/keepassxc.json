@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-keepassxc",
     "project_url": "https://keepassxc.org/",
     "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/keepassxc-logo.png",
-    "description": "[KeePassXC] is a free and open-source password manager. It started as a community fork of KeePassX (itself a cross-platform port of KeePass).",
+    "description": "Safely store your passwords and auto-fill them into your favorite apps, so you can forget all about them.",
     "version": "2.7.9-r1-ls52",
     "version_timestamp": "2025-03-27 07:05:13+00:00",
     "category": "Password Manager",

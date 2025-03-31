@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-radarr",
     "project_url": "https://github.com/Radarr/Radarr",
     "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/radarr.png",
-    "description": "radarr - A fork of Sonarr to work with movies \u00e0 la Couchpotato.",
+    "description": "Automatically download movies as soon as they are available.",
     "version": "5.21.1.9799-ls266",
     "version_timestamp": "2025-03-24 16:40:25+00:00",
     "category": "Media Management",

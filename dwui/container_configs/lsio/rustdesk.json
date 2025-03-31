@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-rustdesk",
     "project_url": "https://rustdesk.com/",
     "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/rustdesk-logo.png",
-    "description": "[RustDesk] is a full-featured open source remote control alternative for self-hosting and security with minimal configuration.",
+    "description": "Remote access and remote control software. Open-source alternative to remote desktop software such as TeamViewer.",
     "version": "1.3.8-ls45",
     "version_timestamp": "2025-03-27 16:14:24+00:00",
     "category": "Remote Desktop",

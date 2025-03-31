@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-altus",
     "project_url": "https://github.com/amanharwara/altus",
     "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/altus-logo.png",
-    "description": "[Altus] is an Electron-based WhatsApp client with themes and multiple account support.",
+    "description": "WhatsApp client with themes and multiple account support.",
     "version": "5.6.0-ls70",
     "version_timestamp": "2025-03-29 03:26:12+00:00",
     "category": "Chat",

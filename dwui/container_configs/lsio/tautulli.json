@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-tautulli",
     "project_url": "http://tautulli.com",
     "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/tautulli-icon.png",
-    "description": "tautulli is a python based web application for monitoring, analytics and notifications for Plex Media Server.",
+    "description": "Monitoring, analytics and notifications for Plex Media Server.",
     "version": "v2.15.1-ls183",
     "version_timestamp": "2025-03-27 23:39:18+00:00",
     "category": "Media Tools",

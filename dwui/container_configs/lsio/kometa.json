@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-kometa",
     "project_url": "https://github.com/Kometa-Team/Kometa",
     "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/kometa-banner.png",
-    "description": "kometa is a powerful tool designed to give you complete control over your media libraries. With kometa, you can take your customization to the next level, with granular control over metadata, collections, overlays, and much more.",
+    "description": "Update metadata information for items in Plex as well as automatically build collections and playlists. ",
     "version": "v2.1.0-ls45",
     "version_timestamp": "2025-03-26 05:39:16+00:00",
     "category": "Media Management",

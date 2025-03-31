@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-projectsend",
     "project_url": "http://www.projectsend.org",
     "project_logo": "http://www.projectsend.org/wp-content/themes/projectsend/img/screenshots.png",
-    "description": "projectsend is a self-hosted application that lets you upload files and assign them to specific clients that you create yourself. Secure, private and easy. No more depending on external services or e-mail to send those files.",
+    "description": "Upload files and assign them to specific clients/groups that you create yourself.",
     "version": "r1720-ls228",
     "version_timestamp": "2025-03-17 21:34:06+00:00",
     "category": "File Sharing",

@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-spotube",
     "project_url": "https://spotube.krtirtho.dev/",
     "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/spotube-logo.png",
-    "description": "[Spotube] is an open source, cross-platform Spotify client compatible across multiple platforms utilizing Spotify's data API and YouTube, Piped.video or JioSaavn as an audio source, eliminating the need for Spotify Premium",
+    "description": "Spotify client compatible across multiple platforms utilizing Spotify's data API and YouTube, Piped.video or JioSaavn as an audio source, eliminating the need for Spotify Premium",
     "version": "v4.0.2-ls55",
     "version_timestamp": "2025-03-28 14:44:12+00:00",
     "category": "Music",

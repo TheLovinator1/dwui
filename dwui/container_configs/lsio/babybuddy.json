@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-babybuddy",
     "project_url": "https://github.com/babybuddy/babybuddy",
     "project_logo": "https://github.com/linuxserver/docker-templates/raw/master/linuxserver.io/img/babybuddy-logo.png",
-    "description": "babybuddy is a buddy for babies! Helps caregivers track sleep, feedings, diaper changes, tummy time and more to learn about and predict baby's needs without (as much) guess work.",
+    "description": "Helps caregivers track sleep, feedings, diaper changes, tummy time and more to learn about and predict baby's needs without (as much) guess work.",
     "version": "v2.7.1-ls189",
     "version_timestamp": "2025-03-23 21:33:27+00:00",
     "category": "Family",

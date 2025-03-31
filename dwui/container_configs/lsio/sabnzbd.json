@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-sabnzbd",
     "project_url": "http://sabnzbd.org/",
     "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/sabnzbd-banner.png",
-    "description": "sabnzbd makes Usenet as simple and streamlined as possible by automating everything we can. All you have to do is add an .nzb. SABnzbd takes over from there, where it will be automatically downloaded, verified, repaired, extracted and filed away with zero human interaction.",
+    "description": "Automated Usenet download tool.",
     "version": "4.4.1-ls208",
     "version_timestamp": "2025-03-27 02:22:56+00:00",
     "category": "Downloaders",

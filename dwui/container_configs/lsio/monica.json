@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-monica",
     "project_url": "https://github.com/monicahq/monica",
     "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/monica-logo.png",
-    "description": "monica is an open source personal relationship management system, that lets you document your life.",
+    "description": "Personal CRM. Remember everything about your friends, family and business relationships",
     "version": "v4.1.2-ls56",
     "version_timestamp": "2025-03-19 08:07:07+00:00",
     "category": "Content Management",

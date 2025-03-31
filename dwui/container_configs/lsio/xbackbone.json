@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-xbackbone",
     "project_url": "https://github.com/SergiX44/XBackBone",
     "project_logo": "https://raw.githubusercontent.com/SergiX44/XBackBone/master/docs/img/xbackbone.png",
-    "description": "xbackbone is a simple, self-hosted, lightweight PHP file manager that support the instant sharing tool ShareX and *NIX systems. It supports uploading and displaying images, GIF, video, code, formatted text, and file downloading and uploading. Also have a web UI with multi user management, past uploads history and search support.",
+    "description": "Simple, lightweight PHP file manager that support the instant sharing tool ShareX and *NIX systems. It supports uploading and displaying images, GIF, video, code, formatted text, and file downloading and uploading. Also have a web UI with multi user management, past uploads history and search support.",
     "version": "3.8.1-ls184",
     "version_timestamp": "2025-03-23 03:12:38+00:00",
     "category": "File Sharing",

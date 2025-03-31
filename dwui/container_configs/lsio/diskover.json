@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-diskover",
     "project_url": "https://github.com/diskoverdata/diskover-community",
     "project_logo": "https://raw.githubusercontent.com/diskoverdata/diskover-community/master/diskover-web/public/images/diskover.png",
-    "description": "diskover is an open source file system indexer that uses Elasticsearch to index and manage data across heterogeneous storage systems.",
+    "description": "Allows you to effectively search and organize files, and system administrators can manage storage infrastructure, efficiently provision storage, monitor and report on storage usage, and effectively make decisions about new infrastructure purchases.",
     "version": "v2.3.0-ls192",
     "version_timestamp": "2025-03-27 11:17:30+00:00",
     "category": "Storage,Monitoring",

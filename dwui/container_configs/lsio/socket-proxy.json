@@ -2,7 +2,7 @@
     "name": "socket-proxy",
     "github_url": "https://github.com/linuxserver/docker-socket-proxy",
     "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/docker-logo.png",
-    "description": "The Socket Proxy is a security-enhanced proxy which allows you to apply access rules to the Docker socket, limiting the attack surface for containers such as watchtower or Traefik that need to use it.",
+    "description": "Security-enhanced proxy which allows you to apply access rules to the Docker socket, limiting the attack surface for containers such as watchtower or Traefik that need to use it.",
     "version": "1.26.3-r0-ls46",
     "version_timestamp": "2025-03-17 20:51:33+00:00",
     "category": "Docker",

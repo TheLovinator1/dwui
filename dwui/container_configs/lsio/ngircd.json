@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-ngircd",
     "project_url": "https://ngircd.barton.de/",
     "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/ngircd-logo.png",
-    "description": "ngircd is a free, portable and lightweight Internet Relay Chat server for small or private networks, developed under the GNU General Public License (GPL). It is easy to configure, can cope with dynamic IP addresses, and supports IPv6, SSL-protected connections as well as PAM for authentication. It is written from scratch and not based on the original IRCd.",
+    "description": "Portable and lightweight IRC server for small or private networks.",
     "version": "27-r0-ls149",
     "version_timestamp": "2025-03-29 14:58:40+00:00",
     "category": "IRC",

@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-hishtory-server",
     "project_url": "https://github.com/ddworken/hishtory",
     "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/hishtory-server-icon.png",
-    "description": "[hiSHtory] is a better shell history. It stores your shell history in context (what directory you ran the command in, whether it succeeded or failed, how long it took, etc). This is all stored locally and end-to-end encrypted for syncing to to all your other computers.",
+    "description": "Better shell history. It stores your shell history in context (what directory you ran the command in, whether it succeeded or failed, how long it took, etc).",
     "version": "v0.335-ls112",
     "version_timestamp": "2025-03-28 03:21:38+00:00",
     "category": "Administration",

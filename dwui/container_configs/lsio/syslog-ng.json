@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-syslog-ng",
     "project_url": "https://www.syslog-ng.com/products/open-source-log-management/",
     "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/syslog-ng-logo.png",
-    "description": "[syslog-ng] allows you to flexibly collect, parse, classify, rewrite and correlate logs from across your infrastructure and store or route them to log analysis tools.",
+    "description": "Collect, parse, classify, rewrite and correlate logs from across your infrastructure and store or route them to log analysis tools.",
     "version": "4.8.1-r1-ls152",
     "version_timestamp": "2025-03-27 19:11:18+00:00",
     "category": "Monitoring",

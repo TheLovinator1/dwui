@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-calibre",
     "project_url": "https://calibre-ebook.com/",
     "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/calibre-logo.png",
-    "description": "calibre is a powerful and easy to use e-book manager. Users say it's outstanding and a must-have. It'll allow you to do nearly everything and it takes things a step beyond normal e-book software. It's also completely free and open source and great for both casual users and computer experts.",
+    "description": "Organize e-books into virtual libraries, display, edit, create and convert e-books, as well as sync e-books with a variety of e-readers.",
     "version": "v8.1.1-ls327",
     "version_timestamp": "2025-03-28 07:49:11+00:00",
     "category": "Books",

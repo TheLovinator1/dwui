@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-healthchecks",
     "project_url": "https://github.com/healthchecks/healthchecks",
     "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/healthchecks-logo.png",
-    "description": "healthchecks is a watchdog for your cron jobs. It's a web server that listens for pings from your cron jobs, plus a web interface.",
+    "description": "Cron job monitoring service. It listens for HTTP requests and email messages from your cron jobs and scheduled tasks. When a ping does not arrive on time, it sends out alerts.",
     "version": "v3.9-ls286",
     "version_timestamp": "2025-03-24 09:05:37+00:00",
     "category": "Monitoring",

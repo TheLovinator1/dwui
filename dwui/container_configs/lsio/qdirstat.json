@@ -4,7 +4,7 @@
     "github_url": "https://github.com/linuxserver/docker-qdirstat",
     "project_url": "https://github.com/shundhammer/qdirstat",
     "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/qdirstat-logo.png",
-    "description": "[QDirStat] Qt-based directory statistics: KDirStat without any KDE -- from the author of the original KDirStat.",
+    "description": "Graphical application to show where your disk space has gone and to help you to clean it up.",
     "version": "1.9-ls162",
     "version_timestamp": "2025-03-23 20:48:23+00:00",
     "category": "Storage",

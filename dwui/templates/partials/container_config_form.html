@@ -8,6 +8,9 @@
         <header>
             <h1>{{ image_display_name }}</h1>
         </header>
+        <!-- Example JSON:
+            "description": "Media server designed to organize, play, and stream audio and video to a variety of devices.",
+        -->
         <p>{{ image_config.description }}</p>
     </div>
 
@@ -17,6 +20,7 @@
             <input type="text" class="form-control" id="name" name="name" value="{{ suggested_name }}" required>
             <div class="form-text">Choose a unique name for your container</div>
         </div>
+        <!-- "project_logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/emby-logo.png", -->
         {% if image_config.project_logo %}
         <div class="ms-3">
             <img src="{{ image_config.project_logo }}" alt="{{ image_display_name }} Logo"
@@ -25,6 +29,10 @@
         {% endif %}
     </div>
 
+    <!-- Example JSON:
+        "github_url": "https://github.com/linuxserver/docker-emby",
+        "project_url": "https://emby.media/",
+    -->
     {% if image_config.github_url or image_config.project_url %}
     <div class="d-flex justify-content-between align-items-center mb-3">
         <div>
@@ -40,6 +48,34 @@
     {% endif %}
 
     <!-- Volumes Configuration -->
+    <!-- Example JSON:
+        "volumes": [
+            {
+                "path": "/config",
+                "host_path": "/path/to/emby/library",
+                "desc": "Emby data storage location. *This can grow very large, 50gb+ is likely for a large collection.*",
+                "optional": false
+            },
+            {
+                "path": "/data/tvshows",
+                "host_path": "/path/to/tvshows",
+                "desc": "Media goes here. Add as many as needed e.g. `/data/movies`, `/data/tv`, etc.",
+                "optional": false
+            },
+            {
+                "path": "/data/movies",
+                "host_path": "/path/to/movies",
+                "desc": "Media goes here. Add as many as needed e.g. `/data/movies`, `/data/tv`, etc.",
+                "optional": false
+            },
+            {
+                "path": "/opt/vc/lib",
+                "host_path": "/opt/vc/lib",
+                "desc": "Path for Raspberry Pi OpenMAX libs *optional*.",
+                "optional": true
+            }
+        ],
+    -->
     <div class="mb-4" id="volumesSection">
         <h5>Volumes</h5>
         <div class="form-text mb-2">Configure volume mappings from your host to the container</div>
@@ -72,6 +108,22 @@
     </div>
 
     <!-- Port Configuration -->
+    <!-- Example JSON:
+        "ports": [
+            {
+                "external": "8096",
+                "internal": "8096",
+                "desc": "Http webUI.",
+                "optional": false
+            },
+            {
+                "external": "8920",
+                "internal": "8920",
+                "desc": "Https webUI (you need to setup your own certificate).",
+                "optional": true
+            }
+        ],
+    -->
     <div class="mb-4" id="portsSection">
         <h5>Network Ports</h5>
         <div class="form-text mb-2">Configure port mappings from your host to the container</div>
@@ -100,6 +152,28 @@
     </div>
 
     <!-- Environment Variables -->
+    <!-- Example JSON:
+        "env_vars": [
+            {
+                "name": "PUID",
+                "value": "1000",
+                "desc": "User ID",
+                "optional": false
+            },
+            {
+                "name": "PGID",
+                "value": "1000",
+                "desc": "Group ID",
+                "optional": false
+            },
+            {
+                "name": "TZ",
+                "value": "Etc/UTC",
+                "desc": "Timezone",
+                "optional": false
+            }
+        ],
+    -->
     <div class="mb-4" id="envSection">
         <h5>Environment Variables</h5>
         <div class="form-text mb-2">Configure environment variables for the container</div>
@@ -215,6 +289,40 @@
     </div>
 
     <!-- Devices -->
+    <!-- Example JSON:
+        "devices": [
+            {
+                "path": "/dev/dri",
+                "host_path": "/dev/dri",
+                "desc": "Only needed if you want to use your Intel or AMD GPU for hardware accelerated video encoding (vaapi).",
+                "optional": true
+            },
+            {
+                "path": "/dev/vchiq",
+                "host_path": "/dev/vchiq",
+                "desc": "Only needed if you want to use your Raspberry Pi OpenMax video encoding (Bellagio).",
+                "optional": true
+            },
+            {
+                "path": "/dev/video10",
+                "host_path": "/dev/video10",
+                "desc": "Only needed if you want to use your Raspberry Pi V4L2 video encoding.",
+                "optional": true
+            },
+            {
+                "path": "/dev/video11",
+                "host_path": "/dev/video11",
+                "desc": "Only needed if you want to use your Raspberry Pi V4L2 video encoding.",
+                "optional": true
+            },
+            {
+                "path": "/dev/video12",
+                "host_path": "/dev/video12",
+                "desc": "Only needed if you want to use your Raspberry Pi V4L2 video encoding.",
+                "optional": true
+            }
+        ]
+    -->
     {% if image_config.devices %}
     <div class="mb-4" id="devicesSection">
         <h5>Devices</h5>

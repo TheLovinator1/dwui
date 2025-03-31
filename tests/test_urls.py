@@ -18,6 +18,12 @@ from django.urls import resolve, reverse
         ("image_config", {}),
         ("account_login", {}),
         ("account_logout", {}),
+        ("networks", {}),
+        ("volumes", {}),
+        ("images", {}),
+        ("admin_settings", {}),
+        ("test_notifications", {}),
+        ("import_data", {}),
     ],
 )
 def test_url_resolves(url_name: str, kwargs: dict[str, str]) -> None:
